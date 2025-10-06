@@ -48,18 +48,32 @@
             font-size: 1.5em;
         }
         .menu-btn::before {
-            content: '🗡️';
-            left: -40px;
-            transform: translateY(-50%) scaleX(-1);
-        }
-        .menu-btn::after {
-            content: '🗡️';
-            right: -40px;
-            transform: translateY(-50%) scaleX(-1);
-        }
+  content: "";
+  position: absolute;
+  left: -40px;
+  width: 80px;
+  height: 80px;
+  background-image: url('imagenes/aaaaaaaaflecha.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translateY(-50%) scaleX(-1);
+}
+       .menu-btn::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  width: 80px;
+  height: 80px;
+  background-image: url('imagenes/flechaaaaasss.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translateY(-50%) scaleX(-1);
+}
         .menu-btn:hover::before,
         .menu-btn:hover::after {
-            opacity: 0.4;
+            opacity: 1;
             transform: translateY(-50%) scale(1.2);
         }
         .menu-btn:hover {
