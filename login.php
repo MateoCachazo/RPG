@@ -6,13 +6,35 @@
     <title>Document</title>
 </head>
 <style>
-    /* From Uiverse.io by Yaya12085 */ 
+ body {
+    background: radial-gradient(ellipse at center, #213250ff 0%, #0c1324ff 100%);
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+        }
 .form-container {
   width: 320px;
   border-radius: 0.75rem;
   background-color: rgba(17, 24, 39, 1);
-  padding: 2rem;
+  text-align: left;
+  margin-left: 550px;
+  margin-top: 100px;
+  padding: 3rem;
   color: rgba(243, 244, 246, 1);
+  transition: transform 0,3s ease;
+  animation: agrandar 2s ease-in infinite;
+}
+
+
+@keyframes agrandar{
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 .title {
@@ -28,6 +50,7 @@
 
 .input-group {
   margin-top: 0.25rem;
+  margin-right: 0.3rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
