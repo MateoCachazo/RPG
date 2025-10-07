@@ -111,7 +111,7 @@
         <button class="menu-btn" onclick="window.location.href='start.php'">Iniciar partida</button>        
         <button class="menu-btn" onclick="window.location.href='achievements.php'">Estadisticas</button>
         <button class="menu-btn" onclick="window.location.href='login.php'">Login</button>
-        <button class="menu-btn" onclick="window.location.href='register.php'">Register</button>
+        <button class="menu-btn" onclick="window.location.href='register.php'">Registrarse</button>
         <button class="menu-btn" onclick="window.location.href='exit.php'">Salir del juego</button>
     </div>
 </body>
