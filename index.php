@@ -12,7 +12,7 @@
             user-select: none;
         }
         body {
-            background: radial-gradient(ellipse at center, #213250ff 0%, #0c1324ff 100%);
+            background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
             color: #fff;
             font-family: 'Cinzel', serif;
             text-align: center;
@@ -24,6 +24,7 @@
             text-align: left;
         }
         .menu-btn {
+            border: none;
             display: block;
             width: 320px;
             margin: 18px auto;
@@ -50,7 +51,7 @@
         .menu-btn::before {
   content: "";
   position: absolute;
-  left: -40px;
+  left: -30px;
   width: 80px;
   height: 80px;
   background-image: url('imagenes/aaaaaaaaflecha.png');
@@ -62,10 +63,10 @@
        .menu-btn::after {
   content: "";
   position: absolute;
-  right: -40px;
+  right: -30px;
   width: 80px;
   height: 80px;
-  background-image: url('imagenes/flechaaaaasss.png');
+  background-image: url('imagenes/aaaaaaaaflecha copia.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -77,9 +78,11 @@
             transform: translateY(-50%) scale(1.2);
         }
         .menu-btn:hover {
-            background: rgba(60,80,120,0.9);
-         
-        }      
+            color: rgba(192, 71, 91, 1);
+            text-shadow: #ba1e1eff 0 0 12px;
+            background: none;
+        }
+              
         .image-container {
             text-align: center;
             margin-top: 20px;

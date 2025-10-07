@@ -7,7 +7,7 @@
 </head>
 <style>
  body {
-    background: radial-gradient(ellipse at center, #213250ff 0%, #0c1324ff 100%);
+    background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
     color: #fff;
     font-family: 'Cinzel', serif;
     text-align: center;
@@ -104,6 +104,10 @@
   border: none;
   border-radius: 0.375rem;
   font-weight: 600;
+  cursor: pointer;
+}
+.sign:hover{
+  background-color: rgba(139, 92, 246, 1);
 }
 
 .social-message {
@@ -150,6 +154,7 @@
   font-size: 0.75rem;
   line-height: 1rem;
   color: rgba(156, 163, 175, 1);
+  cursor: pointer;
 }
 
 </style>
@@ -165,20 +170,20 @@
 		<div class="input-group">
 			<label for="password">Password</label>
 			<input type="password" name="password" id="password" placeholder="">
+      <br>
+      <br>
+      <br>
 			<div class="forgot">
 				<a rel="noopener noreferrer" href="#">Forgot Password ?</a>
 			</div>
 		</div>
 		<button class="sign">Sign in</button>
 	</form>
-	<div class="social-message">
-		<div class="line"></div>
-		<p class="message">Login with social accounts</p>
-		<div class="line"></div>
-	</div>
+  <br>
+  <br>
 	
 	<p class="signup">Don't have an account?
-		<a rel="noopener noreferrer" href="#" class="">Sign up</a>
+		<a rel="" href="Sign.php">Sign up</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
