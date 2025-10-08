@@ -33,7 +33,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.02);
+    transform: scale(1.01);
   }
 }
 
