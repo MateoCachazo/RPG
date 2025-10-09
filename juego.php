@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Juego</title>
+    <style>
+       canvas {
+        width: 80%;
+        height: 100%;
+      }
+    </style>
 </head>
 <body>
-    <canvas width = 100% height = 100% id = "juego"></canvas>
+    <canvas id = "juego"></canvas>
 </body>
 </html>
 
 <script>
     const canvas = document.getElementById("juego");
     const ctx = canvas.getContext("2d");
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0,0,100,100);
 
     let teclas = {};
 
-    let ubicacion = {x: 4, y: 4};
+    let jugador = {x: 2, y: 3, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], coalición: false, id: 1, aceleracion_x : 0.1, velocidadx: 0, velocidady : 0, velocidadx_max: 0.5};
 
-    let mapa = 
-    [
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,0,0},
-    ];
-    
+    let personajes = [jugador];
+    //let obstaculos = [];
+
     document.addEventListener("keydown", (e) =>
     {
         teclas[e.key.toLowerCase()] = true;
@@ -35,41 +37,69 @@
     document.addEventListener("keyup", (e) =>
     {
         teclas[e.key.toLowerCase()] = false;
+
+        jugador.velocidadx = 0;
     });
-
-
     function moverJugador ()
     {
-        if (teclas["w"])
+        if (teclas["w"] && jugador.y - 1 > 0)
         {
-            mapa[ubicacion.y][ubicacion.x] = 0;
-            mapa[ubicacion.y-1][ubicacion.x] = 1;
+            jugador.y -=1;
         }
-        if (teclas["s"])
+        if (teclas["s"] && jugador.y + 1 < canvas.height - 1)
         {
-            mapa[ubicacion.y][ubicacion.x] = 0;
-            mapa[ubicacion.y+1][ubicacion.x] = 1;
+            jugador.y +=1;
         }
-        if (teclas["a"])
+        if (teclas["a"] && jugador.x - 1 > 0)
         {
-            mapa[ubicacion.y][ubicacion.x] = 0;
-            mapa[ubicacion.y][ubicacion.x-1] = 1;
+            if (jugador.velocidadx < jugador.velocidadx_max)
+            {
+                jugador.velocidadx += 0.1;
+            }
+            jugador.x -=jugador.velocidadx;
         }
-        if (teclas["d"])
+        if (teclas["d"] && jugador.x + 1 < canvas.width - 1)
         {
-            mapa[ubicacion.y][ubicacion.x] = 0;
-            mapa[ubicacion.y][ubicacion.x+1] = 1;
+            if (jugador.velocidadx < jugador.velocidadx_max)
+            {
+                jugador.velocidadx += 0.1;
+            }
+            jugador.x +=jugador.velocidadx;
         }
     }
 
-    function dibujarMapa()
+    function dibujar()
     {
-        for (let i = 0; i < mapa.lenght; i++)
+        dibujar_personaje(personajes[0]);
+        /*personajes.foreach(personaje, i)
         {
-            for (let j = 0; j < mapa[0].lenght; j++)
+            dibujar_personaje(personaje);
+        }*/
+        /*obstaculos.foreach(obstaculo,i)
+        {
+            dibujar_obstaculo(obstáculo);
+        }*/
+    }
+
+    function dibujar_personaje(personaje)
+    {
+        ctx.fillStyle = "black";
+        ctx.fillRect(personaje.x * personaje.ancho,personaje.y * personaje.altura,personaje.ancho,personaje.altura);
+    }
+
+    function dibujar_obstaculo(obstaculo)
+    {
+        ctx.fillRect(obstaculo.x,obstaculo.y,obstaculo.ancho,obstaculo.altura);
+    }
+
+    function revisar_porcion(porcion)
+    {
+    let pixeles = ctx.getImageData(porcion.x, porcion.y, porcion.width, porcion.height).data;
+        pixeles.foreach(pixel,i)
+        {
+            if (pixel != porcion.base[i] && porcion.base[i] != -1)
             {
-                ctx.font = "40px Arial";
-                ctx.filltext(mapa[i][j], i*40, j*40);
+                personajes[porcion.id].colicion= true;
             }
         }
     }
@@ -78,9 +108,8 @@
     {
         ctx.clearRect (0,0,canvas.width, canvas.height);
         moverJugador();
-        dibujarMapa();
+        dibujar();
         requestAnimationFrame(loop);
     }
-
-    loop();
+    loop()
 </script>
