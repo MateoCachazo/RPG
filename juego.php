@@ -58,9 +58,7 @@
     ctx.fillRect(0,0,100,100);
 
     let teclas = {};
-
-    let jugador = {parado: true, x: 50, y: 50, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], colicion: false, id: 1, aceleracion_x : 0.1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 4};
-
+    let jugador = {parado: true, x: 50, y: 50, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], colicion: false, id: 1, aceleracion_x : 0.1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 6, saltando : false, salto : 0};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -78,11 +76,47 @@
         teclas[e.key.toLowerCase()] = false;
 
         jugador.velocidadx = 0;
-        jugador.velocidady = 0;
     });
     function moverJugador ()
     {
-        if (teclas["w"] && /*jugador.y + jugador.velocidady > 0 &&*/ revisar_porcion(jugador))
+        /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
+        
+        if (jugador.velocidady < jugador.velocidady_max && jugador.saltando == false)
+        {
+            jugador.velocidady += 1;
+        }
+        
+        if (teclas["w"] && revisar_porcion(jugador) == false) //este if hay que cambiarlo para que solo revise colisiones de abajo
+        {
+            jugador.saltando = true;
+            jugador.salto = 8;
+        }
+
+        if (jugador.saltando)
+        {
+            if (jugador.salto > 2)
+            {
+                jugador.velocidady += 0.5;
+                jugador.y -= jugador.velocidady;
+            }
+            jugador.salto -= 1;
+            if (revisar_porcion(jugador) == false)
+            {
+                jugador.salto = 0;
+            }
+            if (jugador.salto <= 0)
+            {
+                jugador.saltando = false;
+                jugador.velocidady = 0;
+            }
+        }
+
+        if (revisar_porcion(jugador) && jugador.saltando == false)
+        {
+           jugador.y += jugador.velocidady;
+        }
+
+        /*if (teclas["w"] && jugador.y + jugador.velocidady > 0 && revisar_porcion(jugador))
         {
             if (jugador.velocidady < jugador.velocidady_max)
             {
@@ -101,20 +135,20 @@
         else
         {
             jugador.velocidady = 0;
-        }
-        if (teclas["a"] && revisar_porcion(jugador))
+        }*/
+        if (teclas["a"] /*&& revisar_porcion(jugador)*/)
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
-                jugador.velocidadx += 1;
+                jugador.velocidadx += 2;
             }
             jugador.x -=jugador.velocidadx;
         }
-        else if (teclas["d"] && revisar_porcion(jugador))
+        else if (teclas["d"] /*&& revisar_porcion(jugador)*/)
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
-                jugador.velocidadx += 1;
+                jugador.velocidadx += 2;
             }
             jugador.x +=jugador.velocidadx;
         }
