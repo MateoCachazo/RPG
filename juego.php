@@ -1,33 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego</title>
-    <style>
-       canvas {
-        width: 80%;
-        height: 100%;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dos Canvas Superpuestos</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #ddd;
+    }
+
+    .contenedor {
+      position: relative;
+      width: 1000px;
+      height: 1000px;
+      border: 2px solid black;
+      background: white;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1000px;
+      height: 1000px;
+    }
+
+    /* El orden de superposición */
+    #no_se_ve {
+      z-index: 0;
+    }
+
+    #juego {
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-    <canvas id = "juego"></canvas>
+  <div class="contenedor">
+    <canvas id="no_se_ve"></canvas>
+    <canvas id="juego"></canvas>
+  </div>
 </body>
 </html>
 
+
 <script>
     const canvas = document.getElementById("juego");
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true })
+    const no_se_ve = document.getElementById("no_se_ve");
+    const hitbox = no_se_ve.getContext("2d", { willReadFrequently: true })
     ctx.fillStyle = 'red';
     ctx.fillRect(0,0,100,100);
 
     let teclas = {};
 
-    let jugador = {x: 2, y: 3, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], coalición: false, id: 1, aceleracion_x : 0.1, velocidadx: 0, velocidady : 0, velocidadx_max: 0.5};
+    let jugador = {parado: true, x: 5, y: 3, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], colicion: false, id: 1, aceleracion_x : 0.1, velocidadx: 0,velocidady : 0, velocidadx_max: 0.5, velocidady_max: 0.5};
 
     let personajes = [jugador];
-    //let obstaculos = [];
+    let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
+    let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
+    let pared2 = {ancho:20, y:0, altura: canvas.height, x: canvas.width - 20};
+    let techo = {x:0,y:0, ancho:canvas.width, altura:20};
+    let obstaculos = [piso, techo, pared1, pared2];
 
     document.addEventListener("keydown", (e) =>
     {
@@ -39,18 +78,31 @@
         teclas[e.key.toLowerCase()] = false;
 
         jugador.velocidadx = 0;
+        jugador.velocidady = 0;
     });
     function moverJugador ()
     {
-        if (teclas["w"] && jugador.y - 1 > 0)
+        if (teclas["w"] && jugador.y + jugador.velocidady > 0 && revisar_porcion(jugador))
         {
-            jugador.y -=1;
+            if (jugador.velocidady < jugador.velocidady_max)
+            {
+                jugador.velocidady += 0.1;
+            }
+            jugador.y -=jugador.velocidady;
         }
-        if (teclas["s"] && jugador.y + 1 < canvas.height - 1)
+        else if (teclas["s"] && revisar_porcion(jugador))
         {
-            jugador.y +=1;
+            if (jugador.velocidady < jugador.velocidady_max)
+            {
+                jugador.velocidady += 0.1;
+            }
+            jugador.y +=jugador.velocidady;
         }
-        if (teclas["a"] && jugador.x - 1 > 0)
+        else
+        {
+            jugador.velocidady = 0;
+        }
+        if (teclas["a"] && revisar_porcion(jugador))
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
@@ -58,7 +110,7 @@
             }
             jugador.x -=jugador.velocidadx;
         }
-        if (teclas["d"] && jugador.x + 1 < canvas.width - 1)
+        else if (teclas["d"] && revisar_porcion(jugador))
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
@@ -66,49 +118,74 @@
             }
             jugador.x +=jugador.velocidadx;
         }
-    }
-
-    function dibujar()
-    {
-        dibujar_personaje(personajes[0]);
-        /*personajes.foreach(personaje, i)
+        else
         {
-            dibujar_personaje(personaje);
-        }*/
-        /*obstaculos.foreach(obstaculo,i)
+            jugador.velocidadx = 0;
+        }
+    }
+    function dibujar(contexto)
+    {
+       
+        for (let i = 0; i < personajes.length; i++)
         {
-            dibujar_obstaculo(obstáculo);
-        }*/
+            contexto.fillStyle = "#FF0000";
+            dibujar_personaje(personajes[i],contexto);
+        }  
+        for (let i = 0; i < obstaculos.length; i++)
+        {
+            contexto.fillStyle = "black";
+            dibujar_obstaculo(obstaculos[i],contexto);
+        }
     }
 
-    function dibujar_personaje(personaje)
+    function dibujar_personaje(a,contexto)
     {
-        ctx.fillStyle = "black";
-        ctx.fillRect(personaje.x * personaje.ancho,personaje.y * personaje.altura,personaje.ancho,personaje.altura);
+        contexto.fillRect(a.x * a.ancho,a.y * a.altura,a.ancho,a.altura);
     }
 
-    function dibujar_obstaculo(obstaculo)
+    function dibujar_obstaculo(obstaculo,contexto)
     {
-        ctx.fillRect(obstaculo.x,obstaculo.y,obstaculo.ancho,obstaculo.altura);
+        contexto.fillRect(obstaculo.x,obstaculo.y,obstaculo.ancho,obstaculo.altura);
     }
 
     function revisar_porcion(porcion)
     {
-    let pixeles = ctx.getImageData(porcion.x, porcion.y, porcion.width, porcion.height).data;
-        pixeles.foreach(pixel,i)
+        hitbox.clearRect (0,0,canvas.width, canvas.height);
+        porcion.x += porcion.velocidadx;
+        porcion.y += porcion.velocidady;
+        hitbox.fillStyle = "#FF0000";
+        dibujar_personaje(porcion, hitbox);
+        for (let i = 0; i < personajes.length; i++)
         {
-            if (pixel != porcion.base[i] && porcion.base[i] != -1)
+            if(personajes[i].id != porcion.id)
             {
-                personajes[porcion.id].colicion= true;
+                dibujar_personaje(personajes[i], hitbox);
+            }
+        }  
+       
+        for (let i = 0; i < obstaculos.length; i++)
+        {
+            hitbox.fillStyle = "black";
+            dibujar_obstaculo(obstaculos[i], hitbox);
+        }
+        let pixeles = hitbox.getImageData(porcion.x * porcion.ancho, porcion.y * porcion.altura, porcion.ancho, porcion.altura).data;
+        for(let i = 0; i < pixeles.length;i+=4)
+        {
+            console.log(pixeles[i] + " " + pixeles[i+1] + " " + pixeles[i+2]);
+            if (pixeles[i] != 255 || pixeles[i+1] != 0 || pixeles[i+2] != 0/* && pixeles[i+3] == 1*/)
+            {
+                return false;
             }
         }
+        return true;
     }
 
     function loop()
     {
+        hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
+        dibujar(ctx);
         moverJugador();
-        dibujar();
         requestAnimationFrame(loop);
     }
     loop()
