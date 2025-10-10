@@ -59,7 +59,7 @@
 
     let teclas = {};
 
-    let jugador = {parado: true, x: 5, y: 3, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], colicion: false, id: 1, aceleracion_x : 0.1, velocidadx: 0,velocidady : 0, velocidadx_max: 0.5, velocidady_max: 0.5};
+    let jugador = {parado: true, x: 50, y: 50, altura:10, ancho:10, imagen: "imagen", base: [[0,0,0,0]], colicion: false, id: 1, aceleracion_x : 0.1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 4};
 
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
@@ -82,11 +82,11 @@
     });
     function moverJugador ()
     {
-        if (teclas["w"] && jugador.y + jugador.velocidady > 0 && revisar_porcion(jugador))
+        if (teclas["w"] && /*jugador.y + jugador.velocidady > 0 &&*/ revisar_porcion(jugador))
         {
             if (jugador.velocidady < jugador.velocidady_max)
             {
-                jugador.velocidady += 0.1;
+                jugador.velocidady += 1;
             }
             jugador.y -=jugador.velocidady;
         }
@@ -94,7 +94,7 @@
         {
             if (jugador.velocidady < jugador.velocidady_max)
             {
-                jugador.velocidady += 0.1;
+                jugador.velocidady += 1;
             }
             jugador.y +=jugador.velocidady;
         }
@@ -106,7 +106,7 @@
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
-                jugador.velocidadx += 0.1;
+                jugador.velocidadx += 1;
             }
             jugador.x -=jugador.velocidadx;
         }
@@ -114,7 +114,7 @@
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
-                jugador.velocidadx += 0.1;
+                jugador.velocidadx += 1;
             }
             jugador.x +=jugador.velocidadx;
         }
@@ -140,7 +140,7 @@
 
     function dibujar_personaje(a,contexto)
     {
-        contexto.fillRect(a.x * a.ancho,a.y * a.altura,a.ancho,a.altura);
+        contexto.fillRect(a.x,a.y,a.ancho,a.altura);
     }
 
     function dibujar_obstaculo(obstaculo,contexto)
@@ -151,8 +151,8 @@
     function revisar_porcion(porcion)
     {
         hitbox.clearRect (0,0,canvas.width, canvas.height);
-        porcion.x += porcion.velocidadx;
-        porcion.y += porcion.velocidady;
+        /*porcion.x += porcion.velocidadx;
+        porcion.y += porcion.velocidady;*/
         hitbox.fillStyle = "#FF0000";
         dibujar_personaje(porcion, hitbox);
         for (let i = 0; i < personajes.length; i++)
@@ -168,10 +168,10 @@
             hitbox.fillStyle = "black";
             dibujar_obstaculo(obstaculos[i], hitbox);
         }
-        let pixeles = hitbox.getImageData(porcion.x * porcion.ancho, porcion.y * porcion.altura, porcion.ancho, porcion.altura).data;
+        let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
         for(let i = 0; i < pixeles.length;i+=4)
         {
-            console.log(pixeles[i] + " " + pixeles[i+1] + " " + pixeles[i+2]);
+            //console.log(pixeles[i] + " " + pixeles[i+1] + " " + pixeles[i+2]);
             if (pixeles[i] != 255 || pixeles[i+1] != 0 || pixeles[i+2] != 0/* && pixeles[i+3] == 1*/)
             {
                 return false;
