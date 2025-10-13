@@ -21,6 +21,7 @@
         }
         .menu {
             margin-top: 60px;
+            margin-left: 50px;
             text-align: left;
         }
         .menu-btn {
@@ -37,6 +38,9 @@
             position: relative;
             background: rgba(255, 145, 145, 0);
             color: #fff;
+        }
+        .menu-btn:hover{
+            transform: scale(1.15);
         }
         .menu-btn::before,
         .menu-btn::after {
@@ -109,10 +113,10 @@
     </div>
     
     <div class="menu">
-        <button class="menu-btn" onclick="window.location.href='start.php'">Iniciar partida</button>        
-        <button class="menu-btn" onclick="window.location.href='achievements.php'">Estadisticas</button>
+        <button class="menu-btn" onclick="window.location.href='selec.php'">Iniciar partida</button>        
+        <button class="menu-btn" onclick="window.location.href='estadisticas.php'">Estadisticas</button>
         <button class="menu-btn" onclick="window.location.href='login.php'">Login</button>
-        <button class="menu-btn" onclick="window.location.href='register.php'">Registrarse</button>
+        <button class="menu-btn" onclick="window.location.href='registro.php'">Registrarse</button>
         <button class="menu-btn" onclick="window.location.href='exit.php'">Salir del juego</button>
     </div>
 </body>
