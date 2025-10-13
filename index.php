@@ -86,7 +86,7 @@
         .image-container {
             text-align: center;
             margin-top: 20px;
-            width: 1520px;
+            width: 1570px;
             height:170PX;
             transition: transform 0,3s ease;
             animation: agrandar 2s ease-in infinite;
@@ -100,6 +100,7 @@
                 transform: scale(1.1);
             }
         }
+        
     </style>
 </head>
 <body>

@@ -150,29 +150,34 @@
 <body>
     
 <div class="form-container">
-	<p class="title">Login</p>
-	<form class="form">
-		<div class="input-group">
-			<label for="username">Username</label>
-			<input type="text" name="username" id="username" placeholder="">
-		</div>
-		<div class="input-group">
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password" placeholder="">
-      <br>
-      <br>
-      <br>
-			<div class="forgot">
-				<a rel="noopener noreferrer" href="#">Forgot Password ?</a>
-			</div>
-		</div>
+	<p class="title">Register</p>
+    <form class="form">
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="input-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+        </div>
+        
+			
+		
 		<button class="sign">Sign in</button>
 	</form>
   <br>
   <br>
 	
-	<p class="signup">Don't have an account?
-		<a rel="" href="Sign.php">Sign up</a>
+	<p class="signup">Already have an account?
+		<a rel="" href="login.php">Log-in</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
