@@ -66,7 +66,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
 
     const rutaBase = '/sprites/';          //Creo una constante con una parte de las rutas de las imagees
     const clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
-    const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto"/*, ataque: " Ataque"*/};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
+    const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
     const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
