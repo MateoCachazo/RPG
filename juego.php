@@ -65,8 +65,8 @@ $clase = $_POST["clase"] ?? "Guerrero";
 
 
     const rutaBase = 'sprites/';          //Creo una constante con una parte de las rutas de las imagees
-    const clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
-    const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
+    const clases = [/*'Arquero', */'Golem'/*, 'Guerrero', 'Mago'*/, 'Ninja', 'Vampiro'];    
+    const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee", especial: " Ataque-Especial"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
     const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
@@ -90,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Mago, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Golem, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -106,6 +106,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.contador_limite = 6;
             jugador.animacion_continua = true;
+            jugador.ximagen = 0;
             if (teclas["a"] || teclas["d"])
             {
                 jugador.estado = "caminando";
@@ -129,9 +130,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.contador = 0;
                 jugador.animacion_continua = false;
                 jugador.estado = "daño";
-                jugador.yimagen = 0;
                 jugador.ximagen = 0;
-                //teclas["o"] = false;
             }
             if(teclas["p"])
             {
@@ -139,9 +138,15 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.contador = 0;
                 jugador.animacion_continua = false;
                 jugador.estado = "ataque";
-                jugador.yimagen = 0;
                 jugador.ximagen = 0;
-                //teclas["o"] = false;
+            }
+            if(teclas["q"])
+            {
+                jugador.contador_limite = 5;
+                jugador.contador = 0;
+                jugador.animacion_continua = false;
+                jugador.estado = "especial";
+                jugador.ximagen = 0;
             }
         }
         
@@ -178,8 +183,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
             aux += 2;
             jugador.estado = "salto";
             jugador.contador = 0;
-            jugador.ximagen = 0;
-            jugador.yimagen = 1;
+            jugador.ximagen = 1;
             //console.log(jugador.estado);
         }
         
@@ -190,8 +194,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.estado = "salto";
             jugador.contador = 0;
-            jugador.ximagen = 0;
-            jugador.yimagen = 1;
+            jugador.ximagen = 1;
             jugador.velocidady -= 14;
         }
         
@@ -317,57 +320,20 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
     function cambiar(a, b)
     {
-        /*  ESTE ES EL QUE HAY QUE USAR UNA VEZ SE CAMBIE EL FORMATO DE LOS SPRITES
-        
         if(a.contador >= a.contador_limite)
         {
             a.contador = 0;
             a.ximagen+=b;
-            if(a.ximagen >= naturalHeight && a.animacion_continua)
-            {
-                a.ximagen = 0;
-            }
-            else if(a.ximagen >= naturalHeight && a.animacion_continua == false)
-            {
-                a.ximagen = 0;
-                a.estado = "quieto";
-                a.animacion_continua = true;
-                a.contador_limite = 6;
-            }
-            //console.log(a.ximagen + "  " + a.yimagen);
-        }
-        else
-        {
-            a.contador++;
-        }*/
-
-
-        if(a.contador >= a.contador_limite)
-        {
-            a.contador = 0;
-            a.ximagen+=b;
-            if (a.estado == "salto")
+            if(a.estado == "salto")
             {
                 a.ximagen = 1;
             }
-            else if(a.ximagen == 2)
-            {
-                a.yimagen+=b;
-                a.ximagen = 0;
-            }
-            else if(a.ximagen < 0 || a.yimagen <0)
+            else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua)
             {
                 a.ximagen = 0;
-                a.yimagen = 2;
             }
-            else if(a.yimagen ==2 && a.ximagen == 1 && a.animacion_continua)
+            else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
             {
-                a.yimagen = 0;
-                a.ximagen = 0;
-            }
-            else if(a.yimagen ==2 && a.ximagen == 1 && a.animacion_continua == false)
-            {
-                a.yimagen = 0;
                 a.ximagen = 0;
                 a.estado = "quieto";
                 a.animacion_continua = true;
