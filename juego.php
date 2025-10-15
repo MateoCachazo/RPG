@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RPG</title>
   <style>
-    body {
+    body 
+    {
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background: #ddd;
+      image-rendering: pixelated
     }
 
     .contenedor {
@@ -62,7 +64,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
 
 
 
-    const rutaBase = '/Sprays de Clases/';          //Creo una constante con una parte de las rutas de las imagees
+    const rutaBase = '/sprites/';          //Creo una constante con una parte de las rutas de las imagees
     const clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
     const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto"/*, ataque: " Ataque"*/};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
@@ -88,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Vampiro, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Guerrero, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
