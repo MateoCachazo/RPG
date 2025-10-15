@@ -90,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Golem, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -107,7 +107,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.contador_limite = 6;
             jugador.animacion_continua = true;
             jugador.ximagen = 0;
-            if (jugador.estado != "ataque" && jugador.estado != "especial")
+            if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño")
         {
             if (teclas["a"] || teclas["d"])
             {
@@ -172,12 +172,21 @@ $clase = $_POST["clase"] ?? "Guerrero";
     {
         /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
         
-        if (revisar_porcion(jugador).abajo == false && jugador.estado == "salto")
+        if (revisar_porcion(jugador).abajo == false)
         {
+            let aux2 = jugador.velocidady;
             jugador.velocidady = 0;
-            jugador.estado = "quieto";
+            if(revisar_porcion(jugador).abajo)
+            {
+            aux2 = 0;
+            if (jugador.estado == "salto")
+            {
+                jugador.estado = "quieto";
+            }
             jugador.y +=1;
             cambiar_estado();
+            }
+            jugador.velocidady = aux2;
         }
         
         let aux = jugador.velocidady;
@@ -185,16 +194,20 @@ $clase = $_POST["clase"] ?? "Guerrero";
         if (jugador.velocidady < jugador.velocidady_max  && revisar_porcion(jugador).abajo == true)
         {
             aux += 2;
-            jugador.estado = "salto";
-            jugador.contador = 0;
-            jugador.ximagen = 1;
+            if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño")
+            {
+                jugador.estado = "salto";
+                jugador.contador = 0;
+                jugador.ximagen = 1;
+            }
+
             //console.log(jugador.estado);
         }
         
         jugador.velocidady = aux;
         
         
-        if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial") //este if hay que cambiarlo para que solo revise colisiones de abajo
+        if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") //este if hay que cambiarlo para que solo revise colisiones de abajo
         {
             jugador.estado = "salto";
             jugador.contador = 0;
@@ -259,14 +272,14 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.velocidady = 0;
         }*/
-        if (teclas["a"] && revisar_porcion(jugador).izquierda && jugador.estado != "ataque" && jugador.estado != "especial")
+        if (teclas["a"] && revisar_porcion(jugador).izquierda && ((revisar_porcion(jugador).abajo==false && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") || revisar_porcion(jugador).abajo))
         {
             if (jugador.velocidadx > (jugador.velocidadx_max * -1))
             {
                 jugador.velocidadx -= 2;
             }
         }
-        else if (teclas["d"] && revisar_porcion(jugador).derecha && jugador.estado != "ataque" && jugador.estado != "especial")
+        else if (teclas["d"] && revisar_porcion(jugador).derecha && ((revisar_porcion(jugador).abajo==false && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") || revisar_porcion(jugador).abajo))
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
