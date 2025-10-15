@@ -107,6 +107,8 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.contador_limite = 6;
             jugador.animacion_continua = true;
             jugador.ximagen = 0;
+            if (jugador.estado != "ataque" && jugador.estado != "especial")
+        {
             if (teclas["a"] || teclas["d"])
             {
                 jugador.estado = "caminando";
@@ -149,6 +151,8 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.ximagen = 0;
             }
         }
+            }
+           
         
         
     }
@@ -190,7 +194,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         jugador.velocidady = aux;
         
         
-        if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto") //este if hay que cambiarlo para que solo revise colisiones de abajo
+        if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial") //este if hay que cambiarlo para que solo revise colisiones de abajo
         {
             jugador.estado = "salto";
             jugador.contador = 0;
@@ -255,14 +259,14 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.velocidady = 0;
         }*/
-        if (teclas["a"] && revisar_porcion(jugador).izquierda)
+        if (teclas["a"] && revisar_porcion(jugador).izquierda && jugador.estado != "ataque" && jugador.estado != "especial")
         {
             if (jugador.velocidadx > (jugador.velocidadx_max * -1))
             {
                 jugador.velocidadx -= 2;
             }
         }
-        else if (teclas["d"] && revisar_porcion(jugador).derecha)
+        else if (teclas["d"] && revisar_porcion(jugador).derecha && jugador.estado != "ataque" && jugador.estado != "especial")
         {
             if (jugador.velocidadx < jugador.velocidadx_max)
             {
