@@ -64,7 +64,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
 
 
 
-    const rutaBase = '/sprites/';          //Creo una constante con una parte de las rutas de las imagees
+    const rutaBase = 'sprites/';          //Creo una constante con una parte de las rutas de las imagees
     const clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
     const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
@@ -90,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Guerrero, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Mago, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -138,7 +138,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.contador_limite = 5;
                 jugador.contador = 0;
                 jugador.animacion_continua = false;
-                jugador.estado = "daño";
+                jugador.estado = "ataque";
                 jugador.yimagen = 0;
                 jugador.ximagen = 0;
                 //teclas["o"] = false;
@@ -194,6 +194,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.yimagen = 1;
             jugador.velocidady -= 14;
         }
+        
 
         /*if (jugador.saltando == true)
         {
