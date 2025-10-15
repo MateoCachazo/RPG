@@ -13,7 +13,7 @@
       align-items: center;
       height: 100vh;
       background: #ddd;
-      image-rendering: pixelated
+      image-rendering: pixelated;
     }
 
     .contenedor {
@@ -175,7 +175,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         jugador.velocidady = 0;
         if (jugador.velocidady < jugador.velocidady_max  && revisar_porcion(jugador).abajo == true)
         {
-            aux += 1;
+            aux += 2;
             jugador.estado = "salto";
             jugador.contador = 0;
             jugador.ximagen = 0;
@@ -192,7 +192,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.contador = 0;
             jugador.ximagen = 0;
             jugador.yimagen = 1;
-            jugador.velocidady -= 10;
+            jugador.velocidady -= 14;
         }
 
         /*if (jugador.saltando == true)
@@ -450,7 +450,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 }
             }
         }
-        console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
+        //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
         
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         return colisiones;
