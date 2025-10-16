@@ -28,8 +28,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 1000px;
-      height: 1000px;
+      width: 100%;
+      height: 100%;
     }
 
     /* El orden de superposición */
@@ -90,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Mago, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Mago, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -141,6 +141,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.animacion_continua = false;
                 jugador.estado = "ataque";
                 jugador.ximagen = 0;
+                jugador.contador_ataque = 4;
             }
             if(teclas["q"])
             {
@@ -149,6 +150,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.animacion_continua = false;
                 jugador.estado = "especial";
                 jugador.ximagen = 0;
+                jugador.contador_ataque = 4;
             }
         }
             }
@@ -171,7 +173,15 @@ $clase = $_POST["clase"] ?? "Guerrero";
     function moverJugador ()
     {
         /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
-        
+            if (jugador.contador_ataque > 0)
+            {
+                console.log ("atacando");
+                hitbox.fillStyle = "rgb(0,255,0)";
+                hitbox.fillRect(jugador.x + 20, jugador.y - 20, 50, 50);
+                jugador.contador_ataque -= 1;
+            }
+
+
         if (revisar_porcion(jugador).abajo == false)
         {
             let aux2 = jugador.velocidady;
