@@ -90,7 +90,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     }
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Mago, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0};
     let personajes = [jugador];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
@@ -104,7 +104,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
     {
         if (jugador.animacion_continua == true)
         {
-            jugador.contador_limite = 6;
+            jugador.contador_limite = 7;
             jugador.animacion_continua = true;
             jugador.ximagen = 0;
             if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño")
@@ -173,11 +173,18 @@ $clase = $_POST["clase"] ?? "Guerrero";
     function moverJugador ()
     {
         /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
-            if (jugador.contador_ataque > 0)
+            if (jugador.contador_ataque > 0 && jugador.estado == "ataque")
             {
-                console.log ("atacando");
                 hitbox.fillStyle = "rgb(0,255,0)";
-                hitbox.fillRect(jugador.x + 20, jugador.y - 20, 50, 50);
+                if (jugador.orientado == 1)
+                {
+                    hitbox.fillRect(jugador.x + 25, jugador.y + 10, 35, 35);
+                }
+                else if (jugador.orientado == -1)
+                {
+                    hitbox.fillRect(jugador.x - 17, jugador.y + 10, 35, 35);
+                }
+                
                 jugador.contador_ataque -= 1;
             }
 
@@ -364,7 +371,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 a.ximagen = 0;
                 a.estado = "quieto";
                 a.animacion_continua = true;
-                a.contador_limite = 6;
+                a.contador_limite = 7;
             }
             //console.log(a.ximagen + "  " + a.yimagen);
         }
