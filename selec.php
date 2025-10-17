@@ -14,6 +14,7 @@ body {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
+  image-rendering: pixelated;
 }
 
 .carrusel-container {
