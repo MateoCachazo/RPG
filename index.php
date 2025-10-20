@@ -231,19 +231,15 @@ session_start();
 </div>
 
 <?php
-if (isset($_SESSION["username"]))
+if (isset($_SESSION["username"])) 
 {
     echo "<div id='popup-perfil' class='popup-fondo'>
   <div class='popup-contenido'>
     <span class='cerrar-popup'>&times;</span>
     <img src='imagen/perfil2.png' alt='Foto de perfil' class='foto-perfil'>
-    <h2>Nombre del usuario</h2>
+    <h2>user</h2>
     <p>@nombredeusuario</p>
     <p><strong>Descripción:</strong> Descripción breve del usuario.</p>
-    <div class='perfil-social'>
-      <a href='#'>Seguidores: 1.5k</a>
-      <a href='#'>Siguiendo: 300</a>
-    </div>
   </div>
 </div>";
 }
