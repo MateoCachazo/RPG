@@ -215,8 +215,6 @@
     </div>
 
 
-
-
    <div class= "imagen-perfil" id="abrir-perfil">
    <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img"> 
     
@@ -237,21 +235,11 @@
 </div>
     
 
-
-
-
-
-
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='selec.php'">Iniciar partida</button>   
         <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
         <button class="menu-btn" onclick="window.location.href='exit.php'">Salir del juego</button>
     </div>
-
-
-
-
-
 
 
     <script> 
