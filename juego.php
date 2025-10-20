@@ -95,13 +95,14 @@ $clase = $_POST["clase"] ?? "Guerrero";
 
     let teclas = {};
     let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0};
-    let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 51, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
-    let personajes = [jugador, enemigo];
+    //let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 51, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
+    let personajes = [jugador/*, enemigo*/];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
     let pared2 = {ancho:20, y:0, altura: canvas.height, x: canvas.width - 20};
     let techo = {x:0,y:0, ancho:canvas.width, altura:20};
     let obstaculos = [piso, techo, pared1, pared2];
+    let camaray_aux = jugador.y;
 
     hitbox.fillStyle = "black"; 
 
@@ -112,11 +113,12 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.contador_limite = 7;
             jugador.animacion_continua = true;
             jugador.ximagen = 0;
-            if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño")
+            if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño" && jugador.estado != "salto")
         {
             if (teclas["a"] || teclas["d"])
             {
                 jugador.estado = "caminando";
+                jugador.contador_limite = 5;
                 
                 if(teclas["a"])
                 {
@@ -166,7 +168,10 @@ $clase = $_POST["clase"] ?? "Guerrero";
     document.addEventListener("keydown", (e) =>
     {
         teclas[e.key.toLowerCase()] = true;
-        cambiar_estado();
+        if (e.repeat == false)
+        {
+            cambiar_estado();
+        }
     });
 
     document.addEventListener("keyup", (e) =>
@@ -194,21 +199,21 @@ $clase = $_POST["clase"] ?? "Guerrero";
             }
 
 
-        if (revisar_porcion(jugador).abajo == false)
+        if (revisar_porcion(jugador).abajo == false && jugador.estado == "salto")
         {
-            let aux2 = jugador.velocidady;
-            jugador.velocidady = 0;
-            if(revisar_porcion(jugador).abajo)
+            for (let i = jugador.velocidady; i >= -1; i--)
             {
-            aux2 = 0;
-            if (jugador.estado == "salto")
-            {
-                jugador.estado = "quieto";
+                jugador.velocidady = i + 1;
+                if (revisar_porcion(jugador).abajo)
+                {
+                    jugador.velocidady = 0;
+                    break;
+                }
             }
+            jugador.estado = "quieto";
             jugador.y +=1;
+            jugador.animacion_continua = true;
             cambiar_estado();
-            }
-            jugador.velocidady = aux2;
         }
         
         let aux = jugador.velocidady;
@@ -236,31 +241,6 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.ximagen = 1;
             jugador.velocidady -= 14;
         }
-        
-
-        /*if (jugador.saltando == true)
-        {
-            jugador.salto -= 1;
-            if (jugador.salto > 1)
-            {
-                
-                jugador.y += jugador.velocidady; 
-            }
-            else if (jugador.salto < 2 && jugador.salto > 0)
-            {
-                jugador.velocidady = 0;
-            }
-            
-            if (revisar_porcion(jugador).arriba == false || revisar_porcion(jugador).abajo == false)
-            {
-                jugador.salto = 0;
-            }
-            if (jugador.salto <= 0)
-            {
-                jugador.saltando = false;
-                jugador.velocidady = 0;
-            }
-        }*/
 
         if (revisar_porcion(jugador).abajo)
         {
@@ -274,26 +254,6 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.x += jugador.velocidadx;
         }
-        /*if (teclas["w"] && jugador.y + jugador.velocidady > 0 && revisar_porcion(jugador))
-        {
-            if (jugador.velocidady < jugador.velocidady_max)
-            {
-                jugador.velocidady += 1;
-            }
-            jugador.y -=jugador.velocidady;
-        }
-        else if (teclas["s"] && revisar_porcion(jugador))
-        {
-            if (jugador.velocidady < jugador.velocidady_max)
-            {
-                jugador.velocidady += 1;
-            }
-            jugador.y +=jugador.velocidady;
-        }
-        else
-        {
-            jugador.velocidady = 0;
-        }*/
         if (teclas["a"] && revisar_porcion(jugador).izquierda && ((revisar_porcion(jugador).abajo==false && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") || revisar_porcion(jugador).abajo))
         {
             if (jugador.velocidadx > (jugador.velocidadx_max * -1))
@@ -442,6 +402,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 else if(porcion.base[i+2] == 0 && porcion.base[i+1] == 0 && porcion.base[i] == 255 )
                 {
                     colisiones.abajo = false;
+
                 }
                 if (y < porcion.altura - 3)
                 {
@@ -458,7 +419,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         }
         //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
         
-        //hitbox.clearRect (0,0,canvas.width, canvas.height);
+        hitbox.clearRect (0,0,canvas.width, canvas.height);
         return colisiones;
     }
 
@@ -556,8 +517,8 @@ $clase = $_POST["clase"] ?? "Guerrero";
     function loop()
     {
         //console.log(jugador.estado);
-        musica.play();
-        hitbox.clearRect (0,0,canvas.width, canvas.height);
+       // musica.play();
+        //hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         dibujar(ctx);
         //console.log(jugador.y);
@@ -567,11 +528,21 @@ $clase = $_POST["clase"] ?? "Guerrero";
             mover_enemigos(personajes[i]);
         } 
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
-        hitbox.drawImage(canvas, jugador.x - 200, jugador.y - 200, jugador.ancho + 300, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+        if (jugador.y - camaray_aux >= 100 || jugador.y - camaray_aux <= -100)
+        {
+            camaray_aux += jugador.velocidady;
+        }
+        else if (revisar_porcion(jugador).abajo == false && (jugador.y - camaray_aux >= 30 || jugador.y - camaray_aux <= -30))
+        {
+            camaray_aux += 2;
+        }
+        hitbox.drawImage(canvas, jugador.x - 200, camaray_aux - 200, jugador.ancho + 300, jugador.altura + 300, 0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
         hitbox.clearRect(0,0,canvas.width, canvas.height);
+        //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
         requestAnimationFrame(loop);
+        
     }
     loop()
 </script>
