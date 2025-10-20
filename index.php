@@ -1,11 +1,3 @@
-<?php
-
-session_start();
-
-//$_SESSION["username"] = "cachazo";
-
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -227,44 +219,22 @@ session_start();
    <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img"> 
     
 </div>
-<?php
-if (isset($_SESSION["username"]))
-{
-    echo "<div id='popup-perfil' class='popup-fondo'>
-  <div class='popup-contenido'>
-    <span class='cerrar-popup'>&times;</span>
-    <img src='imagen/perfil2.png' alt='Foto de perfil' class='foto-perfil'>
+
+<div id="popup-perfil" class="popup-fondo">
+  <div class="popup-contenido">
+    <span class="cerrar-popup">&times;</span>
+    <img src="imagen/perfil2.png" alt="Foto de perfil" class="foto-perfil">
     <h2>Nombre del usuario</h2>
     <p>@nombredeusuario</p>
     <p><strong>Descripción:</strong> Descripción breve del usuario.</p>
-    <div class='perfil-social'>
-      <a href='#'>Seguidores: 1.5k</a>
-      <a href='#'>Siguiendo: 300</a>
+    <div class="perfil-social">
+      <a href="#">Seguidores: 1.5k</a>
+      <a href="#">Siguiendo: 300</a>
     </div>
   </div>
-</div>";
-}
-else
-{
-    echo "<div id='popup-perfil' class='popup-fondo'>
-  <div class='popup-contenido'>
-    <span class='cerrar-popup'>&times;</span>
-   <p> <h2><a href= 'login.php'>Inicia Sesión </a></h2> </p>
-   <p> <h2><a href= 'registro.php'>Registrate </a></h2> </p>
-  </div>
-</div>";
-}
-
+</div>
     
 
-<<<<<<< HEAD
-=======
-
-?>
-
-
-
->>>>>>> e894df4dc2aac16d79ec10970d17211b65122cbe
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='selec.php'">Iniciar partida</button>   
         <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
