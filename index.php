@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+
+//$_SESSION["username"] = "cachazo";
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -215,32 +223,48 @@
     </div>
 
 
+
+
    <div class= "imagen-perfil" id="abrir-perfil">
    <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img"> 
     
 </div>
 
-<div id="popup-perfil" class="popup-fondo">
-  <div class="popup-contenido">
-    <span class="cerrar-popup">&times;</span>
-    <img src="imagen/perfil2.png" alt="Foto de perfil" class="foto-perfil">
+<?php
+if (isset($_SESSION["username"]))
+{
+    echo "<div id='popup-perfil' class='popup-fondo'>
+  <div class='popup-contenido'>
+    <span class='cerrar-popup'>&times;</span>
+    <img src='imagen/perfil2.png' alt='Foto de perfil' class='foto-perfil'>
     <h2>Nombre del usuario</h2>
     <p>@nombredeusuario</p>
     <p><strong>Descripción:</strong> Descripción breve del usuario.</p>
-    <div class="perfil-social">
-      <a href="#">Seguidores: 1.5k</a>
-      <a href="#">Siguiendo: 300</a>
+    <div class='perfil-social'>
+      <a href='#'>Seguidores: 1.5k</a>
+      <a href='#'>Siguiendo: 300</a>
     </div>
   </div>
-</div>
-    
+</div>";
+}
+else
+{
+    echo "<div id='popup-perfil' class='popup-fondo'>
+  <div class='popup-contenido'>
+    <span class='cerrar-popup'>&times;</span>
+   <p> <h2><a href= 'login.php'>Inicia Sesión </a></h2> </p>
+   <p> <h2><a href= 'registro.php'>Registrate </a></h2> </p>
+  </div>
+</div>";
+}
+
+?>
 
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='selec.php'">Iniciar partida</button>   
         <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
         <button class="menu-btn" onclick="window.location.href='exit.php'">Salir del juego</button>
     </div>
-
 
     <script> 
   /* selección de elementos */
