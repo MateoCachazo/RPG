@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RPG</title>
   <style>
-    body 
+    body
     {
       margin: 0;
       display: flex;
@@ -16,6 +16,7 @@
       image-rendering: pixelated;
     }
 
+
     .contenedor {
       position: relative;
       width: 1000px;
@@ -23,6 +24,7 @@
       border: 2px solid black;
       background: white;
     }
+
 
     canvas {
       position: absolute;
@@ -32,13 +34,20 @@
       height: 100%;
     }
 
+
     /* El orden de superposición */
     #no_se_ve {
       z-index: 0;
     }
 
+
     #juego {
       z-index: 1;
+    }
+    #hud
+    {
+        z-index: 2;
+        image-rendering: pixelated;
     }
   </style>
 </head>
@@ -46,34 +55,47 @@
   <div class="contenedor">
     <canvas id="no_se_ve"></canvas>
     <canvas id="juego"></canvas>
+    <canvas id= "hud"></canvas>
   </div>
 </body>
 </html>
 <?php
 
-$clase = $_POST["clase"] ?? "Guerrero";
+
+$clase = $_POST["clase"] ?? "Ninja";
 ?>
+
 
 <script>
     const canvas = document.getElementById("juego");
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     const no_se_ve = document.getElementById("no_se_ve");
     const hitbox = no_se_ve.getContext("2d", { willReadFrequently: true })
+    const hud = document.getElementById("hud");
+    const hud_ctx = hud.getContext("2d", {willReadFrequently: true})
+
     ctx.fillStyle = 'red';
     ctx.fillRect(0,0,100,100);
     const musica = new Audio('cancion-rpg.wav');
+
 
     canvas.width = screen.width;
     canvas.height = screen.height;
     no_se_ve.width = screen.width;
     no_se_ve.height = screen.height;
+    let clasee = "<?php echo $clase;?>";
+
 
     const rutaBase = 'sprites/';          //Creo una constante con una parte de las rutas de las imagees
     const clases = [/*'Arquero', */'Golem',/* 'Guerrero',*/ 'Mago', 'Ninja', 'Vampiro'];    
     const accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee", especial: " Ataque-Especial"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
+    let barra_vida = new Image();
+    barra_vida.src = "sprites/Barra de Vida.png";
+
     const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
+
 
     for (const a in accion) {
     const sufijo = accion[a];
@@ -82,6 +104,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         const src = `${rutaBase}${p}${sufijo}.png`;
         img.src = src;
         imagenes[p][a] = img;
+
 
         promesasCarga.push(new Promise(res => {
         img.onload = res;
@@ -93,77 +116,87 @@ $clase = $_POST["clase"] ?? "Guerrero";
     });
     }
 
+
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0};
-    //let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 51, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true};
-    let personajes = [jugador/*, enemigo*/];
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes.Golem, base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 100};
+    let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 51, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30};
+    let personajes = [jugador, enemigo];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
+    let pared4 = {x: 60, y: canvas.height - 50, altura: 50, ancho: 50};
+    let pared3 = {x: 150, y: canvas.height - 70, altura: 70, ancho: 50};
+    let piso2 = {x: 225, y: canvas.height - 90, altura: 20, ancho: 50};
     let pared1 = {x:0, y:0, altura: canvas.height, ancho: 20};
     let pared2 = {ancho:20, y:0, altura: canvas.height, x: canvas.width - 20};
     let techo = {x:0,y:0, ancho:canvas.width, altura:20};
-    let obstaculos = [piso, techo, pared1, pared2];
+    let obstaculos = [piso, techo, pared1, pared2/*, pared3, pared4, piso2*/];
     let camaray_aux = jugador.y;
+    let daño_aux = 10;
 
-    hitbox.fillStyle = "black"; 
+
+    hitbox.fillStyle = "black";
+
 
     function cambiar_estado ()
     {
-        if (jugador.animacion_continua == true)
+       if (jugador.vida > 0)
         {
-            jugador.contador_limite = 7;
-            jugador.animacion_continua = true;
-            jugador.ximagen = 0;
-            if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño" && jugador.estado != "salto")
-        {
-            if (teclas["a"] || teclas["d"])
+             if (jugador.animacion_continua == true)
             {
-                jugador.estado = "caminando";
-                jugador.contador_limite = 5;
-                
-                if(teclas["a"])
+                jugador.contador_limite = 7;
+                jugador.animacion_continua = true;
+                jugador.ximagen = 0;
+                if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño" && jugador.estado != "salto")
+            {
+                if (teclas["a"] || teclas["d"])
                 {
-                    jugador.orientado = -1;
+                    jugador.estado = "caminando";
+                    jugador.contador_limite = 5;
+                    
+                    if(teclas["a"])
+                    {
+                        jugador.orientado = -1;
+                    }
+                    else
+                    {
+                        jugador.orientado = 1;
+                    }
                 }
                 else
                 {
-                    jugador.orientado = 1;
+                    jugador.estado = "quieto";
+                }
+                if(teclas["o"])
+                {
+                    jugador.contador_limite = 5;
+                    jugador.contador = 0;
+                    jugador.animacion_continua = false;
+                    jugador.estado = "daño";
+                    jugador.ximagen = 0;
+                }
+                if(teclas["p"])
+                {
+                    jugador.contador_limite = 5;
+                    jugador.contador = 0;
+                    jugador.animacion_continua = false;
+                    jugador.estado = "ataque";
+                    jugador.ximagen = 0;
+                    jugador.contador_ataque = 4;
+                }
+                if(teclas["q"])
+                {
+                    jugador.contador_limite = 5;
+                    jugador.contador = 0;
+                    jugador.animacion_continua = false;
+                    jugador.estado = "especial";
+                    jugador.ximagen = 0;
+                    //jugador.contador_ataque = 4;
                 }
             }
-            else
-            {
-                jugador.estado = "quieto";
-            }
-            if(teclas["o"])
-            {
-                jugador.contador_limite = 5;
-                jugador.contador = 0;
-                jugador.animacion_continua = false;
-                jugador.estado = "daño";
-                jugador.ximagen = 0;
-            }
-            if(teclas["p"])
-            {
-                jugador.contador_limite = 5;
-                jugador.contador = 0;
-                jugador.animacion_continua = false;
-                jugador.estado = "ataque";
-                jugador.ximagen = 0;
-                jugador.contador_ataque = 4;
-            }
-            if(teclas["q"])
-            {
-                jugador.contador_limite = 5;
-                jugador.contador = 0;
-                jugador.animacion_continua = false;
-                jugador.estado = "especial";
-                jugador.ximagen = 0;
-                //jugador.contador_ataque = 4;
-            }
+                }
         }
-            }
-           
-        
-        
+
+       
+       
     }
     document.addEventListener("keydown", (e) =>
     {
@@ -174,6 +207,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         }
     });
 
+
     document.addEventListener("keyup", (e) =>
     {
         teclas[e.key.toLowerCase()] = false;
@@ -182,43 +216,43 @@ $clase = $_POST["clase"] ?? "Guerrero";
     });
     function moverJugador ()
     {
+        if (jugador.vida > 0)
+        {
+            
+        if (jugador.estado == "daño" && daño_aux > 0)
+            {
+                jugador.vida -= 1;
+                console.log(jugador.vida);
+                daño_aux -= 1;
+            }
+
         /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
             if (jugador.contador_ataque > 0 && jugador.estado == "ataque")
-            {
-                hitbox.fillStyle = "rgb(0,255,0)";
-                if (jugador.orientado == 1)
                 {
-                    hitbox.fillRect(jugador.x + 25, jugador.y + 10, 35, 35);
+                    hitbox.fillStyle = "rgba(0,255,0,10)";
+                    if (jugador.orientado == 1)
+                    {
+                        hitbox.fillRect(jugador.x + 25, jugador.y + 10, 35, 35);
+                    }
+                    else if (jugador.orientado == -1)
+                    {
+                        hitbox.fillRect(jugador.x - 17, jugador.y + 10, 35, 35);
+                    }
+                    
+                    jugador.contador_ataque -= 1;
                 }
-                else if (jugador.orientado == -1)
-                {
-                    hitbox.fillRect(jugador.x - 17, jugador.y + 10, 35, 35);
-                }
-                
-                jugador.contador_ataque -= 1;
-            }
 
 
-        if (revisar_porcion(jugador).abajo == false && jugador.estado == "salto")
-        {
-            for (let i = jugador.velocidady; i >= -1; i--)
-            {
-                jugador.velocidady = i + 1;
-                if (revisar_porcion(jugador).abajo)
-                {
-                    jugador.velocidady = 0;
-                    break;
-                }
-            }
-            jugador.estado = "quieto";
-            jugador.y +=1;
-            jugador.animacion_continua = true;
-            cambiar_estado();
-        }
-        
+
+
+
+       
+
+
+       
         let aux = jugador.velocidady;
         jugador.velocidady = 0;
-        if (jugador.velocidady < jugador.velocidady_max  && revisar_porcion(jugador).abajo == true)
+        if (aux < jugador.velocidady_max  && revisar_porcion(jugador).abajo == true)
         {
             aux += 2;
             if (jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño")
@@ -228,12 +262,21 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 jugador.ximagen = 1;
             }
 
+
             //console.log(jugador.estado);
         }
-        
+       
+
+
+
+
+
+
+
+
         jugador.velocidady = aux;
-        
-        
+       
+       
         if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") //este if hay que cambiarlo para que solo revise colisiones de abajo
         {
             jugador.estado = "salto";
@@ -242,9 +285,56 @@ $clase = $_POST["clase"] ?? "Guerrero";
             jugador.velocidady -= 14;
         }
 
-        if (revisar_porcion(jugador).abajo)
+
+        if(revisar_porcion(jugador).arriba == false)
         {
+            jugador.velocidady = 0;
+        }
+
+
+
+
+
+
+
+
+        let auux = false;
+        if (revisar_porcion(jugador).abajo == false /*&& jugador.estado == "salto"*/)
+        {
+            //console.log(jugador.estado);
+            for (jugador.velocidady; jugador.velocidady >= -1; jugador.velocidady--)
+            {
+                if (revisar_porcion(jugador).abajo)
+                {
+                   // console.log (jugador.velocidady);
+                    jugador.velocidady+= 1;
+                    auux = true;
+                    break;
+                }
+            }
+            if(jugador.estado == "salto")
+            {
+                jugador.estado = "quieto";
+                //jugador.y +=1;
+                jugador.animacion_continua = true;
+                cambiar_estado();
+            }
+        }
+
+
+
+
+
+
+
+
+        //if (revisar_porcion(jugador).abajo)
+        //{*/
            jugador.y += jugador.velocidady;
+        //}
+        if(auux)
+        {
+            jugador.velocidady = 0;
         }
         if (revisar_porcion(jugador).derecha && jugador.orientado == 1)
         {
@@ -272,6 +362,10 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.velocidadx = 0;
         }
+
+        
+            
+        }
     }
     function dibujar(contexto)
     {
@@ -288,8 +382,18 @@ $clase = $_POST["clase"] ?? "Guerrero";
             contexto.fillStyle = "black";
             dibujar_obstaculo(obstaculos[i],contexto);
         }
+        /*hud_ctx.fillStyle = "black";
+        hud_ctx.strokeStyle = "white";
+        hud_ctx.lineWidth = 2;
+        hud_ctx.strokeText(jugador.vida, 70, 30);
+        hud_ctx.fillText(jugador.vida, 70, 30);*/
+        hud_ctx.fillStyle = "red";
+        hud_ctx.fillRect(19,20,((38 * jugador.vida) / 100),7);
+        hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
+
 
     }
+
 
     function dibujar_hitbox(a)
     {        
@@ -308,18 +412,20 @@ $clase = $_POST["clase"] ?? "Guerrero";
         //console.log(a.orientado);
         contexto.save();
 
+
         if(a.orientado == -1)
         {
             contexto.scale(-1, 1); // Invierte horizontalmente
             contexto.translate(-a.ancho - a.x * 2, 0);
         }
 
+
        contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
        contexto.restore();
     }
     function cambiar(a, b)
     {
-        if(a.contador >= a.contador_limite)
+         if(a.contador >= a.contador_limite)
         {
             a.contador = 0;
             a.ximagen+=b;
@@ -333,6 +439,10 @@ $clase = $_POST["clase"] ?? "Guerrero";
             }
             else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
             {
+                if (a.estado == "daño")
+                {
+                    daño_aux = 10;
+                }
                 a.ximagen = 0;
                 a.estado = "quieto";
                 a.animacion_continua = true;
@@ -344,12 +454,15 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             a.contador++;
         }
+
     }
+
 
     function dibujar_obstaculo(obstaculo,contexto)
     {
         contexto.fillRect(obstaculo.x,obstaculo.y,obstaculo.ancho,obstaculo.altura);
     }
+
 
     function importante(a)
     {
@@ -357,6 +470,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             a[i+3] = 0;
         }
+
 
     }
     function revisar_porcion(porcion)
@@ -366,7 +480,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         hitbox.fillStyle = "rgb(125,0,125)";
         //hitbox.fillRect (porcion.x, porcion.y, porcion.ancho, porcion.altura);
         dibujar_hitbox(porcion);
-        
+       
         porcion.base = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
         importante(porcion.base);
         for (let i = 0; i < personajes.length; i++)
@@ -394,37 +508,61 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 let x = pixelIndex % porcion.ancho;
                 let y = Math.floor(pixelIndex / porcion.ancho);
 
+
                 // ARRIBA / ABAJO
                 if /*(*/(porcion.base[i+2] == 255 && porcion.base[i+1] == 0 && porcion.base[i] == 0 )/*|| (porcion.base[i+2] != 125 && porcion.base[i+1] && 0 && porcion.base[i] != 125))*/
-                { 
+                {
                     colisiones.arriba = false;
                 }
                 else if(porcion.base[i+2] == 0 && porcion.base[i+1] == 0 && porcion.base[i] == 255 )
                 {
                     colisiones.abajo = false;
 
+
                 }
                 if (y < porcion.altura - 3)
                 {
-                    if (x < porcion.ancho / 2 && y < porcion.altura -2) 
+                    if (x < porcion.ancho / 2 && y < porcion.altura -2)
                     {
                         colisiones.izquierda = false;
                     }
                     else if (x > porcion.ancho / 2 && y < porcion.altura -2)
-                    { 
+                    {
                         colisiones.derecha = false;
                     }
                 }
             }
         }
         //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
-        
-        hitbox.clearRect (0,0,canvas.width, canvas.height);
+       
+        //hitbox.clearRect (0,0,canvas.width, canvas.height);
         return colisiones;
     }
 
+
      function mover_enemigos(enemigo)
     {
+            if (Math.abs(jugador.x - enemigo.x) + Math.abs(jugador.y - enemigo.y) >= 30)
+            {
+                enemigo.estado = "ataque";
+            }
+
+            if (enemigo.contador_ataque > 0 && enemigo.estado == "ataque")
+            {
+                hitbox.fillStyle = "rgba(0,255,0,10)";
+                if (enemigo.orientado == 1)
+                {
+                    hitbox.fillRect(enemigo.x + 25, enemigo.y + 10, 35, 35);
+                }
+                else if (enemigo.orientado == -1)
+                {
+                    hitbox.fillRect(enemigo.x - 17, enemigo.y + 10, 35, 35);
+                }
+                
+                enemigo.contador_ataque -= 1;
+            }
+
+
         if (revisar_porcion(enemigo).abajo == false && enemigo.estado == "salto")
         {
             enemigo.velocidady = 0;
@@ -432,7 +570,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
             enemigo.y +=1;
             cambiar_estado();
         }
-        
+       
         let aux = enemigo.velocidady;
         enemigo.velocidady = 0;
         if (enemigo.velocidady < enemigo.velocidady_max  && revisar_porcion(enemigo).abajo == true)
@@ -442,8 +580,9 @@ $clase = $_POST["clase"] ?? "Guerrero";
             enemigo.contador = 0;
             enemigo.ximagen = 1;
         }
-        
+       
         enemigo.velocidady = aux;/*
+
 
         if (teclas["a"] && revisar_porcion(jugador).izquierda)
         {
@@ -463,7 +602,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
         {
             jugador.velocidadx = 0;
         }*/
-        
+       
         if(enemigo.vision >= Math.abs(jugador.x - enemigo.x) + Math.abs(jugador.y - enemigo.y))
         {
             enemigo.orientado = Math.abs(jugador.x - enemigo.x) / (jugador.x - enemigo.x);
@@ -485,6 +624,7 @@ $clase = $_POST["clase"] ?? "Guerrero";
                 enemigo.velocidadx = 0;
             }
         }
+
 
         if(enemigo.orientado == 1)
         {
@@ -514,27 +654,36 @@ $clase = $_POST["clase"] ?? "Guerrero";
         }
     }
 
+
     function loop()
     {
         //console.log(jugador.estado);
        // musica.play();
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
+        hud_ctx.clearRect(0,0,screen.width,screen.height);
         dibujar(ctx);
         //console.log(jugador.y);
         moverJugador();
         for (let i = 1; i < personajes.length; i++)
         {
             mover_enemigos(personajes[i]);
-        } 
+        }
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
-        if (jugador.y - camaray_aux >= 100 || jugador.y - camaray_aux <= -100)
+       /* if (jugador.y - camaray_aux >= 100 || jugador.y - camaray_aux <= -100)
         {
-            camaray_aux += jugador.velocidady;
         }
         else if (revisar_porcion(jugador).abajo == false && (jugador.y - camaray_aux >= 30 || jugador.y - camaray_aux <= -30))
         {
             camaray_aux += 2;
+        }*/
+        if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) > 60)
+        {
+            camaray_aux += jugador.velocidady;
+        }
+        else if(revisar_porcion(jugador).abajo == false  && Math.abs(jugador.y - camaray_aux) > 30)
+        {
+            camaray_aux += (jugador.y - camaray_aux) / Math.abs(jugador.y - camaray_aux) * 2;
         }
         hitbox.drawImage(canvas, jugador.x - 200, camaray_aux - 200, jugador.ancho + 300, jugador.altura + 300, 0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
@@ -542,7 +691,9 @@ $clase = $_POST["clase"] ?? "Guerrero";
         hitbox.clearRect(0,0,canvas.width, canvas.height);
         //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
         requestAnimationFrame(loop);
-        
+       
     }
     loop()
 </script>
+
+
