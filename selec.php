@@ -6,7 +6,7 @@
 <title>Selector de Clases 3D</title>
 <style>
 body {
-   background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
+  background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
   color: white;
   font-family: sans-serif;
   display: flex;
@@ -48,6 +48,23 @@ body {
   font-size: 22px;
   font-weight: bold;
   transition: all 0.5s;
+  cursor: pointer;
+}
+
+/* Borde cuando está seleccionada */
+.clase.seleccionada {
+  box-shadow: 0 0 25px 5px #00ff99;
+  transform: scale(1.6) !important;
+}
+
+/* Animación al elegir definitivamente */
+.clase.elegida {
+  animation: elegido 0.7s ease forwards;
+}
+
+@keyframes elegido {
+  0% { transform: scale(1.6); box-shadow: 0 0 25px 5px #00ff99; }
+  100% { transform: scale(2.5) rotateY(360deg); opacity: 0; }
 }
 
 .clase-estadisticas {
@@ -66,7 +83,6 @@ body {
   margin-top: 15px;
   font-size: 14px;
   margin-left: 10px;
-
 }
 
 .clase img {
@@ -88,6 +104,7 @@ body {
   padding: 10px;
   border-radius: 50%;
 }
+
 .clase.activo {
   z-index: 20;
 }
@@ -95,99 +112,121 @@ body {
 #izquierda { left: -300px; }
 #derecha { right: -300px; }
 
+#videoFondo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
 </style>
 </head>
 <body>
+<video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
+  <source src="imagenes/fondo juego.mp4" type="video/mp4">
+  Tu navegador no soporta la etiqueta de video.
+</video>
+
+<!-- Formulario oculto para enviar la clase seleccionada -->
+<form id="formSeleccion" action="juego.php" method="POST" style="display:none;">
+  <input type="hidden" name="personaje" id="inputPersonaje">
+</form>
 
 <div class="carrusel-container">
   <button id="izquierda" class="flecha">⟨</button>
   <div class="carrusel" id="carrusel">
-  <div class="clase" style="--i:0;">
-    <img src="imagenes/Guerrero.png" alt="Guerrero">
-    <div class="clase-estadisticas">
-     <div class="text-group">
-      <strong>Guerrero</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">----</span><br> <!-- 20 --> 
-      Defensa: <span style="color:chartreuse; font-weight:bold;">---</span><br> <!-- 15 -->
-      Velocidad: <span style="color:chartreuse; font-weight:bold;">--</span><br> <!-- 10 --> 
-      Ataque: <span style="color:chartreuse; font-weight:bold;">--</span> <span style="color:brown; font-weight:bold;">-</span> <!-- 12 -->
-</div>
+    <!-- Tarjetas -->
+    <div class="clase" data-personaje="Guerrero" style="--i:0;">
+      <img src="imagenes/Guerrero.png" alt="Guerrero">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Guerrero</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">----</span><br>
+          Defensa: <span style="color:chartreuse; font-weight:bold;">---</span><br>
+          Velocidad: <span style="color:chartreuse; font-weight:bold;">--</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">--</span> <span style="color:brown; font-weight:bold;">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clase" data-personaje="Mago" style="--i:1;">
+      <img src="imagenes/Mago.png" alt="Mago">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Mago</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">---</span><br>
+          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
+          Velocidad: <span style="color:chartreuse; font-weight:bold;">-</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">----</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clase" data-personaje="Arquero" style="--i:2;">
+      <img src="imagenes/Arquero.png" alt="Arquero">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Arquero</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br>
+          Defensa: <span style="color:chocolate; font-weight:bold;">--</span><br>
+          Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">---</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clase" data-personaje="Golem" style="--i:3;">
+      <img src="imagenes/Golem.png" alt="Golem">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Golem</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">------</span><br>
+          Defensa: <span style="color:chartreuse; font-weight:bold;">----</span><br>
+          Velocidad: <span style="color:chocolate; font-weight:bold;">-</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clase" data-personaje="Ninja" style="--i:4;">
+      <img src="imagenes/Ninja.png" alt="Ninja">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Ninja</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><span style="color:brown; font-weight:bold;"> -</span><br>
+          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
+          Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">---</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clase" data-personaje="Vampiro" style="--i:5;">
+      <img src="imagenes/Vampiro.png" alt="Vampiro">
+      <div class="clase-estadisticas">
+        <div class="text-group">
+          <strong>Vampiro</strong><br>
+          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br>
+          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
+          Velocidad: <span style="color:chartreuse; font-weight:bold;">----</span><br>
+          Ataque: <span style="color:chartreuse; font-weight:bold;">--</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="clase" style="--i:1;">
-    <img src="imagenes/Mago.png" alt="Mago">
-    <div class="clase-estadisticas">
-      <div class="text-group">
-      <strong>Mago</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">---</span><br> <!-- 15 -->
-      Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br> <!-- 5 -->
-      Velocidad: <span style="color:chartreuse; font-weight:bold;">-</span><br> <!-- 5 -->
-      Ataque: <span style="color:chartreuse; font-weight:bold;">----</span> <!-- 20 -->
-    </div>
-    </div>
-  </div>
-  <div class="clase" style="--i:2;">
-    <img src="imagenes/Arquero.png" alt="Arquero">
-    <div class="clase-estadisticas">
-      <div class="text-group">
-      <strong>Arquero</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br> <!-- 10 -->
-      Defensa: <span style="color:chocolate; font-weight:bold;">--</span><br> <!-- 6 -->
-      Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br> <!-- 15 -->
-      Ataque: <span style="color:chartreuse; font-weight:bold;">---</span> <!-- 15 -->
-    </div>
-    </div>
-  </div>
-  <div class="clase" style="--i:3;">
-    <img src="imagenes/Golem.png" alt="Golem">
-    <div class="clase-estadisticas">
-      <div class="text-group">
-      <strong>Golem</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">------</span><br> <!-- 30 -->
-      Defensa: <span style="color:chartreuse; font-weight:bold;">----</span><br> <!-- 20 -->
-      Velocidad: <span style="color:chocolate; font-weight:bold;">-</span><br> <!-- 3 -->
-      Ataque: <span style="color:chartreuse; font-weight:bold;">-</span> <!-- 5 -->
-    </div>
-    </div>
-  </div>
-  <div class="clase" style="--i:4;">
-    <img src="imagenes/Ninja.png" alt="Ninja">
-    <div class="clase-estadisticas">
-      <div class="text-group">
-      <strong>Ninja</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">--</span><span style="color:brown; font-weight:bold;"> -</span><br> <!-- 12 -->
-      Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br> <!-- 5 -->
-      Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br> <!-- 15 -->
-      Ataque: <span style="color:chartreuse; font-weight:bold;">---</span> <!-- 15 -->
-    </div>
-    </div>
-  </div>
-  <div class="clase" style="--i:5;">
-    <img src="imagenes/Vampiro.png" alt="Vampiro">
-    <div class="clase-estadisticas">
-      <div class="text-group">
-      <strong>Vampiro</strong><br>
-      Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br> <!-- 10 -->
-      Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br> <!-- 5 -->
-      Velocidad: <span style="color:chartreuse; font-weight:bold;">----</span><br> <!-- 20 -->
-      Ataque: <span style="color:chartreuse; font-weight:bold;">--</span> <!-- 10 -->
-    </div>
-    </div>
-  </div>
-</div>
   <button id="derecha" class="flecha">⟩</button>
 </div>
 
 <script>
-   /* Variables globales para el carrusel */
 const carrusel = document.getElementById('carrusel');
-const total = 6;
+const clases = document.querySelectorAll('.clase');
+const total = clases.length;
 let angulo = 0;
 let actual = 0;
+let claseSeleccionada = null;
 
-
-/* Esta funcion hace que a la hora de estar en el carrusel, dependiendo de que clase este va a mostrar la
-tarjeta principal con un agrandamiento y que gire cierto angulo en 3D */
 function actualizarCarrusel() {
   carrusel.style.transform = `rotateY(${angulo}deg)`;
   clases.forEach((clase, i) => {
@@ -202,15 +241,11 @@ function actualizarCarrusel() {
   });
 }
 
-/* Estos eventos hacen que al clicar en las flechas se mueva el carrusel y cambie la clase activa */
-
 document.getElementById('derecha').onclick = () => {
   angulo -= 360 / total;
   actual = (actual + 1) % total;
   actualizarCarrusel();
 };
-
-/* Evento para la flecha izquierda */
 
 document.getElementById('izquierda').onclick = () => {
   angulo += 360 / total;
@@ -218,9 +253,27 @@ document.getElementById('izquierda').onclick = () => {
   actualizarCarrusel();
 };
 
- /* Selecciona todas las clases y actualiza el carrusel al cargar la pagina */
+/* --- SELECCIÓN DE CLASES --- */
+clases.forEach(clase => {
+  clase.addEventListener('click', () => {
+    const nombre = clase.dataset.personaje;
 
-const clases = document.querySelectorAll('.clase');
+    if (claseSeleccionada === clase) {
+      // Segundo clic → Enviar formulario
+      document.getElementById('inputPersonaje').value = nombre;
+      clase.classList.add('elegida');
+      setTimeout(() => {
+        document.getElementById('formSeleccion').submit();
+      }, 600);
+    } else {
+      // Primer clic → Marcar selección
+      clases.forEach(c => c.classList.remove('seleccionada'));
+      clase.classList.add('seleccionada');
+      claseSeleccionada = clase;
+    }
+  });
+});
+
 actualizarCarrusel();
 </script>
 

@@ -1,3 +1,12 @@
+
+<?php
+if (isset($_POST['personaje'])) {
+  $personaje = $_POST['personaje'];
+  echo "<h1>Has elegido a $personaje</h1>";
+  // Aquí puedes cargar sus estadísticas, imagen, o iniciar el juego con ese personaje.
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
