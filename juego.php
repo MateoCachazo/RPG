@@ -24,8 +24,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     .contenedor {
       position: relative;
-      width: 1000px;
-      height: 1000px;
+      width: 100%;
+      height: 100%;
       border: 2px solid black;
       background: white;
     }
@@ -145,8 +145,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 6, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 100, daño_aux: 10};
-    let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 500, altura:48, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30, daño_aux: 10, delay_ataque: 0};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 500, altura:56, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 6, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 100, daño_aux: 10};
+    let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 500, altura:56, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30, daño_aux: 10, delay_ataque: 0};
     let personajes = [jugador, enemigo];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared4 = {x: 60, y: canvas.height - 50, altura: 50, ancho: 50};
@@ -157,6 +157,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let techo = {x:0,y:0, ancho:canvas.width, altura:20};
     let obstaculos = [piso, techo, pared1, pared2/*, pared3, pared4, piso2*/];
     let camaray_aux = jugador.y;
+    let camarax_aux = jugador.x;
 
     //console.log(clasee);
     hitbox.fillStyle = "black";
@@ -389,7 +390,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     function dibujar(contexto)
     {
         ctx.fillStyle = "rgb(100,100,100)";
-       // ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillRect(0,0,canvas.width,canvas.height);
         for (let i = 0; i < personajes.length; i++)
         {
             contexto.fillStyle = "#FF0000";
@@ -761,6 +762,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         {
             camaray_aux += 2;
         }*/
+
         if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) > 60)
         {
             camaray_aux += jugador.velocidady;
@@ -769,7 +771,21 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         {
             camaray_aux += (jugador.y - camaray_aux) / Math.abs(jugador.y - camaray_aux) * 2;
         }
-        hitbox.drawImage(canvas, jugador.x - 200, camaray_aux - 200, jugador.ancho + 300, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+
+        if (jugador.x - 300 > 0 && jugador.x - 300 < canvas.width)
+        {
+            camarax_aux = jugador.x;
+        }
+        else if (jugador.x - 300 <= 0)
+        {
+            camarax_aux = 300;
+        }
+        else if (jugador.x - 300 > canvas.width)
+        {
+            camarax_aux = canvas.width + 300;
+        }
+
+        hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 300, jugador.ancho + 400, jugador.altura + 400, 0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
         hitbox.clearRect(0,0,canvas.width, canvas.height);
