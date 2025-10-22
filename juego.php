@@ -79,7 +79,10 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     ctx.fillStyle = 'red';
     ctx.fillRect(0,0,100,100);
     const musica = new Audio('cancion-rpg.wav');
-
+    musica.volume = 0.5;
+    const snd_salto = new Audio('sonidos/salto.wav');
+    const snd_daño = new Audio('sonidos/daño.wav');
+    const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
 
     canvas.width = screen.width;
     canvas.height = screen.height;
@@ -291,6 +294,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
        
         if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") //este if hay que cambiarlo para que solo revise colisiones de abajo
         {
+            snd_salto.play();
             jugador.estado = "salto";
             jugador.contador = 0;
             jugador.ximagen = 1;
@@ -431,8 +435,6 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         let estado = a.estado;
         //console.log(a.orientado);
         contexto.save();
-
-
         if(a.orientado == -1)
         {
             contexto.scale(-1, 1); // Invierte horizontalmente
@@ -461,7 +463,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                     {
                         hitbox.fillRect(a.x - 15, a.y + 10, 55, 40);
                     }
-                    
+                    snd_golpe_guerrero.play();
                     a.contador_ataque -= 1;
                 }
     }
@@ -573,7 +575,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         colisiones.izquierda = false;
                         if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
                         {
-                            
+                            snd_daño.play();
                             porcion.daño_aux = 10;
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
@@ -590,7 +592,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         colisiones.derecha = false;
                         if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                         {
-                            
+                            snd_daño.play();
                             porcion.daño_aux = 10;
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
@@ -743,7 +745,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     function loop()
     {
         //console.log(jugador.estado);
-       // musica.play();
+        musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
