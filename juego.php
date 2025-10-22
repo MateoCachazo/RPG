@@ -123,7 +123,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let teclas = {};
     let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 50, altura:48, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 6, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 100, daño_aux: 10};
     let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 500, altura:48, ancho:48, imagen: imagenes.Ninja, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30, daño_aux: 10, delay_ataque: 0};
-    let personajes = [jugador/*, enemigo*/];
+    let personajes = [jugador, enemigo];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared4 = {x: 60, y: canvas.height - 50, altura: 50, ancho: 50};
     let pared3 = {x: 150, y: canvas.height - 70, altura: 70, ancho: 50};
@@ -250,7 +250,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             }
 
             jugador.y += 1;
-            console.log(jugador.estado);
+            //console.log(jugador.estado);
         }
        
 
@@ -269,7 +269,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             jugador.estado = "salto";
             jugador.contador = 0;
             jugador.ximagen = 1;
-            jugador.velocidady -= 21;
+            jugador.velocidady -= 19;
         }
 
 
@@ -420,14 +420,14 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
        if (a.contador_ataque > 0 && a.estado == "ataque")
                 {
-                    hitbox.fillStyle = "rgba(0,255,0,0.1)";
+                    hitbox.fillStyle = "rgba(0,255,0,0.5)";
                     if (a.orientado == 1)
                     {
-                        hitbox.fillRect(a.x + 25, a.y + 10, 35, 35);
+                        hitbox.fillRect(a.x, a.y + 10, 55, 40);
                     }
                     else if (a.orientado == -1)
                     {
-                        hitbox.fillRect(a.x - 17, a.y + 10, 35, 35);
+                        hitbox.fillRect(a.x - 15, a.y + 10, 55, 40);
                     }
                     
                     a.contador_ataque -= 1;
@@ -534,7 +534,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         colisiones.izquierda = false;
                         if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
                         {
-                            console.log(porcion.vida);
+                            
                             porcion.daño_aux = 10;
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
@@ -543,14 +543,15 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                             porcion.estado = "daño";
                             porcion.ximagen = 0;
                            // porcion.velocidadx += 12;
+                           
                         }
                     }
                     else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                     {
                         colisiones.derecha = false;
-                        if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
+                        if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                         {
-                            console.log(porcion.vida);
+                            
                             porcion.daño_aux = 10;
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
@@ -574,110 +575,123 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
      function mover_enemigos(enemigo)
     {
-        if (enemigo.delay_ataque > 0)
+        if (enemigo.vida > 0)
         {
-            enemigo.delay_ataque -= 1;
-        }
+            if (enemigo.delay_ataque > 0)
+            {
+                enemigo.delay_ataque -= 1;
+            }
 
-       if(Math.abs(enemigo.x - jugador.x) + Math.abs(enemigo.y - jugador.y) <= 30 && (enemigo.estado == "caminando" || enemigo.estado == "salto" || enemigo.estado == "quieto") && enemigo.delay_ataque == 0)
-        {
-            enemigo.contador_limite = 5;
-            enemigo.contador = 0;
-            enemigo.animacion_continua = false;
-            enemigo.estado = "ataque";
-            enemigo.ximagen = 0;
-            enemigo.contador_ataque = 4;
-            enemigo.delay_ataque = 90;
-        } 
-        
-        if (revisar_porcion(enemigo).abajo == false && enemigo.estado == "salto")
-        {
+            if (enemigo.estado == "daño" && enemigo.daño_aux > 0)
+                {
+                    enemigo.vida -= 1;
+                    //console.log(enemigo.vida);
+                    enemigo.daño_aux -= 1;
+                }
+
+        if(Math.abs(enemigo.x - jugador.x) + Math.abs(enemigo.y - jugador.y) <= 30 && (enemigo.estado == "caminando" || enemigo.estado == "salto" || enemigo.estado == "quieto") && enemigo.delay_ataque == 0)
+            {
+                enemigo.contador_limite = 5;
+                enemigo.contador = 0;
+                enemigo.animacion_continua = false;
+                enemigo.estado = "ataque";
+                enemigo.ximagen = 0;
+                enemigo.contador_ataque = 4;
+                enemigo.delay_ataque = 90;
+            } 
+            
+            if (revisar_porcion(enemigo).abajo == false && enemigo.estado == "salto")
+            {
+                enemigo.velocidady = 0;
+                enemigo.estado = "quieto";
+                enemigo.y +=1;
+                cambiar_estado();
+            }
+            
+            let aux = enemigo.velocidady;
             enemigo.velocidady = 0;
-            enemigo.estado = "quieto";
-            enemigo.y +=1;
-            cambiar_estado();
-        }
-        
-        let aux = enemigo.velocidady;
-        enemigo.velocidady = 0;
-        if (enemigo.velocidady < enemigo.velocidady_max  && revisar_porcion(enemigo).abajo == true)
-        {
-            aux += 2;
-            enemigo.estado = "salto";
-            enemigo.contador = 0;
-            enemigo.ximagen = 1;
-        }
-        
-        enemigo.velocidady = aux;/*
+            if (enemigo.velocidady < enemigo.velocidady_max  && revisar_porcion(enemigo).abajo == true)
+            {
+                aux += 2;
+                enemigo.estado = "salto";
+                enemigo.contador = 0;
+                enemigo.ximagen = 1;
+            }
+            
+            enemigo.velocidady = aux;/*
 
-        if (teclas["a"] && revisar_porcion(jugador).izquierda)
-        {
-            if (jugador.velocidadx > (jugador.velocidadx_max * -1))
+            if (teclas["a"] && revisar_porcion(jugador).izquierda)
             {
-                jugador.velocidadx -= 2;
+                if (jugador.velocidadx > (jugador.velocidadx_max * -1))
+                {
+                    jugador.velocidadx -= 2;
+                }
             }
-        }
-        else if (teclas["d"] && revisar_porcion(jugador).derecha)
-        {
-            if (jugador.velocidadx < jugador.velocidadx_max)
+            else if (teclas["d"] && revisar_porcion(jugador).derecha)
             {
-                jugador.velocidadx += 2;
-            }
-        }
-        else
-        {
-            jugador.velocidadx = 0;
-        }*/
-        
-        if(enemigo.vision >= Math.abs(jugador.x - enemigo.x) + Math.abs(jugador.y - enemigo.y))
-        {
-            enemigo.orientado = Math.abs(jugador.x - enemigo.x) / (jugador.x - enemigo.x);
-            if(enemigo.orientado == 1)
-            {
-                enemigo.orientado = 1;
+                if (jugador.velocidadx < jugador.velocidadx_max)
+                {
+                    jugador.velocidadx += 2;
+                }
             }
             else
             {
-                enemigo.orientado = -1;
-            }
-            //console.log(enemigo.orientado);
-        }
-        else
-        {
-            if((revisar_porcion(enemigo).izquierda == false && enemigo.orientado == -1)|| (enemigo.orientado == 1 && revisar_porcion(enemigo).derecha == false))
+                jugador.velocidadx = 0;
+            }*/
+            
+            if(enemigo.vision >= Math.abs(jugador.x - enemigo.x) + Math.abs(jugador.y - enemigo.y))
             {
-                enemigo.orientado *= -1;
-                enemigo.velocidadx = 0;
+                enemigo.orientado = Math.abs(jugador.x - enemigo.x) / (jugador.x - enemigo.x);
+                if(enemigo.orientado == 1)
+                {
+                    enemigo.orientado = 1;
+                }
+                else
+                {
+                    enemigo.orientado = -1;
+                }
+                //console.log(enemigo.orientado);
             }
-        }
+            else
+            {
+                if((revisar_porcion(enemigo).izquierda == false && enemigo.orientado == -1)|| (enemigo.orientado == 1 && revisar_porcion(enemigo).derecha == false))
+                {
+                    enemigo.orientado *= -1;
+                    enemigo.velocidadx = 0;
+                }
+            }
 
-        if(enemigo.orientado == 1)
-        {
-            if (enemigo.velocidadx < enemigo.velocidadx_max)
+            if(enemigo.orientado == 1)
             {
-                enemigo.velocidadx += 2;
+                if (enemigo.velocidadx < enemigo.velocidadx_max)
+                {
+                    enemigo.velocidadx += 2;
+                }
+            }
+            else
+            {
+                if (enemigo.velocidadx > (enemigo.velocidadx_max * -1))
+                {
+                    enemigo.velocidadx -= 2;
+                }
+            }
+            if (revisar_porcion(enemigo).abajo)
+            {
+            enemigo.y += enemigo.velocidady;
+            }
+            if (revisar_porcion(enemigo).derecha && enemigo.orientado == 1)
+            {
+                enemigo.x += enemigo.velocidadx;
+            }
+            else if (revisar_porcion(enemigo).izquierda && enemigo.orientado == -1)
+            {
+                enemigo.x += enemigo.velocidadx;
             }
         }
-        else
-        {
-            if (enemigo.velocidadx > (enemigo.velocidadx_max * -1))
-            {
-                enemigo.velocidadx -= 2;
-            }
-        }
-        if (revisar_porcion(enemigo).abajo)
-        {
-           enemigo.y += enemigo.velocidady;
-        }
-        if (revisar_porcion(enemigo).derecha && enemigo.orientado == 1)
-        {
-            enemigo.x += enemigo.velocidadx;
-        }
-        else if (revisar_porcion(enemigo).izquierda && enemigo.orientado == -1)
-        {
-            enemigo.x += enemigo.velocidadx;
-        }
-         
+    else
+    {
+        personajes.splice(enemigo.id-1, 1);
+    }
     }
 
 
@@ -716,6 +730,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
         hitbox.clearRect(0,0,canvas.width, canvas.height);
         //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
+        //console.log(personajes[1].vida);
         requestAnimationFrame(loop);
        
     }
