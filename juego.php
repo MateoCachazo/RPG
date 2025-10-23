@@ -126,6 +126,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let enemigos = ['Esqueleto_Diabólico'];    
     let accion2 = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", /*salto: " Salto",*/ ataque: " Ataque-1", especial: " Ataque-2", muerte: " Muerte"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
 
+
     for (const a in accion2) 
     {
     const sufijo = accion2[a];
@@ -148,9 +149,60 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
 
     let teclas = {};
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 500, altura:56, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: 4, velocidady_max: 6, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 100, daño_aux: 10};
-    let enemigo = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 500, altura:56, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30, daño_aux: 10, delay_ataque: 0};
-    let personajes = [jugador, enemigo];
+    let estadisticas = 
+    {
+        "Guerrero":
+        {
+            velocidadx_max: 4,
+            velocidady_max: 6,
+            vida: 45,
+            daño_aux: 5,
+            ataque: 12 
+        },
+        "Golem":
+        {
+            velocidadx_max: 1,
+            velocidady_max: 10,
+            vida: 70,
+            daño_aux: 3,
+            ataque: 5 
+        },
+        "Mago":
+        {
+            velocidadx_max: 2,
+            velocidady_max: 8,
+            vida: 30,
+            daño_aux: 6,
+            ataque: 20 
+        },
+        "Arquero":
+        {
+            velocidadx_max: 5,
+            velocidady_max: 6,
+            vida: 20,
+            daño_aux: 5,
+            ataque: 15
+        },
+        "Ninja":
+        {
+            velocidadx_max: 6,
+            velocidady_max: 4,
+            vida: 20,
+            daño_aux: 6,
+            ataque: 15
+        },
+        "Vampiro":
+        {
+            velocidadx_max: 7,
+            velocidady_max: 2,
+            vida: 20,
+            daño_aux: 6,
+            ataque: 10
+        }
+    };
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 50, y: 500, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: estadisticas[clasee].daño_aux, ataque: estadisticas[clasee].ataque};
+    let esqueletodiabolico = {vision: 75,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 10, y: 500, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 30, daño_aux: 10, delay_ataque: 0};
+    let personajes = [jugador, esqueletodiabolico];
     let piso = {x:0, y:canvas.height - 20,altura:20, ancho:canvas.width};
     let pared4 = {x: 60, y: canvas.height - 50, altura: 50, ancho: 50};
     let pared3 = {x: 150, y: canvas.height - 70, altura: 70, ancho: 50};
@@ -158,7 +210,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let piso2 = {x: 225, y: canvas.height - 90, altura: 20, ancho: 50};
     let pared2 = {ancho:20, y:0, altura: canvas.height, x: canvas.width - 20};
     let techo = {x:0,y:0, ancho:canvas.width, altura:20};
-    let obstaculos = [piso, techo, pared1, pared2/*, pared3, pared4, piso2*/];
+    let obstaculos = [piso, techo, pared1, pared2, pared3, pared4, piso2];
     let camaray_aux = jugador.y;
     let camarax_aux = jugador.x;
 
@@ -412,7 +464,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         hud_ctx.strokeText(jugador.vida, 70, 30);
         hud_ctx.fillText(jugador.vida, 70, 30);*/
         hud_ctx.fillStyle = "red";
-        hud_ctx.fillRect(19,20,((38 * jugador.vida) / 100),7);
+        hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
         hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
 
 
@@ -576,7 +628,14 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
                         {
                             snd_daño.play();
-                            porcion.daño_aux = 10;
+                            if (porcion.id != 1)
+                            {
+                                porcion.daño_aux = jugador.ataque;
+                            }
+                            else
+                            {
+                                porcion.daño_aux = estadisticas[clasee].daño_aux;
+                            }
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
                             porcion.contador = 0;
@@ -593,7 +652,14 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                         {
                             snd_daño.play();
-                            porcion.daño_aux = 10;
+                            if (porcion.id != 1)
+                            {
+                                porcion.daño_aux = jugador.ataque;
+                            }
+                            else
+                            {
+                                porcion.daño_aux = estadisticas[clasee].daño_aux;
+                            }
                             porcion.velocidadx = 0;
                             porcion.contador_limite = 5;
                             porcion.contador = 0;
@@ -609,7 +675,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         }
         //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
        
-        hitbox.clearRect (0,0,canvas.width, canvas.height);
+        //hitbox.clearRect (0,0,canvas.width, canvas.height);
         return colisiones;
     }
 
@@ -622,14 +688,22 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             {
                 enemigo.delay_ataque -= 1;
             }
-
             if (enemigo.estado == "daño" && enemigo.daño_aux > 0)
-                {
-                    enemigo.vida -= 1;
-                    //console.log(enemigo.vida);
-                    enemigo.daño_aux -= 1;
-                }
-
+            {
+                enemigo.vida -= 1;
+                //console.log(enemigo.vida);
+                enemigo.daño_aux -= 1;
+            }
+            if (revisar_porcion(enemigo).abajo == false && enemigo.estado == "salto")
+            {
+                enemigo.velocidady = 0;
+                enemigo.y +=1;
+                cambiar_estado();
+            }
+            if (revisar_porcion(enemigo).abajo == false && enemigo.estado != "daño" && enemigo.estado != "ataque")
+            {
+                enemigo.estado = "caminando";
+            }
         if(Math.abs(enemigo.x - jugador.x) + Math.abs(enemigo.y - jugador.y) <= 30 && (enemigo.estado == "caminando" || enemigo.estado == "salto" || enemigo.estado == "quieto") && enemigo.delay_ataque == 0)
             {
                 enemigo.contador_limite = 5;
@@ -640,14 +714,6 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                 enemigo.contador_ataque = 4;
                 enemigo.delay_ataque = 90;
             } 
-            
-            if (revisar_porcion(enemigo).abajo == false && enemigo.estado == "salto")
-            {
-                enemigo.velocidady = 0;
-                enemigo.estado = "caminando";
-                enemigo.y +=1;
-                cambiar_estado();
-            }
             
             let aux = enemigo.velocidady;
             enemigo.velocidady = 0;
@@ -682,7 +748,6 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             
             if(enemigo.vision >= Math.abs(jugador.x - enemigo.x) + Math.abs(jugador.y - enemigo.y) && enemigo.estado != "ataque" && enemigo.estado != "daño")
             {
-                enemigo.estado = "caminando";
                 enemigo.orientado = Math.abs(jugador.x - enemigo.x) / (jugador.x - enemigo.x);
                 if(enemigo.orientado == 1)
                 {
@@ -790,9 +855,9 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 300, jugador.ancho + 400, jugador.altura + 400, 0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
-        hitbox.clearRect(0,0,canvas.width, canvas.height);
+        //hitbox.clearRect(0,0,canvas.width, canvas.height);
         //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
-        //console.log(personajes[1].vida);
+        //console.log(personajes[0].vida);
         requestAnimationFrame(loop);
        
     }
