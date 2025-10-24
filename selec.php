@@ -267,11 +267,13 @@ clases.forEach(clase => {
       }, 600);
     } else {
       // Primer clic → Marcar selección
+      const ang = (360 / total);
+      angulo = -ang * Array.from(clases).indexOf(clase);
       clases.forEach(c => c.classList.remove('seleccionada'));
-      clase.classList.add('seleccionada');
+      clase.classList.add('seleccionada');}
       claseSeleccionada = clase;
     }
-  });
+  )
 });
 
 actualizarCarrusel();
