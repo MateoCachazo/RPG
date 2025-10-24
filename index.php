@@ -102,7 +102,7 @@ session_start();
             margin-top: 60px;
             width: 1570px;
             height:170PX;
-            transition: transform 0,3s ease;
+            transition: transform 0.3s ease;
             animation: agrandar 2s ease-in infinite;
         }
 
@@ -206,6 +206,35 @@ session_start();
     height: 20px;
     right: 10px;
     cursor: pointer;
+}
+
+a {
+  display: inline-block;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover  {
+    text-decoration: none;
+    animation: transformBounce 1000ms infinite cubic-bezier(.22,.9,.3,.1) alternate;
+    transform: translateY(-12px);
+}
+@keyframes transformBounce {
+               from { transform: translateY(-6px);}
+               to  { transform: translateY(6px); } 
+    }
+@keyframes arribaImg {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
+}
+.imagen-perfil:hover {
+  
+  animation: arribaImg 2s ease infinite;
+
 }
     </style>
 </head>
