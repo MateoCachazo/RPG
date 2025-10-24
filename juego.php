@@ -472,15 +472,29 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
 
     function dibujar_hitbox(a)
-    {        
-        hitbox.save();
-        hitbox.translate(a.x +a.ancho / 2, a.y + a.altura);
-        hitbox.fillRect(-14/2, -25, 10, 25);
-        hitbox.fillStyle = "rgb(0 ,0, 255)";
-        hitbox.fillRect(-10/2, -25, 6,1);
-        hitbox.fillStyle = "rgb(255 ,0, 0)";
-        hitbox.fillRect(-10/2, -1, 6,1);
-        hitbox.restore();
+    {   
+        if (a.id == 1 && clasee == "Golem")
+        {
+            hitbox.save();
+            hitbox.translate(a.x +a.ancho / 2, a.y + a.altura);
+            hitbox.fillRect(-14/2, -38, 14, 38);
+            hitbox.fillStyle = "rgb(0 ,0, 255)";
+            hitbox.fillRect(-10/2, -38, 6,1);
+            hitbox.fillStyle = "rgb(255 ,0, 0)";
+            hitbox.fillRect(-10/2, -1, 6,1);
+            hitbox.restore();
+        }
+        else
+        {
+            hitbox.save();
+            hitbox.translate(a.x +a.ancho / 2, a.y + a.altura);
+            hitbox.fillRect(-14/2, -25, 10, 25);
+            hitbox.fillStyle = "rgb(0 ,0, 255)";
+            hitbox.fillRect(-10/2, -25, 6,1);
+            hitbox.fillStyle = "rgb(255 ,0, 0)";
+            hitbox.fillRect(-10/2, -1, 6,1);
+            hitbox.restore();
+        }
     }
     function dibujar_personaje(a,contexto)
     {
@@ -509,11 +523,11 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                     hitbox.fillStyle = "rgba(0,255,0,0.5)";
                     if (a.orientado == 1)
                     {
-                        hitbox.fillRect(a.x, a.y + 10, 55, 40);
+                        hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
                     }
                     else if (a.orientado == -1)
                     {
-                        hitbox.fillRect(a.x - 15, a.y + 10, 55, 40);
+                        hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
                     }
                     snd_golpe_guerrero.play();
                     a.contador_ataque -= 1;
@@ -630,12 +644,12 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                             snd_daño.play();
                             if (porcion.id != 1)
                             {
-                                jugador.critico = Math.floor(Math.random() * 2) + 1;
-                                porcion.daño_aux = ((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico.defensa) / 50 + 2;
+                                jugador.critico = Math.floor(Math.random() * 3) + 1;
+                                porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico.defensa) / 50 + 2);
                             }
                             else
                             {
-                                porcion.daño_aux = ((esqueletodiabolico.ataque) / jugador.defensa) + esqueletodiabolico.ataque / 2;
+                                porcion.daño_aux = Math.floor(((2 * esqueletodiabolico.ataque)/5) + 2 * esqueletodiabolico.critico * (esqueletodiabolico.ataque / jugador.defensa) / 50 + 2);
                             }
                             console.log(porcion.daño_aux);
                             porcion.velocidadx = 0;
@@ -656,13 +670,13 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                             snd_daño.play();
                             if (porcion.id != 1)
                             {
-                                jugador.critico = Math.floor(Math.random() * 2) + 1;
-                                porcion.daño_aux = ((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico.defensa) / 50 + 2;
+                                jugador.critico = Math.floor(Math.random() * 3) + 1;
+                                porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico.defensa) / 50 + 2);
                             }
                             else
                             {
                                 esqueletodiabolico.critico = Math.floor(Math.random() * 2) + 1;
-                                porcion.daño_aux = ((2 * esqueletodiabolico.ataque)/5) + 2 * esqueletodiabolico.critico * (esqueletodiabolico.ataque / jugador.defensa) / 50 + 2;
+                                porcion.daño_aux = Math.floor(((2 * esqueletodiabolico.ataque)/5) + 2 * esqueletodiabolico.critico * (esqueletodiabolico.ataque / jugador.defensa) / 50 + 2);
                             }
                             console.log(porcion.daño_aux);
                             porcion.velocidadx = 0;
@@ -680,7 +694,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         }
         //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
        
-        hitbox.clearRect (0,0,canvas.width, canvas.height);
+        //hitbox.clearRect (0,0,canvas.width, canvas.height);
         return colisiones;
     }
 
@@ -860,7 +874,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 300, jugador.ancho + 400, jugador.altura + 400, 0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
-        hitbox.clearRect(0,0,canvas.width, canvas.height);
+        //hitbox.clearRect(0,0,canvas.width, canvas.height);
         //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
        // console.log(personajes[0].vida);
         requestAnimationFrame(loop);
