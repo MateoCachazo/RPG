@@ -177,7 +177,7 @@ body {
     </div>
 
     <div class="clase" data-personaje="Arquero" style="--i:2;">
-      <img src="imagenes/Arquero.png" alt="Arquero">
+      <img src="imagenes/Arquero tarjeta.png" alt="Arquero">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Arquero</strong><br>
