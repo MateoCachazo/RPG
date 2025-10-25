@@ -39,12 +39,12 @@ body {
   left: 27%;
   top: 20%;
   transform: translate(-50%, -50%);
-  background: #222;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  backface-visibility: hidden;
   font-size: 22px;
   font-weight: bold;
   transition: all 0.5s;
@@ -54,7 +54,7 @@ body {
 /* Borde cuando está seleccionada */
 .clase.seleccionada {
   box-shadow: 0 0 25px 5px #00ff99;
-  transform: scale(1.6) !important;
+  transform: scale(2.5) !important;
 }
 
 /* Animación al elegir definitivamente */
@@ -68,7 +68,7 @@ body {
 }
 
 .clase-estadisticas {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.95);
   position: absolute;
   bottom: 0px;
   border-radius: 0px 0px 15px 15px;
@@ -86,9 +86,21 @@ body {
 }
 
 .clase img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 130px;
+  width: auto;
+  height: auto;
+  margin-bottom: 70px;
+}
+
+.clase:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+  margin-top: 2px;
+}
+
+.clase img:hover {
+  transform: scale(1.3);
+  transition: transform 0.3s;
+  margin-top: -20px;
 }
 
 .flecha {
@@ -139,7 +151,7 @@ body {
   <div class="carrusel" id="carrusel">
     <!-- Tarjetas -->
     <div class="clase" data-personaje="Guerrero" style="--i:0;">
-      <img src="imagenes/Guerrero.png" alt="Guerrero">
+      <img src="imagenes/Guerrero tarjeta.png" alt="Guerrero">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Guerrero</strong><br>
@@ -152,7 +164,7 @@ body {
     </div>
 
     <div class="clase" data-personaje="Mago" style="--i:1;">
-      <img src="imagenes/Mago.png" alt="Mago">
+      <img src="imagenes/Mago tarjeta.png" alt="Mago">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Mago</strong><br>
@@ -178,7 +190,7 @@ body {
     </div>
 
     <div class="clase" data-personaje="Golem" style="--i:3;">
-      <img src="imagenes/Golem.png" alt="Golem">
+      <img src="imagenes/Golem tarjeta.png" alt="Golem">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Golem</strong><br>
@@ -191,7 +203,7 @@ body {
     </div>
 
     <div class="clase" data-personaje="Ninja" style="--i:4;">
-      <img src="imagenes/Ninja.png" alt="Ninja">
+      <img src="imagenes/Ninja tarjeta.png" alt="Ninja">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Ninja</strong><br>
@@ -204,7 +216,7 @@ body {
     </div>
 
     <div class="clase" data-personaje="Vampiro" style="--i:5;">
-      <img src="imagenes/Vampiro.png" alt="Vampiro">
+      <img src="imagenes/Vampiro tarjeta.png" alt="Vampiro">
       <div class="clase-estadisticas">
         <div class="text-group">
           <strong>Vampiro</strong><br>
