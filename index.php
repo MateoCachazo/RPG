@@ -19,15 +19,12 @@ session_start();
             scroll-behavior: smooth;
             user-select: none;
         }
-        body {
-          
-            color: #fff;
-            background-clip: url('imagenes/fondo\ juego.mp4');
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            min-height: 100vh;
-            margin: 0;
-            
+        body {         
+           color: #fff;
+           background-clip: url('imagenes/fondo\ juego.mp4');
+           font-family: 'Press Start 2P';
+           min-height: 10vh;
+           margin: 0;          
         }
         .menu {
             margin-top: 120px;
@@ -40,7 +37,7 @@ session_start();
             width: 320px;
             margin: 18px auto;
             padding: 18px 0;
-            font-size: 1.5em;         
+            font-size: 1.0em;         
             border-radius: 12px;
             cursor: pointer;           
             font-family: inherit;
@@ -237,6 +234,8 @@ a:hover  {
 
 }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <audio id="audioFondo" src="imagenes/audio.mp3" autoplay loop></audio>
