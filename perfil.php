@@ -161,9 +161,31 @@ $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
       .name{ font-size:18px }
       .panel-right{ width:100% }
     }
+    .video-background-container {
+    position: fixed; /* Fija el contenedor en la pantalla */
+  width: 100%;
+  height: 100%; /* Ocupa el 100% de la altura de la ventana (viewport) */
+  overflow: hidden; /* Oculta cualquier parte del video que se desborde */
+}
+
+/* Estilos para el video de fondo */
+#videoFondo {
+  position: fixed; /* Mantiene el video fijo en su lugar y lo envia detras de todo*/
+  right: 0;
+  bottom: 0;
+  min-width: 100%; /* Asegura que el video cubra todo el ancho */
+  min-height: 100%; /* Asegura que el video cubra toda la altura */
+  z-index: -1; /* Coloca el video detrás del resto del contenido */
+  object-fit: cover; /* Recorta el video para que cubra todo el contenedor, manteniendo su relación de aspecto */
+} 
   </style>
 </head>
 <body>
+  <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
+    <source src="imagenes/fondo juego.mp4" type="video/mp4">
+    <!-- Puedes agregar más etiquetas source para distintos formatos -->
+    Tu navegador no soporta la etiqueta de video.
+  </video>
   <div class="container">
     <aside class="panel-left" aria-label="Perfil">
       <div class="avatar" title="Imagen de perfil">
