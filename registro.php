@@ -170,7 +170,7 @@
   </video>  
 <div class="form-container">
 	<p class="title">Register</p>
-    <form class="form">
+    <form class="form" action="registroo.php" method="post">
         <div class="input-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
