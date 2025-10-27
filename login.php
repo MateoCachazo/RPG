@@ -174,7 +174,7 @@
 
 <div class="form-container">
 	<p class="title">Login</p>
-	<form class="form">
+	<form class="form" action="login2.php" method="post">
 		<div class="input-group">
 			<label for="username">Username</label>
 			<input type="text" name="username" id="username" placeholder="">
