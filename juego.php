@@ -961,7 +961,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     function loop()
     {
         //console.log(jugador.estado);
-       // musica.play();
+        musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
