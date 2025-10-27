@@ -320,7 +320,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     let piso = {x:0, y:canvas.height - 291,altura:20, ancho:340};
     let piso2 = {x: 479, y: canvas.height - 291, altura: 20, ancho: canvas.width};
-    let pisoagua = {x:340, y:canvas.height - 270,altura:20, ancho:139};
+    let pisoagua = {x:340, y:canvas.height - 286,altura:20, ancho:139};
     /*let piso3 = {x: 592, y: canvas.height - 292, altura: 20, ancho: 22};
     let piso4 = {x: 640, y: canvas.height - 292, altura: 20, ancho: 20};
     let piso5 = {x: 684, y: canvas.height - 292, altura: 20, ancho: 214};
@@ -863,17 +863,19 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                     }
                 }  
             
-                for (let i = 0; i < obstaculos.length; i++)
-                {
-                    hitbox.fillStyle = "black";
-                    dibujar_obstaculo(obstaculos[i], hitbox);
-                }
                 for (let i = 0; i < obstaculos_daño.length; i++)
                 {
                     hitbox.fillStyle = "rgba(0,255,0,0.5)";
                     hitbox.clearRect(obstaculos_daño[i].x, obstaculos_daño[i].y, obstaculos_daño[i].ancho, obstaculos_daño[i].altura);
                     dibujar_obstaculo(obstaculos_daño[i],hitbox);
                 }
+
+                for (let i = 0; i < obstaculos.length; i++)
+                {
+                    hitbox.fillStyle = "black";
+                    dibujar_obstaculo(obstaculos[i], hitbox);
+                }
+                
                 for (let i = 0; i < objetos.length; i++)
                 {
                     hitbox.fillStyle = "black";
