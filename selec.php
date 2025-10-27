@@ -195,10 +195,10 @@ body {
       <div class="text-group">
         <strong>Guerrero</strong>
       </div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">120</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">80</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">45</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">95</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">20</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">15</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">4</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">12</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 
@@ -206,10 +206,10 @@ body {
     <img src="imagenes/Mago tarjeta.png" alt="Mago">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Mago</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">80</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">40</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">60</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">110</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">15</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">5</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">2</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">20</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 
@@ -217,10 +217,10 @@ body {
     <img src="imagenes/Arquero tarjeta.png" alt="Arquero">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Arquero</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">95</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">60</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">90</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">85</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">10</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">6</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">5</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">15</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 
@@ -228,10 +228,10 @@ body {
     <img src="imagenes/Golem tarjeta.png" alt="Golem">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Golem</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">180</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">120</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">28</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">50</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">30</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">20</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">1</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">5</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 
@@ -239,10 +239,10 @@ body {
     <img src="imagenes/Ninja tarjeta.png" alt="Ninja">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Ninja</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">90</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">45</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">110</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">90</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">100</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">5</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">6</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">15</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 
@@ -250,10 +250,10 @@ body {
     <img src="imagenes/Vampiro tarjeta.png" alt="Vampiro">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Vampiro</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">100</span><span class="stat-label">Vida</span></div>
-      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">55</span><span class="stat-label">Defensa</span></div>
-      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">95</span><span class="stat-label">Velocidad</span></div>
-      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">88</span><span class="stat-label">Ataque</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">10</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">5</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">6</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">10</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
 </div>
