@@ -239,7 +239,7 @@ body {
     <img src="imagenes/Ninja tarjeta.png" alt="Ninja">
     <div class="clase-estadisticas">
       <div class="text-group"><strong>Ninja</strong></div>
-      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">100</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">10</span><span class="stat-label">Vida</span></div>
       <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">5</span><span class="stat-label">Defensa</span></div>
       <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">6</span><span class="stat-label">Velocidad</span></div>
       <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">15</span><span class="stat-label">Ataque</span></div>
