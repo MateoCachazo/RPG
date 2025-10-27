@@ -148,7 +148,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     no_se_ve.width = screen.width;
     no_se_ve.height = screen.height;
     let clasee = "<?php echo $clase;?>";
-    //clasee = "Vampiro";
+    //clasee = "Arquero";
 
     let rutaBase = 'sprites/clases/';          //Creo una constante con una parte de las rutas de las imagees
     let clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
@@ -577,6 +577,45 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             
         }
     }
+
+    function ataque_especial(personaje)
+    {
+            switch(clasee)
+            {
+                case "Guerrero":
+                    hitbox.fillStyle = "rgba(0,255,0,0.5)";
+                    if (personaje.orientado == 1)
+                    {
+                        hitbox.fillRect(personaje.x, personaje.y + 20 + 10, 70, 60);
+                    }
+                    else if (personaje.orientado == -1)
+                    {
+                        hitbox.fillRect(personaje.x - 30, personaje.y + 20 + 10, 70, 60);
+                    }
+                    snd_golpe_guerrero.play();
+                    personaje.contador_ataque -= 1;
+                break;
+
+                case "Vampiro": 
+                break;
+
+                case "Arquero":
+                    let flecha = new proyectil(jugador.x, jugador.y + 20, 48, 48, jugador.id, flecha_exp, fin, jugador.orientado, 0);
+                    proyectiles.push(flecha);
+                break;
+
+
+                case "Mago":
+                break;
+
+                case "Golem":
+                break;
+
+                case "Ninja":
+                break;
+            }
+    }
+
     function dibujar(contexto)
     {
         //ctx.fillStyle = "rgb(100,100,100)";
@@ -668,43 +707,52 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             hitbox.restore();
         }
     }
-    function dibujar_personaje(a,contexto)
+   function dibujar_personaje(a,contexto)
     {
-            let estado = a.estado;
-            //console.log(a.orientado);
-            contexto.save();
-            if(a.orientado == -1)
-            {
-                contexto.scale(-1, 1); // Invierte horizontalmente
-                contexto.translate(-a.ancho - a.x * 2, 0);
-            }
+        let estado = a.estado;
+        //console.log(a.orientado);
+        contexto.save();
+        /*if (!(personaje.sprite instanceof HTMLImageElement)) {
+            console.error("Sprite inválido en personaje:", personaje);
+            return;
+        }*/
+        if(a.orientado == -1)
+        {
+            contexto.scale(-1, 1); // Invierte horizontalmente
+            contexto.translate(-a.ancho - a.x * 2, 0);
+        }
 
 
-            if(estado == "salto" && a.id > 1)
-            {
-                contexto.drawImage(a.imagen["quieto"], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
-            }
-            else
-            {
-                contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
-            }
-        contexto.restore();
+        if(estado == "salto" && a.id > 1)
+        {
+            contexto.drawImage(a.imagen["quieto"], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+        }
+        else
+        {
+            contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+        }
+       contexto.restore();
 
-        if (a.contador_ataque > 0 && a.estado == "ataque")
-                    {
-                        hitbox.fillStyle = "rgba(0,255,0,0.5)";
-                        if (a.orientado == 1)
-                        {
-                            hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
-                        }
-                        else if (a.orientado == -1)
-                        {
-                            hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
-                        }
-                        snd_golpe_guerrero.play();
-                        a.contador_ataque -= 1;
-                    }
+       if (a.contador_ataque > 0 && a.estado == "ataque")
+        {
+            hitbox.fillStyle = "rgba(0,255,0,0.5)";
+            if (a.orientado == 1)
+            {
+                hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+            }
+            else if (a.orientado == -1)
+            {
+                hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+            }
+            snd_golpe_guerrero.play();
+            a.contador_ataque -= 1;
+        }
+        else if(a.estado == "especial" && a.contador == 3 && a.ximagen == 5)
+        {
+            ataque_especial(a);
+        }
     }
+
     function cambiar(a, b)
     {
         switch(b)
