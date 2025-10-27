@@ -54,7 +54,7 @@ body {
 /* Borde cuando está seleccionada */
 .clase.seleccionada {
   box-shadow: 0 0 25px 5px #00ff99;
-  transform: scale(2.5) !important;
+  
 }
 
 /* Animación al elegir definitivamente */
@@ -243,11 +243,14 @@ function actualizarCarrusel() {
   carrusel.style.transform = `rotateY(${angulo}deg)`;
   clases.forEach((clase, i) => {
     const ang = (360 / total) * i;
+    // decide la escala: si es la tarjeta activa aumentala; si además tiene la clase 'seleccionada' hacela aún más grande
+    let escala = 1;
+    if (i === actual) escala = 1.5;          // la que está en frente
+    if (clase.classList.contains('seleccionada')) escala = 1.9; // si fue marcada por clic
+    clase.style.transform = `rotateY(${ang}deg) translateZ(300px) scale(${escala})`;
     if (i === actual) {
-      clase.style.transform = `rotateY(${ang}deg) translateZ(300px) scale(1.5)`;
       clase.classList.add('activo');
     } else {
-      clase.style.transform = `rotateY(${ang}deg) translateZ(300px) scale(1)`;
       clase.classList.remove('activo');
     }
   });
@@ -266,7 +269,7 @@ document.getElementById('izquierda').onclick = () => {
 };
 
 /* --- SELECCIÓN DE CLASES --- */
-clases.forEach(clase => {
+clases.forEach((clase, i) => {
   clase.addEventListener('click', () => {
     const nombre = clase.dataset.personaje;
 
@@ -278,15 +281,20 @@ clases.forEach(clase => {
         document.getElementById('formSeleccion').submit();
       }, 600);
     } else {
-      // Primer clic → Marcar selección
+      // Primer clic → marcar como seleccionada y centrarla
       const ang = (360 / total);
-      angulo = -ang * Array.from(clases).indexOf(clase);
+      angulo = -ang * i;
+      actual = i;
+      // marcar visual
       clases.forEach(c => c.classList.remove('seleccionada'));
-      clase.classList.add('seleccionada');}
+      clase.classList.add('seleccionada');
       claseSeleccionada = clase;
+      actualizarCarrusel();
     }
-  )
+  });
 });
+
+
 
 actualizarCarrusel();
 </script>

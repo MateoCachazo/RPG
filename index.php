@@ -37,7 +37,7 @@ session_start();
             width: 320px;
             margin: 18px auto;
             padding: 18px 0;
-            font-size: 1.0em;         
+            font-size: 0.9em;         
             border-radius: 12px;
             cursor: pointer;           
             font-family: inherit;
@@ -181,6 +181,8 @@ session_start();
 }
 
 
+
+
 .cerrar-popup {
   color: #ddd;
   font-size: 20px;
@@ -232,6 +234,11 @@ a:hover  {
   
   animation: arribaImg 2s ease infinite;
 
+}
+
+h2{
+  font-size: 0.97em;
+  margin: 10px 0;
 }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
