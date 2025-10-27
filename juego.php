@@ -47,6 +47,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     #juego {
       z-index: 1;
+      image-rendering: pixelated;
     }
     #hud
     {
@@ -74,6 +75,65 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     const hitbox = no_se_ve.getContext("2d", { willReadFrequently: true })
     const hud = document.getElementById("hud");
     const hud_ctx = hud.getContext("2d", {willReadFrequently: true})
+
+    class proyectil
+    {
+        constructor (x, y, ancho, altura,id, imagen, imagen_fin, orientado, velocidady)
+        {
+            this.velocidadx = 5;
+            this.velocidady_max = -5;
+            this.velocidady = velocidady;
+            this.orientado = orientado;
+            this.anchoimagen = 48;
+            this.ximagen = 0;
+            this.yimagen = 0;
+            this.altoimagen = 48;
+            this.contador = 0;
+            this.contador_limite = 5;
+            this.animacion_continua = true;
+            this.x = x;
+            this.y = y;
+            this.ancho = ancho;
+            this.altura = altura;
+            this.id = id;
+            this.imagen = imagen;
+            this.imagen_fin = imagen_fin;
+        }
+    }
+    class laser
+    {
+        constructor (x, y, ancho, altura,id, imagen, imagen_fin)
+        {
+            this.anchoimagen = 48;
+            this.altoimagen = 48;
+            this.contador = 0;
+            this.contador_limite = 5;
+            this.x = x;
+            this.y = y;
+            this.ancho = ancho;
+            this.altura = altura;
+            this.id = id;
+            this.imagen = imagen;
+            this.imagen_fin = imagen_fin;
+        }
+    }
+    class magia
+    {
+        constructor (x, y, ancho, altura,id, imagen, imagen_fin)
+        {
+            this.anchoimagen = 48;
+            this.altoimagen = 48;
+            this.contador = 0;
+            this.contador_limite = 5;
+            this.x = x;
+            this.y = y;
+            this.ancho = ancho;
+            this.altura = altura;
+            this.id = id;
+            this.imagen = imagen;
+            this.imagen_fin = imagen_fin;
+        }
+    }
     
     ctx.fillStyle = 'red';
     ctx.fillRect(0,0,100,100);
@@ -112,45 +172,66 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
 
+    let flecha_exp = new Image();
+    flecha_exp.src = "sprites/clases/Flecha Explosiva (Ataque-Especial-Arquero).png";
 
-     for (const a in objetos_accion) 
-    {
-    const sufijo = objetos_accion[a];
-    objetos_nivel1.forEach(p => {
-        const img = new Image();
-        const src = `sprites/${p}${sufijo}.png`;
-        img.src = src;
-        imagenes[p][a] = img;
-
-
-        promesasCarga.push(new Promise(res => {
-        img.onload = res;
-        img.onerror = () => {
-            console.error(`Error al cargar imagen: ${src}`);
-            res(); // continúa incluso si falla una imagen
+    promesasCarga.push(new Promise(res => {
+        flecha_exp.onload = res;
+        flecha_exp.onerror = () => {
+            console.error(`Error al cargar imagen: ${flecha_exp.src}`);
+            res();
         };
-        }));
-    });
+    }));
+
+    let fin = new Image();
+    fin.src = "sprites/clases/Explosión (Ataque-Especial-Arquero).png";
+
+    promesasCarga.push(new Promise(res => {
+        fin.onload = res;
+        fin.onerror = () => {
+            console.error("aaaaaaaaaaaaaaaaaaaa");
+            res();
+        };
+    }));
+
+    for (const a in objetos_accion) 
+    {
+        const sufijo = objetos_accion[a];
+        objetos_nivel1.forEach(p => {
+            const img = new Image();
+            const src = `sprites/${p}${sufijo}.png`;
+            img.src = src;
+            imagenes[p][a] = img;
+
+
+            promesasCarga.push(new Promise(res => {
+            img.onload = res;
+            img.onerror = () => {
+                console.error(`Error al cargar imagen: ${src}`);
+                res(); // continúa incluso si falla una imagen
+            };
+            }));
+        });
     }
 
     for (const a in accion) 
     {
-    const sufijo = accion[a];
-    clases.forEach(p => {
-        const img = new Image();
-        const src = `${rutaBase}${p}${sufijo}.png`;
-        img.src = src;
-        imagenes[p][a] = img;
+        const sufijo = accion[a];
+        clases.forEach(p => {
+            const img = new Image();
+            const src = `${rutaBase}${p}${sufijo}.png`;
+            img.src = src;
+            imagenes[p][a] = img;
 
 
-        promesasCarga.push(new Promise(res => {
-        img.onload = res;
-        img.onerror = () => {
-            console.error(`Error al cargar imagen: ${src}`);
-            res(); // continúa incluso si falla una imagen
-        };
-        }));
-    });
+            promesasCarga.push(new Promise(res => {
+            img.onload = res;
+            img.onerror = () => {
+                console.error(`Error al cargar imagen: ${src}`);
+                res(); // continúa incluso si falla una imagen
+            };
+            }));
+        });
     }
 
     rutaBase = 'sprites/enemigos/';          //Creo una constante con una parte de las rutas de las imagees
@@ -160,22 +241,22 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     for (const a in accion2) 
     {
-    const sufijo = accion2[a];
-    enemigos.forEach(p => {
-        const img = new Image();
-        const src = `${rutaBase}${p}${sufijo}.png`;
-        img.src = src;
-        imagenes[p][a] = img;
+        const sufijo = accion2[a];
+        enemigos.forEach(p => {
+            const img = new Image();
+            const src = `${rutaBase}${p}${sufijo}.png`;
+            img.src = src;
+            imagenes[p][a] = img;
 
 
-        promesasCarga.push(new Promise(res => {
-        img.onload = res;
-        img.onerror = () => {
-            console.error(`Error al cargar imagen: ${src}`);
-            res(); // continúa incluso si falla una imagen
-        };
-        }));
-    });
+            promesasCarga.push(new Promise(res => {
+            img.onload = res;
+            img.onerror = () => {
+                console.error(`Error al cargar imagen: ${src}`);
+                res(); // continúa incluso si falla una imagen
+            };
+            }));
+        });
     }
 
 
@@ -258,6 +339,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let nenufar1 = {ximagen:0, yimagen:0,x: 360, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let tabla = {ximagen:0, yimagen:0,x: 400, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -2, animacion_continua: true};
     let nenufar2 = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let proyectiles = [];
 
     let obstaculos = [pared1, pared2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
     let objetos = [nenufar1, tabla, nenufar2];
@@ -517,6 +599,11 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             dibujar_objeto(objetos[i]);
             ctx.drawImage(objetos[i].imagen[objetos[i].estado], objetos[i].ximagen * objetos[i].anchoimagen, 0, objetos[i].anchoimagen, objetos[i].altoimagen, objetos[i].x - 14, objetos[i].y - 18, objetos[i].ancho, objetos[i].altura);
         }
+        for (let i = 0; i < proyectiles.length; i++)
+        {
+            contexto.fillStyle = "black";
+            dibujar_proyectil(proyectiles[i],contexto);
+        }
         //ctx.drawImage(nivel1_adelante, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
         /*hud_ctx.fillStyle = "black";
         hud_ctx.strokeStyle = "white";
@@ -533,6 +620,19 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             contexto.clearRect(obstaculos_daño[i].x, obstaculos_daño[i].y, obstaculos_daño[i].ancho, obstaculos_daño[i].altura);
             dibujar_obstaculo(obstaculos_daño[i],contexto);
         }*/
+    }
+    function dibujar_proyectil(a,contexto)
+    {
+        contexto.save();
+        if(a.orientado == -1)
+        {
+            contexto.scale(-1, 1); // Invierte horizontalmente
+            contexto.translate(-a.ancho - a.x * 2, 0);
+        }
+        contexto.drawImage(a.imagen, a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+        contexto.restore();
+        hitbox.fillStyle = "rgba(0,255,0,0.5)";
+        hitbox.fillRect(a.x +20, a.y + 20,20, 20);
     }
 
     function dibujar_objeto(a)
@@ -570,40 +670,40 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     }
     function dibujar_personaje(a,contexto)
     {
-        let estado = a.estado;
-        //console.log(a.orientado);
-        contexto.save();
-        if(a.orientado == -1)
-        {
-            contexto.scale(-1, 1); // Invierte horizontalmente
-            contexto.translate(-a.ancho - a.x * 2, 0);
-        }
+            let estado = a.estado;
+            //console.log(a.orientado);
+            contexto.save();
+            if(a.orientado == -1)
+            {
+                contexto.scale(-1, 1); // Invierte horizontalmente
+                contexto.translate(-a.ancho - a.x * 2, 0);
+            }
 
 
-        if(estado == "salto" && a.id > 1)
-        {
-            contexto.drawImage(a.imagen["quieto"], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
-        }
-        else
-        {
-            contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
-        }
-       contexto.restore();
+            if(estado == "salto" && a.id > 1)
+            {
+                contexto.drawImage(a.imagen["quieto"], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+            }
+            else
+            {
+                contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+            }
+        contexto.restore();
 
-       if (a.contador_ataque > 0 && a.estado == "ataque")
-                {
-                    hitbox.fillStyle = "rgba(0,255,0,0.5)";
-                    if (a.orientado == 1)
+        if (a.contador_ataque > 0 && a.estado == "ataque")
                     {
-                        hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+                        hitbox.fillStyle = "rgba(0,255,0,0.5)";
+                        if (a.orientado == 1)
+                        {
+                            hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+                        }
+                        else if (a.orientado == -1)
+                        {
+                            hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+                        }
+                        snd_golpe_guerrero.play();
+                        a.contador_ataque -= 1;
                     }
-                    else if (a.orientado == -1)
-                    {
-                        hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
-                    }
-                    snd_golpe_guerrero.play();
-                    a.contador_ataque -= 1;
-                }
     }
     function cambiar(a, b)
     {
@@ -646,19 +746,30 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             break;
 
             case -1:
-                if(a.contador >= a.contador_limite)
+                if (a.id < 0)
                 {
-                    a.contador = 0;
                     a.ximagen = 0;
-                    if(a.ximagen >= a.imagen.naturalWidth / 48 && a.animacion_continua)
+                }
+            else
+            {
+                    if(a.contador >= a.contador_limite)
                     {
-                        a.ximagen = 0;
+                        a.contador = 0;
+                        a.ximagen++;
+                        if(a.ximagen >= a.imagen.naturalWidth / 48 && a.animacion_continua)
+                        {
+                            a.ximagen = 0;
+                        }
                     }
-                }
-                else
-                {
-                    a.contador++;
-                }
+                    else
+                    {
+                        a.contador++;
+                    }
+                    if(a.animacion_continua == false && a.ximagen == a.imagen.naturalWidth && a.contador == a.contador_limite)
+                    {
+                        proyectiles.splice(proyectiles.indexOf(a), 1);
+                    }
+            }
             break;
         }
     }
@@ -720,6 +831,14 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                     hitbox.fillStyle = "black";
                     //hitbox.clearRect(objetos[i].x, objetos[i].y, objetos[i].ancho, objetos[i].altura);
                     dibujar_objeto(objetos[i]);
+                }
+                for (let i = 0; i < proyectiles.length; i++)
+                {
+                    hitbox.fillStyle = "black";
+                    if(proyectiles[i].id != porcion.id)
+                    {
+                        dibujar_proyectil(proyectiles[i],hitbox);
+                    }
                 }
                 let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
                 porcion.x -= porcion.velocidadx;
@@ -957,6 +1076,25 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         }
     }
 
+    function mover_proyectil(objeto)
+    {
+        let aux = objeto.velocidadx;
+        objeto.velocidadx = 0;
+        if(revisar_porcion(objeto).izquierda && revisar_porcion(objeto).izquierda/* true*/)
+        {
+            objeto.velocidadx = aux;
+        }
+        else if(objeto.animacion_continua != false)
+        {
+            objeto.imagen = objeto.imagen_fin;
+            objeto.animacion_continua = false;
+            objeto.ximagen = 0;
+            objeto.contador_limite = 2;
+        }
+        objeto.x+=objeto.velocidadx * objeto.orientado;
+        cambiar(objeto, -1);
+
+    }
 
     function loop()
     {
@@ -975,6 +1113,10 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         for (let i = 1; i < objetos.length; i++)
         {
             cambiar(objetos[i], -1);
+        }
+        for (let i = 1; i < proyectiles.length; i++)
+        {
+            mover_proyectil(proyectiles[i]);
         }
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
         if (jugador.y - camaray_aux >= 100 || jugador.y - camaray_aux <= -100)
@@ -1019,4 +1161,3 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     loop()
 
 </script>
-
