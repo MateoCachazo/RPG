@@ -1148,7 +1148,13 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     function loop()
     {
-        //console.log(jugador.estado);
+        if (jugador.vida <= 0)
+       {
+        window.location.href = "index.php";
+       }
+       else
+       {
+         //console.log(jugador.estado);
         musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
@@ -1205,6 +1211,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         hitbox.clearRect(0,0,canvas.width, canvas.height);
         //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
         // console.log(personajes[0].vida);
+       }
+       
         requestAnimationFrame(loop);
        
     }
