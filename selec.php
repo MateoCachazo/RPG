@@ -40,7 +40,6 @@ body {
   top: 20%;
   transform: translate(-50%, -50%);
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,6 +76,11 @@ body {
   color: white;
   font-size: 14px;
   text-align: left;
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .text-group {
@@ -133,6 +137,41 @@ body {
   z-index: -1;
   object-fit: cover;
 }
+
+.icon-corazon { background-image: url('imagenes/corazon.png'); }
+.icon-escudo   { background-image: url('imagenes/escudo\ defensa.png'); }
+.icon-rayo     { background-image: url('imagenes/rayo.png'); }
+.icon-espada   { background-image: url('imagenes/espada.png'); }
+
+.stat-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+/* icono */
+.stat-icon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+}
+
+.stat-value-escudo{color: blue; font-size: 10px;}
+.stat-value-vida { color: red; font-size: 10px;}
+.stat-value-velocidad { color: orange; font-size: 10px;}
+.stat-value-ataque { color: deepskyblue; font-size: 10px;}
+/* texto del label */
+.stat-label {
+  color: #ddd;
+  font-size: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -148,86 +187,76 @@ body {
 
 <div class="carrusel-container">
   <button id="izquierda" class="flecha">⟨</button>
-  <div class="carrusel" id="carrusel">
-    <!-- Tarjetas -->
-    <div class="clase" data-personaje="Guerrero" style="--i:0;">
-      <img src="imagenes/Guerrero tarjeta.png" alt="Guerrero">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Guerrero</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">----</span><br>
-          Defensa: <span style="color:chartreuse; font-weight:bold;">---</span><br>
-          Velocidad: <span style="color:chartreuse; font-weight:bold;">--</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">--</span> <span style="color:brown; font-weight:bold;">-</span>
-        </div>
+ <div class="carrusel" id="carrusel">
+  <!-- Tarjetas -->
+  <div class="clase" data-personaje="Guerrero" style="--i:0;">
+    <img src="imagenes/Guerrero tarjeta.png" alt="Guerrero">
+    <div class="clase-estadisticas">
+      <div class="text-group">
+        <strong>Guerrero</strong>
       </div>
-    </div>
-
-    <div class="clase" data-personaje="Mago" style="--i:1;">
-      <img src="imagenes/Mago tarjeta.png" alt="Mago">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Mago</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">---</span><br>
-          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
-          Velocidad: <span style="color:chartreuse; font-weight:bold;">-</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">----</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="clase" data-personaje="Arquero" style="--i:2;">
-      <img src="imagenes/Arquero tarjeta.png" alt="Arquero">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Arquero</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br>
-          Defensa: <span style="color:chocolate; font-weight:bold;">--</span><br>
-          Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">---</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="clase" data-personaje="Golem" style="--i:3;">
-      <img src="imagenes/Golem tarjeta.png" alt="Golem">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Golem</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">------</span><br>
-          Defensa: <span style="color:chartreuse; font-weight:bold;">----</span><br>
-          Velocidad: <span style="color:chocolate; font-weight:bold;">-</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">-</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="clase" data-personaje="Ninja" style="--i:4;">
-      <img src="imagenes/Ninja tarjeta.png" alt="Ninja">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Ninja</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><span style="color:brown; font-weight:bold;"> -</span><br>
-          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
-          Velocidad: <span style="color:chartreuse; font-weight:bold;">---</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">---</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="clase" data-personaje="Vampiro" style="--i:5;">
-      <img src="imagenes/Vampiro tarjeta.png" alt="Vampiro">
-      <div class="clase-estadisticas">
-        <div class="text-group">
-          <strong>Vampiro</strong><br>
-          Vida: <span style="color:chartreuse; font-weight:bold;">--</span><br>
-          Defensa: <span style="color:chartreuse; font-weight:bold;">-</span><br>
-          Velocidad: <span style="color:chartreuse; font-weight:bold;">----</span><br>
-          Ataque: <span style="color:chartreuse; font-weight:bold;">--</span>
-        </div>
-      </div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">120</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">80</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">45</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">95</span><span class="stat-label">Ataque</span></div>
     </div>
   </div>
+
+  <div class="clase" data-personaje="Mago" style="--i:1;">
+    <img src="imagenes/Mago tarjeta.png" alt="Mago">
+    <div class="clase-estadisticas">
+      <div class="text-group"><strong>Mago</strong></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">80</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">40</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">60</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">110</span><span class="stat-label">Ataque</span></div>
+    </div>
+  </div>
+
+  <div class="clase" data-personaje="Arquero" style="--i:2;">
+    <img src="imagenes/Arquero tarjeta.png" alt="Arquero">
+    <div class="clase-estadisticas">
+      <div class="text-group"><strong>Arquero</strong></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">95</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">60</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">90</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">85</span><span class="stat-label">Ataque</span></div>
+    </div>
+  </div>
+
+  <div class="clase" data-personaje="Golem" style="--i:3;">
+    <img src="imagenes/Golem tarjeta.png" alt="Golem">
+    <div class="clase-estadisticas">
+      <div class="text-group"><strong>Golem</strong></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">180</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">120</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">28</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">50</span><span class="stat-label">Ataque</span></div>
+    </div>
+  </div>
+
+  <div class="clase" data-personaje="Ninja" style="--i:4;">
+    <img src="imagenes/Ninja tarjeta.png" alt="Ninja">
+    <div class="clase-estadisticas">
+      <div class="text-group"><strong>Ninja</strong></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">90</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">45</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">110</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">90</span><span class="stat-label">Ataque</span></div>
+    </div>
+  </div>
+
+  <div class="clase" data-personaje="Vampiro" style="--i:5;">
+    <img src="imagenes/Vampiro tarjeta.png" alt="Vampiro">
+    <div class="clase-estadisticas">
+      <div class="text-group"><strong>Vampiro</strong></div>
+      <div class="stat-line"><span class="stat-icon icon-corazon" ></span><span class="stat-value-vida">100</span><span class="stat-label">Vida</span></div>
+      <div class="stat-line"><span class="stat-icon icon-escudo" ></span><span class="stat-value-escudo">55</span><span class="stat-label">Defensa</span></div>
+      <div class="stat-line"><span class="stat-icon icon-rayo" ></span><span class="stat-value-velocidad">95</span><span class="stat-label">Velocidad</span></div>
+      <div class="stat-line"><span class="stat-icon icon-espada" ></span><span class="stat-value-ataque">88</span><span class="stat-label">Ataque</span></div>
+    </div>
+  </div>
+</div>
   <button id="derecha" class="flecha">⟩</button>
 </div>
 
