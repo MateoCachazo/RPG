@@ -298,15 +298,15 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         "Ninja":
         {
             velocidadx_max: 6,
-            velocidady_max: 4,
+            velocidady_max: 6,
             vida: 100,
             ataque: 15,
             defensa: 5
         },
         "Vampiro":
         {
-            velocidadx_max: 7,
-            velocidady_max: 2,
+            velocidadx_max: 6,
+            velocidady_max: 3,
             vida: 10,
             ataque: 10,
             defensa: 5
