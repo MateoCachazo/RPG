@@ -1008,24 +1008,29 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                                 }
                                 else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
                                 {
-                                    if (jugador.daño_aux == 0)
+                                    if (jugador.daño_aux >= 0)
                                     {
-                                        for (i = 0; i < objetos.length; i++)
-                                        {
-                                            if ((jugador.orientado == 1 && objetos[i] >= jugador.x && objetos[i] <= jugador.ancho) || (jugador.orientado == -1 && objetos[i] <= jugador.x && objetos[i] >= jugador.ancho))
-                                            {
-                                                objetos.splice(objetos[i].id-1, 1);
-                                                break;
-                                            }
-                                        }
                                         if (jugador.vida + 7 <= estadisticas[clasee].vida)
                                         {
                                             jugador.daño_aux = -7;
                                         }
                                         else
                                         {
-                                            jugador.daño_aux = estadisticas[clasee].vida - jugador.vida;
+                                            jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
                                         }
+
+                                        for (i = 0; i < objetos.length; i++)
+                                        {
+                                            if (objetos[i].id == -3)
+                                            {
+                                                if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                                {
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
+                                                    break;
+                                                }
+                                            }   
+                                        }
+                                        
                                     }                   
                                 }
                             }
@@ -1057,23 +1062,27 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                             }
                             else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
                                 {
-                                    if (jugador.daño_aux == 0)
-                                    {
-                                        for (i = 0; i < objetos.length; i++)
-                                        {
-                                            if ((jugador.orientado == 1 && objetos[i] >= jugador.x && objetos[i] <= jugador.ancho) || (jugador.orientado == -1 && objetos[i] <= jugador.x && objetos[i] >= jugador.ancho))
-                                            {
-                                                objetos.splice(objetos[i].id-1, 1);
-                                                break;
-                                            }
-                                        }
+                                    if (jugador.daño_aux >= 0)
+                                    {                                  
                                         if (jugador.vida + 7 <= estadisticas[clasee].vida)
                                         {
                                             jugador.daño_aux = -7;
                                         }
                                         else
                                         {
-                                            jugador.daño_aux = estadisticas[clasee].vida - jugador.vida;
+                                            jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
+                                        }
+
+                                        for (i = 0; i < objetos.length; i++)
+                                        {
+                                            if (objetos[i].id == -3)
+                                            {
+                                                if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                                {
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
+                                                    break;
+                                                }
+                                            }   
                                         }
                                     }                        
                                 }
