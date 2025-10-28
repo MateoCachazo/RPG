@@ -158,7 +158,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     barra_vida.src = "sprites/Barra de Vida.png";
     let vida_contador = 0;
 
-    let objetos_nivel1 = ['Nenúfar_N1', 'Tabla_N1', 'NenúfarFlor_N1'];
+    let objetos_nivel1 = ['Nenúfar_N1', 'Tabla_N1', 'NenúfarFlor_N1', 'ColeccionableAlma_N1'];
     let objetos_accion = {animacion: ' (animación)', quieto: ' (quieto)'};
 
    
@@ -170,7 +170,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let nivel1_adelante = new Image();
     nivel1_adelante.src = "sprites/Nivel 1 Objetos por delante.png";
 
-    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}};   // creo el objeto donde guardare las imagenes
+    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
 
     let flecha_exp = new Image();
@@ -342,10 +342,12 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let nenufar1 = {ximagen:0, yimagen:0,x: 360, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let tabla = {ximagen:0, yimagen:0,x: 400, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -2, animacion_continua: true};
     let nenufar2 = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let pocion1 = {ximagen:0, yimagen:0,x: 400, y: canvas.height - 350, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.ColeccionableAlma_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
+
     let proyectiles = [];
 
     let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
-    let objetos = [nenufar1, tabla, nenufar2];
+    let objetos = [nenufar1, tabla, nenufar2, pocion1];
     let obstaculos_daño = [agua];
 
     let camaray_aux = jugador.y;
@@ -442,7 +444,11 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                 //console.log(jugador.vida);
                 jugador.daño_aux -= 1;
             }
-
+        else if(jugador.daño_aux < 0 && jugador.estado != "daño")
+        {
+            jugador.vida += 1;
+            jugador.daño_aux += 1;
+        }
         /* Habria que agregar un if que verifica que no tenga colisiones abajo para todo esto, por ahora le da gravedad todo el tiempo */
             
 
@@ -623,7 +629,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     {
         //ctx.fillStyle = "rgb(100,100,100)";
         //ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(nivel1, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
+        //ctx.drawImage(nivel1, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
         for (let i = 0; i < personajes.length; i++)
         {
             contexto.fillStyle = "#FF0000";
@@ -726,6 +732,10 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     function dibujar_objeto(a)
     {
+        if (a.id == -3)
+        {
+            hitbox.fillStyle = "rgb(255,255,64)";
+        }
         hitbox.fillRect(a.x,a.y,20,a.altura);
         //cambiar(a,1);
         //console.log("dibujando");
@@ -996,6 +1006,28 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                                     //porcion.velocidadx += 5;
                                 
                                 }
+                                else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
+                                {
+                                    if (jugador.daño_aux == 0)
+                                    {
+                                        for (i = 0; i < objetos.length; i++)
+                                        {
+                                            if ((jugador.orientado == 1 && objetos[i] >= jugador.x && objetos[i] <= jugador.ancho) || (jugador.orientado == -1 && objetos[i] <= jugador.x && objetos[i] >= jugador.ancho))
+                                            {
+                                                objetos.splice(objetos[i].id-1, 1);
+                                                break;
+                                            }
+                                        }
+                                        if (jugador.vida + 7 <= estadisticas[clasee].vida)
+                                        {
+                                            jugador.daño_aux = -7;
+                                        }
+                                        else
+                                        {
+                                            jugador.daño_aux = estadisticas[clasee].vida - jugador.vida;
+                                        }
+                                    }                   
+                                }
                             }
                             else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                             {
@@ -1023,6 +1055,28 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                                     //porcion.velocidadx -= 5;
                                 }
                             }
+                            else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
+                                {
+                                    if (jugador.daño_aux == 0)
+                                    {
+                                        for (i = 0; i < objetos.length; i++)
+                                        {
+                                            if ((jugador.orientado == 1 && objetos[i] >= jugador.x && objetos[i] <= jugador.ancho) || (jugador.orientado == -1 && objetos[i] <= jugador.x && objetos[i] >= jugador.ancho))
+                                            {
+                                                objetos.splice(objetos[i].id-1, 1);
+                                                break;
+                                            }
+                                        }
+                                        if (jugador.vida + 7 <= estadisticas[clasee].vida)
+                                        {
+                                            jugador.daño_aux = -7;
+                                        }
+                                        else
+                                        {
+                                            jugador.daño_aux = estadisticas[clasee].vida - jugador.vida;
+                                        }
+                                    }                        
+                                }
                         }
                         
                     }
@@ -1205,7 +1259,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
        else
        {
          //console.log(jugador.estado);
-        musica.play();
+        //musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
