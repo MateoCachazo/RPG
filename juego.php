@@ -156,6 +156,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
 
     let barra_vida = new Image();
     barra_vida.src = "sprites/Barra de Vida.png";
+    let vida_contador = 0;
 
     let objetos_nivel1 = ['Nenúfar_N1', 'Tabla_N1', 'NenúfarFlor_N1'];
     let objetos_accion = {animacion: ' (animación)', quieto: ' (quieto)'};
@@ -651,9 +652,56 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         hud_ctx.lineWidth = 2;
         hud_ctx.strokeText(jugador.vida, 70, 30);
         hud_ctx.fillText(jugador.vida, 70, 30);*/
-        hud_ctx.fillStyle = "red";
-        hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
-        hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
+        if (jugador.vida <= (estadisticas[clasee].vida * 45) / 100 && jugador.vida > (estadisticas[clasee].vida * 20) / 100)
+        {
+            if (vida_contador < 9)
+            {
+                vida_contador++;
+                hud_ctx.fillStyle = "#ff9c9c";
+                hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
+                hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);     
+            }
+            else
+            {
+                vida_contador++;
+                hud_ctx.fillStyle = "#ff4c4c";
+                hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
+                hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
+                if (vida_contador >= 19)
+                {
+                    vida_contador = 0;
+                }
+            }
+            
+        }
+        else if (jugador.vida <= (estadisticas[clasee].vida * 20) / 100)
+        {
+            if (vida_contador < 4)
+            {
+                vida_contador++;
+                hud_ctx.fillStyle = "#ff9c9c";
+                hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
+                hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);     
+            }
+            else
+            {
+                vida_contador++;
+                hud_ctx.fillStyle = "#ff4c4c";
+                hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
+                hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
+                if (vida_contador >= 7)
+                {
+                    vida_contador = 0;
+                }
+            }
+        }
+        else
+        {
+            hud_ctx.fillStyle = "#ff4c4c";
+            hud_ctx.fillRect(19,20,((38 * jugador.vida) / estadisticas[clasee].vida),7);
+            hud_ctx.drawImage(barra_vida, 10, 0, 48, 48);
+        }
+        
         
       /*  for (let i = 0; i < obstaculos_daño.length; i++)
         {
