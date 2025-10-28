@@ -321,6 +321,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let piso = {x:0, y:canvas.height - 291,altura:20, ancho:340};
     let piso2 = {x: 479, y: canvas.height - 291, altura: 20, ancho: canvas.width};
     let pisoagua = {x:340, y:canvas.height - 286,altura:20, ancho:139};
+    let antisuicidio1 = {x:338, y:canvas.height - 296,altura:5, ancho:5};
+    let antisuicidio2 = {x:479, y:canvas.height - 296,altura:5, ancho:5};
     /*let piso3 = {x: 592, y: canvas.height - 292, altura: 20, ancho: 22};
     let piso4 = {x: 640, y: canvas.height - 292, altura: 20, ancho: 20};
     let piso5 = {x: 684, y: canvas.height - 292, altura: 20, ancho: 214};
@@ -336,12 +338,12 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let pared = {x: canvas.width - 218, y: canvas.height - 452, ancho:27, altura: 180};
     let pared1 = {x: -5, y: 0, ancho:7, altura: canvas.height};
     let pared2 = {x: canvas.width - 10, y: 0, ancho:40, altura: canvas.height};
-    let nenufar1 = {ximagen:0, yimagen:0,x: 360, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
-    let tabla = {ximagen:0, yimagen:0,x: 400, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -2, animacion_continua: true};
-    let nenufar2 = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 295, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let nenufar1 = {ximagen:0, yimagen:0,x: 360, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let tabla = {ximagen:0, yimagen:0,x: 400, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -2, animacion_continua: true};
+    let nenufar2 = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let proyectiles = [];
 
-    let obstaculos = [pared1, pared2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
+    let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
     let objetos = [nenufar1, tabla, nenufar2];
     let obstaculos_daño = [agua];
 
