@@ -146,7 +146,7 @@ button:hover {
   </style>
 </head>
 <body>
-
+<audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
   <!-- Menú principal -->
   <div id="mainMenu" class="menu active">
     <button id="btnResume">Reanudar</button>

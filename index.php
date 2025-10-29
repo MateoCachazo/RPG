@@ -245,7 +245,7 @@ h2{
 
 </head>
 <body>
-<audio id="audioFondo" src="imagenes/audio.mp3" autoplay loop></audio>
+<audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
     <div class="video-background-container">
   <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
     <source src="imagenes/fondo juego.mp4" type="video/mp4">

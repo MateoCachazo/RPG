@@ -175,6 +175,9 @@ body {
 </style>
 </head>
 <body>
+
+<audio id="audioFondo" src="rpg-seleccionar.wav" autoplay loop></audio>
+
 <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
   <source src="imagenes/fondo juego.mp4" type="video/mp4">
   Tu navegador no soporta la etiqueta de video.
