@@ -97,8 +97,8 @@ session_start();
         .image-container {
             text-align: center;
             margin-top: 60px;
-            width: 1570px;
-            height:170PX;
+            width: 1565px;
+            height:200px;
             transition: transform 0.3s ease;
             animation: agrandar 2s ease-in infinite;
         }
@@ -132,17 +132,16 @@ session_start();
 }
 .imagen-perfil {
   position: fixed;
-  top: 60px;
+  top: 40px;
   right: 18px;
   z-index: 20;
   display: flex;
   align-items: center;
-
 }
 
 .perfil-img {
   width: auto;
-  height: 70px;
+  height: 50px;
   border-radius: 6px;
   cursor: pointer;
   display: block;
@@ -254,7 +253,7 @@ h2{
   </video>
   
     <div class="image-container">
-    <img src="imagenes/logo khaos doom.png" alt="Logo" style="width:400px;">
+    <img src="imagenes/logo khaos doom.png" alt="Logo" style="width:520px;">
     </div>
 
 
