@@ -52,11 +52,11 @@ if (isset($_POST['borrar'])) {
 <title>Seleccionar Partida — RPG-1</title>
 <style>
   :root{
-    --bg1: #0f1723;
-    --bg2: #0b1220;
-    --card: rgba(255,255,255,0.04);
+    --bg1: #156ff7ff;
+    --bg2: #0c4cccff;
+    --card: rgba(240, 10, 10, 0.99);
     --accent: #6dd3ff;
-    --muted: #aeb8c3;
+    --muted: #ffffffff;
     --glass: rgba(255,255,255,0.03);
     --radius: 14px;
     --gap: 20px;
@@ -74,10 +74,16 @@ if (isset($_POST['borrar'])) {
     justify-content:center;
   }
 
-  .wrap{
-    width:100%;
-    max-width:var(--max-width);
-  }
+ .wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px;
+  /* fondo semitransparente + blur del fondo (si el navegador lo soporta) */
+  background: rgba(3, 6, 10, 0.7);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
 
   header{
     display:flex;
@@ -119,7 +125,7 @@ if (isset($_POST['borrar'])) {
     width:56px;
     height:56px;
     border-radius:10px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    color: #5cc0ff; 
     display:flex;
     align-items:center;
     justify-content:center;
@@ -189,9 +195,33 @@ if (isset($_POST['borrar'])) {
     input[type="text"]{ width:100%; min-width:0; }
     .controls{ width:100%; justify-content:flex-end; }
   }
+
+.video-background-container {
+  width: 80%;
+  height: 100%; /* Ocupa el 100% de la altura de la ventana (viewport) */
+  overflow: hidden; /* Oculta cualquier parte del video que se desborde */
+}
+
+/* Estilos para el video de fondo */
+#videoFondo {
+  position: fixed; /* Mantiene el video fijo en su lugar y lo envia detras de todo*/
+  right: 0;
+  bottom: 0;
+  min-width: 100%; /* Asegura que el video cubra todo el ancho */
+  min-height: 100%; /* Asegura que el video cubra toda la altura */
+  z-index: -1; /* Envía el video detrás de otros elementos */
+  object-fit: cover; /* Recorta el video para que cubra todo el contenedor, manteniendo su relación de aspecto */
+}
+
 </style>
 </head>
 <body>
+  <div class="video-background-container">
+  <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
+    <source src="imagenes/fondo juego.mp4" type="video/mp4">
+    <!-- Puedes agregar más etiquetas source para distintos formatos -->
+    Tu navegador no soporta la etiqueta de video.
+  </video>
   <div class="wrap">
     <header>
       <div>
