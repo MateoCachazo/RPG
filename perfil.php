@@ -29,7 +29,6 @@ $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
       margin:0;
       min-height:100vh;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(circle at 20% 10%, #122033 0%, #0b0c0f 50%);
       color:#e9eef5;
       padding:32px;
     }
@@ -46,7 +45,7 @@ $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
     /* panel izquierdo: avatar + basic */
     .panel-left{
       width:320px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(39, 38, 38, 0.63));
       border-radius:var(--radius);
       padding:20px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
@@ -93,6 +92,7 @@ $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
       flex:1;
       display:flex;
       flex-direction:column;
+      background:linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(39, 38, 38, 0.63));
       gap:var(--gap);
     }
 
@@ -181,6 +181,7 @@ $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
   </style>
 </head>
 <body>
+  <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
   <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
     <source src="imagenes/fondo juego.mp4" type="video/mp4">
     <!-- Puedes agregar más etiquetas source para distintos formatos -->

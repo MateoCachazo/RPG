@@ -165,7 +165,7 @@
 
 </style>
 <body>
-    
+    <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
 <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
     <source src="imagenes/fondo juego.mp4" type="video/mp4">
     <!-- Puedes agregar más etiquetas source para distintos formatos -->
