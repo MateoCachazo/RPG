@@ -93,36 +93,29 @@ if (isset($_POST['borrar'])) {
   }
   .subtitle{ color:var(--muted); font-size:13px; }
 
-  /* grid de slots */
-  .slots-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap:var(--gap);
-  }
-
   .slot{
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:var(--radius);
-    padding:16px;
+    border-radius: 20px;
+    padding:40px 40px 25px 8px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.6);
     border: 1px solid rgba(255,255,255,0.03);
     transition: transform .24s ease, box-shadow .24s ease;
     display:flex;
     flex-direction:column;
     align-items:stretch;
-    gap:12px;
+    gap: 12px;
   }
   .slot:hover{
     transform: translateY(-6px);
     box-shadow: 0 18px 48px rgba(0,0,0,0.7);
   }
 
-  .slot-head{
+  .slot-head{ /* encabezado del slot */
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:5px;
   }
-  .slot-id{
+  .slot-id{ /* estilo del slot "#1", "#2", etc */
     width:56px;
     height:56px;
     border-radius:10px;
@@ -139,7 +132,7 @@ if (isset($_POST['borrar'])) {
   .slot-info p{ margin:4px 0 0 0; color:var(--muted); font-size:13px; }
 
   /* contenido */
-  .slot-body{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  .slot-body{ display:flex; gap:1px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
 
   .controls{
     display:flex;
@@ -218,7 +211,7 @@ if (isset($_POST['borrar'])) {
                 <?= $p['nombre'] ? htmlspecialchars($p['nombre']) : "Ranura vacía" ?>
               </h3>
               <p>
-                <?= $p['nombre'] ? "Última vez jugado: —" : "Crea una nueva partida aquí" ?>
+                <?= $p['nombre'] ? "Última vez jugado: —" : " "?>
               </p>
             </div>
             <div class="controls" role="group" aria-label="Acciones slot <?= $p['id'] ?>">
