@@ -142,6 +142,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     const snd_salto = new Audio('sonidos/salto.wav');
     const snd_daño = new Audio('sonidos/daño.wav');
     const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
+    const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
 
     canvas.width = screen.width;
     canvas.height = screen.height;
@@ -629,7 +630,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     {
         //ctx.fillStyle = "rgb(100,100,100)";
         //ctx.fillRect(0,0,canvas.width,canvas.height);
-        //ctx.drawImage(nivel1, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(nivel1, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
         for (let i = 0; i < personajes.length; i++)
         {
             contexto.fillStyle = "#FF0000";
@@ -1019,6 +1020,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                                             jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
                                         }
 
+                                        snd_pocion.play();
+
                                         for (i = 0; i < objetos.length; i++)
                                         {
                                             if (objetos[i].id == -3)
@@ -1072,6 +1075,8 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                                         {
                                             jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
                                         }
+
+                                        snd_pocion.play();
 
                                         for (i = 0; i < objetos.length; i++)
                                         {
