@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registro</title>
 </head>
 <style>
  body {
@@ -170,34 +170,35 @@
     Tu navegador no soporta la etiqueta de video.
   </video>  
 <div class="form-container">
-	<p class="title">Register</p>
+	<p class="title">Registro</p>
     <form class="form" action="registroo.php" method="post">
         <div class="input-group">
-            <label for="username">Username</label>
+            <label for="username">Nombre de Usuario: </label>
             <input type="text" id="username" name="username" required>
         </div>
         <div class="input-group">
-            <label for="email">Email</label>
+            <label for="email">Correo Electrónico</label>
             <input type="email" id="email" name="email" required>
         </div>
         <div class="input-group">
-            <label for="password">Password</label>
+            <label for="password">Contraseña</label>
             <input type="password" id="password" name="password" required>
         </div>
         <div class="input-group">
-            <label for="confirm-password">Confirm Password</label>
+            <label for="confirm-password">Confirmar Contraseña</label>
             <input type="password" id="confirm-password" name="confirm-password" required>
         </div>
         
 			
 		
-		<button class="sign">Sign in</button>
+		<button class="sign">Regístrate</button>
 	</form>
   <br>
   <br>
-	
-	<p class="signup">Already have an account?
-		<a rel="" href="login.php">Log-in</a>
+	<br>
+  <br>
+	<p class="signup">¿Ya tienes una cuenta?
+		<a rel="" href="login.php">Inicia Sesión</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
