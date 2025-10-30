@@ -9,7 +9,7 @@
  body {
     background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
     color: #fff;
-    font-family: 'Cinzel', serif;
+    font-family: 'Press Start 2P';
     text-align: center;
     min-height: 100vh;
     margin: 0;
@@ -195,7 +195,7 @@
   <br>
 	
 	<p class="signup">¿No tienes una cuenta?
-		<a rel="" href="Sign.php">Sign up</a>
+		<a rel="" href="Sign.php">Regístrate</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
