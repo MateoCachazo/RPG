@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio de Sesión</title>
 </head>
 <style>
  body {
     background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
     color: #fff;
-    font-family: 'Cinzel', serif;
+    font-family: 'Press Start 2P';
     text-align: center;
     min-height: 100vh;
     margin: 0;
@@ -173,29 +173,29 @@
   </video>
 
 <div class="form-container">
-	<p class="title">Login</p>
+	<p class="title">Inicio de Sesión</p>
 	<form class="form" action="login2.php" method="post">
 		<div class="input-group">
-			<label for="username">Username</label>
+			<label for="username">Nombre de Usuario: </label>
 			<input type="text" name="username" id="username" placeholder="">
 		</div>
 		<div class="input-group">
-			<label for="password">Password</label>
+			<label for="password">Contraseña: </label>
 			<input type="password" name="password" id="password" placeholder="">
       <br>
       <br>
       <br>
 			<div class="forgot">
-				<a rel="noopener noreferrer" href="#">Forgot Password ?</a>
+				<a rel="noopener noreferrer" href="#">¿Olvidaste tu contraseña?</a>
 			</div>
 		</div>
-		<button class="sign">Sign in</button>
+		<button class="sign">Inicia Sesión</button>
 	</form>
   <br>
   <br>
 	
-	<p class="signup">Don't have an account?
-		<a rel="" href="Sign.php">Sign up</a>
+	<p class="signup">¿No tienes una cuenta?
+		<a rel="" href="Sign.php">Regístrate</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
