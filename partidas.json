@@ -1,14 +1,19 @@
-[
-    {
+{
+    "0": {
         "id": 1,
         "nombre": null
     },
-    {
+    "1": {
         "id": 2,
         "nombre": null
     },
-    {
+    "2": {
         "id": 3,
         "nombre": "a"
+    },
+    "372": {
+        "x": 22,
+        "y": 400,
+        "clase": "Guerrero"
     }
-]
+}
