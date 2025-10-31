@@ -2,7 +2,7 @@
 
 $datos = json_decode(file_get_contents("partidas.json"), true);
 
-$input = json_decode(file_get_contents("php://input"));
+$input = json_decode(file_get_contents("php://input"), true);
 
 
 
