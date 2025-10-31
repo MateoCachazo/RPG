@@ -174,7 +174,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let nivel1_adelante = new Image();
     nivel1_adelante.src = "sprites/Nivel 1 Objetos por delante.png";
 
-    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}, PócimaCuración: {}, Pincho: {}, Pinchogrande: {}};   // creo el objeto donde guardare las imagenes
+    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}, PócimaCuración: {}, Pincho: {}, Pinchogrande: {}, PinchoAlt: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
 
     let flecha_exp = new Image();
@@ -271,6 +271,11 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let pinchos_img = new Image();
     pinchos_img.src = "sprites/Pincho.png";
     imagenes.Pincho = pinchos_img;
+
+    let pinchoss_img = new Image();
+    pinchoss_img.src = "sprites/Pincho2.png";
+    imagenes.PinchoAlt = pinchoss_img;
+
     let pinchosgr_img = new Image();
     pinchosgr_img.src = "sprites/Pinchogrande.png";
     imagenes.Pinchogrande = pinchosgr_img;
@@ -370,12 +375,15 @@ $clase = $_POST['personaje'] ?? "Guerrero";
     let pocion1 = {ximagen:0, yimagen:0,x: 414, y: canvas.height - 330, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
     let pocion2 = {ximagen:0, yimagen:0,x: canvas.width - 285, y: canvas.height - 340, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
     let pincho1 = {ximagen:0, yimagen:0,x: 578, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.Pincho, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
+    let pincho2 = {ximagen:0, yimagen:0,x: 627, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.PinchoAlt, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
+    let pincho3 = {ximagen:0, yimagen:0,x: 672, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.Pincho, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
+    let pinchogrande = {ximagen:0, yimagen:0,x: 900, y: canvas.height - 362, altura: 32, ancho: 63, altoimagen: 90, anchoimagen: 63, imagen: imagenes.Pinchogrande, contador: 0, contador_limite: 15, id: -4, animacion_continua: true};
     let sacrificio = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 20, altura: 10, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true}; //este sacrificio es para que ande el resto de objetos
 
     let proyectiles = [];
 
     let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
-    let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1];
+    let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande];
     let obstaculos_daño = [agua];
 
     let camaray_aux = jugador.y;
@@ -687,7 +695,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
         {
             hitbox.fillStyle = "black";
             dibujar_objeto(objetos[i]);
-            if (objetos[i].id == -2)
+            if (objetos[i].id == -2 || objetos[i].id == -4)
             {
                 ctx.drawImage(objetos[i].imagen, objetos[i].ximagen * objetos[i].anchoimagen, 0, objetos[i].anchoimagen, objetos[i].altoimagen, objetos[i].x - 14, objetos[i].y - 18, objetos[i].anchoimagen, objetos[i].altoimagen);
             }
@@ -797,7 +805,7 @@ $clase = $_POST['personaje'] ?? "Guerrero";
             hitbox.fillStyle = "rgb(0,1,0)";
             hitbox.fillRect(a.x,a.y,20,a.altura);
         }
-        else if (a.id == -2)
+        else if (a.id == -2 || a.id == -4)
         {
             hitbox.fillStyle = "rgba(0,255,0,0.5)";
             hitbox.fillRect(a.x,canvas.height - 290 - a.altura,20,a.altura);
@@ -972,6 +980,82 @@ $clase = $_POST['personaje'] ?? "Guerrero";
                         a.contador = 0;
                         a.ximagen++;
                         if(a.ximagen >= a.imagen.naturalWidth / 30)
+                        {
+                            a.ximagen = 0;
+                            //a.altura = ;
+                        }
+                    }
+                    else
+                    {
+                        a.contador++;
+                    }
+                }
+                else if (a.id == -4)
+                {
+                    switch (a.ximagen)
+                    {
+                        case 0:
+                            a.altura = 0;
+                            a.contador_limite = 3;
+                        break;
+                        case 1:
+                            a.altura = 39;
+                            a.contador_limite = 3;
+                        break;
+                        case 2:
+                            a.altura = 56;
+                            a.contador_limite = 3;
+                        break;
+                        case 3:
+                            a.altura = 88;
+                            a.contador_limite = 5;
+                        break;
+                        case 4:
+                            a.altura = 88;
+                            a.contador_limite = 5;
+                        break;
+                        case 5:
+                            a.altura = 88;
+                            a.contador_limite = 5;
+                        break;
+                        case 6:
+                            a.altura = 88;
+                            a.contador_limite = 5;
+                        break;
+                        case 7:
+                            a.altura = 88;
+                            a.contador_limite = 5;
+                        break;
+                        case 8:
+                            a.altura = 54;
+                            a.contador_limite = 3;
+                        break;
+                        case 9:
+                            a.altura = 38;
+                            a.contador_limite = 3;
+                        break;
+                        case 10:
+                            a.altura = 4;
+                            a.contador_limite = 5;
+                        break;
+                        case 11:
+                            a.altura = 0;
+                            a.contador_limite = 15;
+                        break;
+                        case 12:
+                            a.altura = 0;
+                            a.contador_limite = 15;
+                        break;
+                        case 13:
+                            a.altura = 0;
+                            a.contador_limite = 15;
+                        break;
+                    }
+                    if(a.contador >= a.contador_limite)
+                    {
+                        a.contador = 0;
+                        a.ximagen++;
+                        if(a.ximagen >= a.imagen.naturalWidth / 63)
                         {
                             a.ximagen = 0;
                             //a.altura = ;
