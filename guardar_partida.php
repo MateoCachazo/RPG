@@ -19,8 +19,9 @@ else
     $partidanueva['y'] = $input['y'];
     $partidanueva['clase'] = $input['clase'];
     $partidanueva['id'] = $input['id'];
+    $datos[] = $partidanueva;
 }
 
-file_put_contents("partidas.json", json_encode($datos, JSON_PRETTY_PRINT))
+file_put_contents("partidas.json", json_encode($datos, JSON_PRETTY_PRINT));
 
 ?>
