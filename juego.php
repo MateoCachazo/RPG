@@ -539,7 +539,7 @@ $partida = $_POST['partida'] ?? 0;
     let proyectiles = [];
 
     let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
-    let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande/*, checkpoint1*/];
+    let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande, checkpoint1];
     let obstaculos_daño = [agua];
 
     let camaray_aux = jugador.y;
@@ -1395,14 +1395,14 @@ $partida = $_POST['partida'] ?? 0;
                             else if (pixeles[i] == 0 && pixeles[i+1] == 1 && pixeles[i+2] == 0)
                             {
                                 colisiones.abajo = false;  
-                                for (let i = 0; i < objetos.length; i++)
+                                for (let j = 0; j < objetos.length; i++)
                                 {
-                                    if (objetos[i].id == -1)
+                                    if (objetos[j].id == -1)
                                     {
-                                        if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                        if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                         {
-                                            objetos[i].estado = "animacion";
-                                            objetos[i].animacion_continua = false;
+                                            objetos[j].estado = "animacion";
+                                            objetos[j].animacion_continua = false;
                                             break;
                                         }
                                     }  
@@ -1477,12 +1477,12 @@ $partida = $_POST['partida'] ?? 0;
                                             if (objetos[j].id == -5)
                                             {
                                                 if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
-                                                {
+                                                
                                                     if (objetos[j].estado == "apagado" && porcion.id == 1)
                                                     {
                                                         objetos[j].estado = "animacion";
-                                                        xinicio = objetos[i].x;
-                                                        yinicio = objetos[i].y;
+                                                        xinicio = objetos[j].x;
+                                                        yinicio = objetos[j].y;
                                                         //console.log("se cambiooo");
                                                         console.log(xinicio, " ", yinicio)
                                                     }
@@ -1490,9 +1490,9 @@ $partida = $_POST['partida'] ?? 0;
                                                     break;
                                                 }
                                             }  
-                                        }
-                                }
+                                    }
                             }
+                            
                             else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                             {
                                 colisiones.derecha = false;
@@ -1557,8 +1557,8 @@ $partida = $_POST['partida'] ?? 0;
                                                 if (objetos[j].estado == "apagado" && porcion.id == 1)
                                                 {
                                                     objetos[j].estado = "animacion";
-                                                    xinicio = objetos[i].x;
-                                                    yinicio = objetos[i].y;
+                                                    xinicio = objetos[j].x;
+                                                    yinicio = objetos[j].y;
                                                    // console.log("se cambiooo");
                                                     console.log(xinicio, " ", yinicio)
                                                 }
@@ -1571,11 +1571,9 @@ $partida = $_POST['partida'] ?? 0;
                             }
                                            
                         }
-                               
                     }
-                       
                 }
-        }
+        }       
         else
         {
                     let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
@@ -1751,7 +1749,7 @@ $partida = $_POST['partida'] ?? 0;
        else
        {
          //console.log(jugador.estado);
-        //musica.play();
+        musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
