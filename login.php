@@ -195,7 +195,7 @@
   <br>
 	
 	<p class="signup">¿No tienes una cuenta?
-		<a rel="" href="Sign.php">Regístrate</a>
+		<a rel="" href="registro.php">Regístrate</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
