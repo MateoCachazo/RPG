@@ -11,6 +11,7 @@ if ($input['id'] > count($datos))
     $datos[$input['id']]['x'] = $input['x'];
     $datos[$input['id']]['y'] = $input['y'];
     $datos[$input['id']]['clase'] = $input['clase'];
+    $datos[$input['id']]['id'] = $input['id'];
 }
 else
 {

@@ -30,8 +30,14 @@
         "password": "bl4z3pr0"
     },
     {
+<<<<<<< HEAD
+        "username": "Eric",
+        "email": "est.nachtygal.eric@latecnicalf.com.ar",
+        "password": "hola123"
+=======
         "username": "Nacho",
         "email": "nachosbuelz@gmail.com",
         "password": "12345678910"
+>>>>>>> 7b012bea3d57fa6d90dd0c577b51b8e4c87c36ee
     }
 ]
