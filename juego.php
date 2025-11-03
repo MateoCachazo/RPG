@@ -1,25 +1,5 @@
 <?php
-$json = json_decode(file_get_contents("partidas.json"), true);
-$partida = $_POST['partida'] ?? count($json);
-
-foreach ($json as $i => $j)
-{
-    if ($i == $partida)
-    {
-        $xinicio = $j['x'] ?? 22;
-        $yinicio = $j['y'] ?? 400;
-        $clase = $j['clase'] ?? "Guerrero";
-        break;
-    }
-}
-
-if (empty($xinicio))
-{
-    $xinicio = $j['x'] ?? 22;
-    $yinicio = $j['y'] ?? 400;
-    $clase = $j['clase'] ?? "Guerrero";
-}
-
+$clase = $_POST['personaje'] ?? "Guerrero";
 ?>
 
 <!DOCTYPE html>
@@ -159,7 +139,7 @@ if (empty($xinicio))
     ctx.fillRect(0,0,100,100);
     const musica = new Audio('cancion-rpg.wav');
     musica.volume = 0.5;
-    const snd_salto = new Audio('sonidos/salto.wav');
+    const snd_24lto = new Audio('sonidos/salto.wav');
     const snd_daño = new Audio('sonidos/daño.wav');
     const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
     const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
@@ -169,10 +149,7 @@ if (empty($xinicio))
     no_se_ve.width = screen.width;
     no_se_ve.height = screen.height;
     let clasee = "<?php echo $clase;?>";
-    let partida = <?php echo $partida;?>;
     //clasee = "Arquero";
-    let xinicio = <?php echo $xinicio?>;
-    let yinicio = <?php echo $yinicio?>;
 
     let rutaBase = 'sprites/clases/';          //Creo una constante con una parte de las rutas de las imagees
     let clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
@@ -197,7 +174,7 @@ if (empty($xinicio))
     let nivel1_adelante = new Image();
     nivel1_adelante.src = "sprites/Nivel 1 Objetos por delante.png";
 
-    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}, PócimaCuración: {}, Pincho: {}, Pinchogrande: {}, PinchoAlt: {}};   // creo el objeto donde guardare las imagenes
+    const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}, PócimaCuración: {}};   // creo el objeto donde guardare las imagenes
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
 
     let flecha_exp = new Image();
@@ -291,18 +268,6 @@ if (empty($xinicio))
     imagenes.Admin = {};
     imagenes.Admin = imagenes.Vampiro;
 
-    let pinchos_img = new Image();
-    pinchos_img.src = "sprites/Pincho.png";
-    imagenes.Pincho = pinchos_img;
-
-    let pinchoss_img = new Image();
-    pinchoss_img.src = "sprites/Pincho2.png";
-    imagenes.PinchoAlt = pinchoss_img;
-
-    let pinchosgr_img = new Image();
-    pinchosgr_img.src = "sprites/Pinchogrande.png";
-    imagenes.Pinchogrande = pinchosgr_img;
-
     let teclas = {};
     let estadisticas = 
     {
@@ -366,7 +331,7 @@ if (empty($xinicio))
 
     //clasee = "Admin";
 
-    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: xinicio, y: yinicio, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: 0, ataque: estadisticas[clasee].ataque, critico: 1, defensa: estadisticas[clasee].defensa, nivel: 1, xp: 0};
+    let jugador = {contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 22, y:400, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: 0, ataque: estadisticas[clasee].ataque, critico: 1, defensa: estadisticas[clasee].defensa, nivel: 1, xp: 0};
     let esqueletodiabolico1 = {vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 80, y: canvas.height - 400, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
     let esqueletodiabolico2 = {vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 500, y: canvas.height - 400, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
     let esqueletodiabolico3 = {vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 1400, y: canvas.height - 400, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
@@ -397,16 +362,11 @@ if (empty($xinicio))
     let nenufar2 = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let pocion1 = {ximagen:0, yimagen:0,x: 414, y: canvas.height - 330, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
     let pocion2 = {ximagen:0, yimagen:0,x: canvas.width - 285, y: canvas.height - 340, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
-    let pincho1 = {ximagen:0, yimagen:0,x: 578, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.Pincho, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
-    let pincho2 = {ximagen:0, yimagen:0,x: 627, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.PinchoAlt, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
-    let pincho3 = {ximagen:0, yimagen:0,x: 672, y: canvas.height - 322, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.Pincho, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
-    let pinchogrande = {ximagen:0, yimagen:0,x: 900, y: canvas.height - 362, altura: 32, ancho: 63, altoimagen: 90, anchoimagen: 63, imagen: imagenes.Pinchogrande, contador: 0, contador_limite: 15, id: -4, animacion_continua: true};
-    let sacrificio = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 20, altura: 10, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true}; //este sacrificio es para que ande el resto de objetos
 
     let proyectiles = [];
 
     let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
-    let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande];
+    let objetos = [nenufar1, tabla, nenufar2, pocion1, pocion2];
     let obstaculos_daño = [agua];
 
     let camaray_aux = jugador.y;
@@ -718,14 +678,7 @@ if (empty($xinicio))
         {
             hitbox.fillStyle = "black";
             dibujar_objeto(objetos[i]);
-            if (objetos[i].id == -2 || objetos[i].id == -4)
-            {
-                ctx.drawImage(objetos[i].imagen, objetos[i].ximagen * objetos[i].anchoimagen, 0, objetos[i].anchoimagen, objetos[i].altoimagen, objetos[i].x - 14, objetos[i].y - 18, objetos[i].anchoimagen, objetos[i].altoimagen);
-            }
-            else
-            {
-                ctx.drawImage(objetos[i].imagen[objetos[i].estado], objetos[i].ximagen * objetos[i].anchoimagen, 0, objetos[i].anchoimagen, objetos[i].altoimagen, objetos[i].x - 14, objetos[i].y - 18, objetos[i].ancho, objetos[i].altura);              
-            }
+            ctx.drawImage(objetos[i].imagen[objetos[i].estado], objetos[i].ximagen * objetos[i].anchoimagen, 0, objetos[i].anchoimagen, objetos[i].altoimagen, objetos[i].x - 14, objetos[i].y - 18, objetos[i].ancho, objetos[i].altura);
         }
         for (let i = 0; i < proyectiles.length; i++)
         {
@@ -821,18 +774,12 @@ if (empty($xinicio))
         if (a.id == -3)
         {
             hitbox.fillStyle = "rgb(255,255,64)";
-            hitbox.fillRect(a.x - 13,a.y,20,a.altura);
         }
         else if (a.id == -1)
         {
             hitbox.fillStyle = "rgb(0,1,0)";
-            hitbox.fillRect(a.x,a.y,20,a.altura);
         }
-        else if (a.id == -2 || a.id == -4)
-        {
-            hitbox.fillStyle = "rgba(0,255,0,0.5)";
-            hitbox.fillRect(a.x,canvas.height - 290 - a.altura,20,a.altura);
-        }      
+        hitbox.fillRect(a.x,a.y,20,a.altura);
         //cambiar(a,1);
         //console.log("dibujando");
     }
@@ -863,7 +810,6 @@ if (empty($xinicio))
             hitbox.restore();
         }
     }
-
    function dibujar_personaje(a,contexto)
     {
         let estado = a.estado;
@@ -953,144 +899,6 @@ if (empty($xinicio))
             break;
 
             case -1:
-                if (a.id == -2)
-                {
-                    switch (a.ximagen)
-                    {
-                        case 0:
-                            a.altura = 22;
-                            a.contador_limite = 2;
-                        break;
-                        case 1:
-                            a.altura = 35;
-                            a.contador_limite = 2;
-                        break;
-                        case 2:
-                            a.altura = 50;
-                            a.contador_limite = 2;
-                        break;
-                        case 3:
-                            a.altura = 50;
-                            a.contador_limite = 4;
-                        break;
-                        case 4:
-                            a.altura = 50;
-                            a.contador_limite = 4;
-                        break;
-                        case 5:
-                            a.altura = 35;
-                            a.contador_limite = 4;
-                        break;
-                        case 6:
-                            a.altura = 22;
-                            a.contador_limite = 2;
-                        break;
-                        case 7:
-                            a.altura = 9;
-                            a.contador_limite = 2;
-                        break;
-                        case 8:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 9:
-                            a.altura = 0;
-                            a.contador_limite = 60;
-                        break;
-                    }
-                    if(a.contador >= a.contador_limite)
-                    {
-                        a.contador = 0;
-                        a.ximagen++;
-                        if(a.ximagen >= a.imagen.naturalWidth / 30)
-                        {
-                            a.ximagen = 0;
-                            //a.altura = ;
-                        }
-                    }
-                    else
-                    {
-                        a.contador++;
-                    }
-                }
-                else if (a.id == -4)
-                {
-                    switch (a.ximagen)
-                    {
-                        case 0:
-                            a.altura = 0;
-                            a.contador_limite = 3;
-                        break;
-                        case 1:
-                            a.altura = 39;
-                            a.contador_limite = 3;
-                        break;
-                        case 2:
-                            a.altura = 56;
-                            a.contador_limite = 3;
-                        break;
-                        case 3:
-                            a.altura = 88;
-                            a.contador_limite = 5;
-                        break;
-                        case 4:
-                            a.altura = 88;
-                            a.contador_limite = 5;
-                        break;
-                        case 5:
-                            a.altura = 88;
-                            a.contador_limite = 5;
-                        break;
-                        case 6:
-                            a.altura = 88;
-                            a.contador_limite = 5;
-                        break;
-                        case 7:
-                            a.altura = 88;
-                            a.contador_limite = 5;
-                        break;
-                        case 8:
-                            a.altura = 54;
-                            a.contador_limite = 3;
-                        break;
-                        case 9:
-                            a.altura = 38;
-                            a.contador_limite = 3;
-                        break;
-                        case 10:
-                            a.altura = 4;
-                            a.contador_limite = 5;
-                        break;
-                        case 11:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 12:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 13:
-                            a.altura = 0;
-                            a.contador_limite = 60;
-                        break;
-                    }
-                    if(a.contador >= a.contador_limite)
-                    {
-                        a.contador = 0;
-                        a.ximagen++;
-                        if(a.ximagen >= a.imagen.naturalWidth / 63)
-                        {
-                            a.ximagen = 0;
-                            //a.altura = ;
-                        }
-                    }
-                    else
-                    {
-                        a.contador++;
-                    }
-                }
-                else
-                {
                     if(a.contador >= a.contador_limite)
                     {
                         a.contador = 0;
@@ -1115,8 +923,6 @@ if (empty($xinicio))
                     {
                         proyectiles.splice(proyectiles.indexOf(a), 1);
                     }
-                }
-                
             break;
         }
     }
@@ -1141,7 +947,6 @@ if (empty($xinicio))
 
 
     }
-
     function revisar_porcion(porcion)
     {
         let colisiones = {abajo: true, arriba: true, izquierda: true, derecha: true};
@@ -1178,7 +983,7 @@ if (empty($xinicio))
                 
                 for (let i = 0; i < objetos.length; i++)
                 {
-                    //hitbox.fillStyle = "black";
+                    hitbox.fillStyle = "black";
                     //hitbox.clearRect(objetos[i].x, objetos[i].y, objetos[i].ancho, objetos[i].altura);
                     dibujar_objeto(objetos[i]);
                 }
@@ -1238,12 +1043,8 @@ if (empty($xinicio))
                         {
                             if (x < porcion.ancho / 2 && y < porcion.altura -2)
                             {
-                                if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
-                                {
-                                    colisiones.izquierda = false;
-                                }
-                                
-                                else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
+                                colisiones.izquierda = false;
+                                if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
                                 {
                                     snd_daño.play();
                                     if (porcion.id != 1)
@@ -1256,7 +1057,7 @@ if (empty($xinicio))
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    //console.log(porcion.daño_aux);
+                                    console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1287,7 +1088,7 @@ if (empty($xinicio))
                                             {
                                                 if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(objetos.indexOf(objetos[i]), 1);
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
                                                     break;
                                                 }
                                             }   
@@ -1298,11 +1099,8 @@ if (empty($xinicio))
                             }
                             else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                             {
-                                if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
-                                {
-                                    colisiones.derecha = false;
-                                }
-                                else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
+                                colisiones.derecha = false;
+                                if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                                 {
                                     snd_daño.play();
                                     if (porcion.id != 1)
@@ -1315,7 +1113,7 @@ if (empty($xinicio))
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    //console.log(porcion.daño_aux);
+                                    console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1346,7 +1144,7 @@ if (empty($xinicio))
                                             {
                                                 if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(objetos.indexOf(objetos[i]), 1);
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
                                                     break;
                                                 }
                                             }   
@@ -1530,19 +1328,7 @@ if (empty($xinicio))
     {
         if (jugador.vida <= 0)
        {
-            fetch("guardar_partida.php", 
-            {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                id: partida,
-                x: xinicio,
-                y: yinicio,
-                clase: clasee
-            })
-            }
-        );
-        window.location.href = "juego.php";
+        window.location.href = "index.php";
        }
        else
        {
@@ -1552,14 +1338,13 @@ if (empty($xinicio))
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
         dibujar(ctx);
-        
         //console.log(jugador.y);
         moverJugador();
         for (let i = 1; i < personajes.length; i++)
         {
             mover_enemigos(personajes[i]);
         }
-        for (let i = 0; i < objetos.length; i++)
+        for (let i = 1; i < objetos.length; i++)
         {
             cambiar(objetos[i], -1);
         }

@@ -32,6 +32,7 @@ session_start();
             text-align: left;
         }
         .menu-btn {
+          top: 100px;
             border: none;
             display: block;
             width: 320px;
@@ -96,7 +97,7 @@ session_start();
               
         .image-container {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 5px;
             width: 1565px;
             height:200px;
             transition: transform 0.3s ease;
@@ -253,42 +254,77 @@ h2{
   </video>
   
     <div class="image-container">
-    <img src="imagenes/logo khaos doom.png" alt="Logo" style="width:520px;">
+    <img src="imagenes/logo khaos doomS.png" alt="Logo" style="width:500px;">
     </div>
 
-
-
-
-   <div class= "imagen-perfil" id="abrir-perfil">
-   <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img"> 
-    
+<div class= "imagen-perfil" id="abrir-perfil">
+  <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img">
 </div>
 
 <?php
-if (isset($_SESSION["username"])) 
-{
-    echo "<div id='popup-perfil' class='popup-fondo'>
-  <div class='popup-contenido'>
-    <span class='cerrar-popup'>&times;</span>
-    <img src='imagen/perfil2.png' alt='Foto de perfil' class='foto-perfil'>
-    <h2>user</h2>
-    <p>@nombredeusuario</p>
-    <p><strong>Descripción:</strong> Descripción breve del usuario.</p>
-  </div>
-</div>";
-}
-else
-{
-    echo "<div id='popup-perfil' class='popup-fondo'>
-  <div class='popup-contenido'>
-    <span class='cerrar-popup'>&times;</span>
-   <p> <h2><a href= 'login.php'>Inicia Sesión </a></h2> </p>
-   <p> <h2><a href= 'registro.php'>Registrate </a></h2> </p>
-  </div>
-</div>";
+// Cargar datos del usuario desde USUARIOS.json si hay sesión
+$userData = null;
+if (isset($_SESSION['username']) && file_exists(__DIR__ . '/USUARIOS.json')) {
+    $contenido = file_get_contents(__DIR__ . '/USUARIOS.json');
+    $usuarios = json_decode($contenido, true);
+    if (is_array($usuarios)) {
+        foreach ($usuarios as $u) {
+            if (isset($u['username']) && $u['username'] === $_SESSION['username']) {
+                $userData = $u;
+                break;
+            }
+        }
+    }
 }
 
+// Fallbacks
+$displayName = $userData['username'] ?? ($_SESSION['username'] ?? null);
+$displayEmail = $userData['email'] ?? ($_SESSION['email'] ?? null);
+$displayNivel = isset($userData['nivel']) ? intval($userData['nivel']) : (isset($_SESSION['nivel']) ? intval($_SESSION['nivel']) : null);
+$displayXP = isset($userData['xp']) ? intval($userData['xp']) : (isset($_SESSION['xp']) ? intval($_SESSION['xp']) : null);
+$avatarPath = $userData['avatar'] ?? 'imagenes/perfil2.png';
 ?>
+
+<!-- Popup de perfil (siempre presente para que el JS lo encuentre) -->
+<div id="popup-perfil" class="popup-fondo" role="dialog" aria-hidden="true">
+  <div class="popup-contenido" role="document">
+    <span class="cerrar-popup" aria-label="Cerrar">&times;</span>
+
+    <?php if (!empty($displayName)): ?>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <div style="width:72px; height:72px; border-radius:8px; overflow:hidden; flex:0 0 72px;">
+          <img src="<?php echo htmlspecialchars($avatarPath, ENT_QUOTES); ?>" alt="Avatar" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div style="min-width:0;">
+          <h2 style="margin:0 0 6px 0; font-size:1rem;"><?php echo htmlspecialchars($displayName, ENT_QUOTES); ?></h2>
+          <?php if ($displayEmail): ?><div style="color:#ddd; font-size:0.85rem;"><?php echo htmlspecialchars($displayEmail, ENT_QUOTES); ?></div><?php endif; ?>
+        </div>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <?php if ($displayNivel !== null): ?><div style="background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px;">Nivel: <strong><?php echo $displayNivel; ?></strong></div><?php endif; ?>
+        <?php if ($displayXP !== null): ?><div style="background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px;">XP: <strong><?php echo $displayXP; ?></strong></div><?php endif; ?>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:8px;">
+        <a href="perfil.php" style="padding:8px 10px; border-radius:8px; background:#1f8cff; color:#041017; text-decoration:none; font-weight:700;">Ver perfil</a>
+        <a href="editar_perfil.php" style="padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); color:#ddd; text-decoration:none;">Editar</a>
+        <a href="logout.php" style="padding:8px 10px; border-radius:8px; background:#ff6b6b; color:#fff; text-decoration:none;">Cerrar sesión</a>
+      </div>
+    <?php else: ?>
+      <div style="text-align:center;">
+        <h2 style="margin:0 0 8px 0; margin-right: 200px; font-size: 0.8em;">Invitado</h2>
+        <div style="margin-bottom:12px;">
+          <a href="login.php" style="display:inline-block; margin-bottom: 15px; margin-right:8px; padding:8px 10px; border-radius:8px; background:#1f8cff; color:#041017; text-decoration:none; font-weight:700;">Iniciar sesión</a>
+          <a href="registro.php" style="display:inline-block; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); color:#ddd; text-decoration:none;">Registrarse</a>
+        </div>
+        <div style="color:#ccc; font-size:0.6em;">Inicia sesión para ver tus estadísticas y opciones</div>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+
 
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='selec.php'">Iniciar partida</button>   
