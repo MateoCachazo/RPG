@@ -921,10 +921,12 @@ $partida = $_POST['partida'] ?? 0;
         if (a.id == -3)
         {
             hitbox.fillStyle = "rgb(255,255,64)";
+            hitbox.fillRect(a.x - 15,a.y - 10,20,a.altura);
         }
         else if (a.id == -1)
         {
             hitbox.fillStyle = "rgb(0,1,0)";
+            hitbox.fillRect(a.x,a.y,20,a.altura);
         }
         else if (a.id == -2 || a.id == -4)
         {
@@ -1121,47 +1123,47 @@ $partida = $_POST['partida'] ?? 0;
                     {
                         case 0:
                             a.altura = 0;
-                            a.contador_limite = 3;
+                            a.contador_limite = 4;
                         break;
                         case 1:
                             a.altura = 39;
-                            a.contador_limite = 3;
+                            a.contador_limite = 4;
                         break;
                         case 2:
                             a.altura = 56;
-                            a.contador_limite = 3;
+                            a.contador_limite = 4;
                         break;
                         case 3:
                             a.altura = 88;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 4:
                             a.altura = 88;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 5:
                             a.altura = 88;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 6:
                             a.altura = 88;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 7:
                             a.altura = 88;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 8:
                             a.altura = 54;
-                            a.contador_limite = 3;
+                            a.contador_limite = 4;
                         break;
                         case 9:
                             a.altura = 38;
-                            a.contador_limite = 3;
+                            a.contador_limite = 4;
                         break;
                         case 10:
                             a.altura = 4;
-                            a.contador_limite = 5;
+                            a.contador_limite = 7;
                         break;
                         case 11:
                             a.altura = 0;
@@ -1173,7 +1175,7 @@ $partida = $_POST['partida'] ?? 0;
                         break;
                         case 13:
                             a.altura = 0;
-                            a.contador_limite = 60;
+                            a.contador_limite = 90;
                         break;
                     }
                     if(a.contador >= a.contador_limite)
@@ -1390,7 +1392,7 @@ $partida = $_POST['partida'] ?? 0;
                             {
                                 colisiones.abajo = false;  
                             }
-                            else if (pixeles[i] == 0 && pixeles[i+1] == 1 && pixeles[i+2] == 0 )
+                            else if (pixeles[i] == 0 && pixeles[i+1] == 1 && pixeles[i+2] == 0)
                             {
                                 colisiones.abajo = false;  
                                 for (let i = 0; i < objetos.length; i++)
@@ -1454,13 +1456,13 @@ $partida = $_POST['partida'] ?? 0;
 
                                         snd_pocion.play();
 
-                                        for (i = 0; i < objetos.length; i++)
+                                        for (let j = 0; j < objetos.length; j++)
                                         {
-                                            if (objetos[i].id == -3)
+                                            if (objetos[j].id == -3)
                                             {
-                                                if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(Math.abs(objetos[i].id), 1);
+                                                    objetos.splice(Math.abs(objetos[j].id), 1);
                                                     break;
                                                 }
                                             }  
@@ -1470,15 +1472,15 @@ $partida = $_POST['partida'] ?? 0;
                                 }
                                 else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
                                 {
-                                    for (i = 0; i < objetos.length; i++)
+                                    for (let j = 0; j < objetos.length; j++)
                                         {
-                                            if (objetos[i].id == -5)
+                                            if (objetos[j].id == -5)
                                             {
-                                                if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                                 {
-                                                    if (objetos[i].estado == "apagado" && porcion.id == 1)
+                                                    if (objetos[j].estado == "apagado" && porcion.id == 1)
                                                     {
-                                                        objetos[i].estado = "animacion";
+                                                        objetos[j].estado = "animacion";
                                                         xinicio = objetos[i].x;
                                                         yinicio = objetos[i].y;
                                                         //console.log("se cambiooo");
@@ -1531,13 +1533,13 @@ $partida = $_POST['partida'] ?? 0;
 
                                         snd_pocion.play();
 
-                                        for (i = 0; i < objetos.length; i++)
+                                        for (let j = 0; i < objetos.length; j++)
                                         {
-                                            if (objetos[i].id == -3)
+                                            if (objetos[j].id == -3)
                                             {
-                                                if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(Math.abs(objetos[i].id), 1);
+                                                    objetos.splice(Math.abs(objetos[j].id), 1);
                                                     break;
                                                 }
                                             }  
@@ -1546,15 +1548,15 @@ $partida = $_POST['partida'] ?? 0;
                                 }
                                 else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
                                 {
-                                    for (i = 0; i < objetos.length; i++)
+                                    for (let j = 0; j < objetos.length; j++)
                                     {
-                                        if (objetos[i].id == -5)
+                                        if (objetos[j].id == -5)
                                         {
-                                            if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
+                                            if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                             {
-                                                if (objetos[i].estado == "apagado" && porcion.id == 1)
+                                                if (objetos[j].estado == "apagado" && porcion.id == 1)
                                                 {
-                                                    objetos[i].estado = "animacion";
+                                                    objetos[j].estado = "animacion";
                                                     xinicio = objetos[i].x;
                                                     yinicio = objetos[i].y;
                                                    // console.log("se cambiooo");
@@ -1761,7 +1763,7 @@ $partida = $_POST['partida'] ?? 0;
         {
             mover_enemigos(personajes[i]);
         }
-        for (let i = 1; i < objetos.length; i++)
+        for (let i = 0; i < objetos.length; i++)
         {
             cambiar(objetos[i], -1);
         }
