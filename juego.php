@@ -171,7 +171,7 @@ $partida = $_POST['partida'] ?? 0;
     ctx.fillRect(0,0,100,100);
     const musica = new Audio('cancion-rpg.wav');
     musica.volume = 0.5;
-    const snd_24lto = new Audio('sonidos/salto.wav');
+    const snd_salto = new Audio('sonidos/salto.wav');
     const snd_daño = new Audio('sonidos/daño.wav');
     const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
     const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
@@ -1251,7 +1251,7 @@ $partida = $_POST['partida'] ?? 0;
                     {
                         a.contador++;
                     }
-                    console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
+                    //console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
                     if(!a.animacion_continua && a.ximagen >= a.imagen.naturalWidth/a.imagen.naturalHeight/* && a.contador == a.contador_limite*/)
                     {
                         console.log("puuuuuuum");
@@ -1429,7 +1429,7 @@ $partida = $_POST['partida'] ?? 0;
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    console.log(porcion.daño_aux);
+                                    //console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1481,7 +1481,7 @@ $partida = $_POST['partida'] ?? 0;
                                                         objetos[i].estado = "animacion";
                                                         xinicio = objetos[i].x;
                                                         yinicio = objetos[i].y;
-                                                        console.log("se cambiooo");
+                                                        //console.log("se cambiooo");
                                                         console.log(xinicio, " ", yinicio)
                                                     }
                                                    
@@ -1507,7 +1507,7 @@ $partida = $_POST['partida'] ?? 0;
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    console.log(porcion.daño_aux);
+                                    //console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1557,7 +1557,7 @@ $partida = $_POST['partida'] ?? 0;
                                                     objetos[i].estado = "animacion";
                                                     xinicio = objetos[i].x;
                                                     yinicio = objetos[i].y;
-                                                    console.log("se cambiooo");
+                                                   // console.log("se cambiooo");
                                                     console.log(xinicio, " ", yinicio)
                                                 }
                                                
