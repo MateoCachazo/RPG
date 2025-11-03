@@ -171,7 +171,7 @@ $partida = $_POST['partida'] ?? 0;
     ctx.fillRect(0,0,100,100);
     const musica = new Audio('cancion-rpg.wav');
     musica.volume = 0.5;
-    const snd_salto = new Audio('sonidos/salto.wav');
+    const snd_24lto = new Audio('sonidos/salto.wav');
     const snd_daño = new Audio('sonidos/daño.wav');
     const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
     const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
@@ -921,12 +921,10 @@ $partida = $_POST['partida'] ?? 0;
         if (a.id == -3)
         {
             hitbox.fillStyle = "rgb(255,255,64)";
-            hitbox.fillRect(a.x - 13,a.y,20,a.altura);
         }
         else if (a.id == -1)
         {
             hitbox.fillStyle = "rgb(0,1,0)";
-            hitbox.fillRect(a.x,a.y,20,a.altura);
         }
         else if (a.id == -2 || a.id == -4)
         {
@@ -968,7 +966,6 @@ $partida = $_POST['partida'] ?? 0;
             hitbox.restore();
         }
     }
-
    function dibujar_personaje(a,contexto)
     {
         let estado = a.estado;
@@ -1354,7 +1351,7 @@ $partida = $_POST['partida'] ?? 0;
                
                 for (let i = 0; i < objetos.length; i++)
                 {
-                    //hitbox.fillStyle = "black";
+                    hitbox.fillStyle = "black";
                     //hitbox.clearRect(objetos[i].x, objetos[i].y, objetos[i].ancho, objetos[i].altura);
                     dibujar_objeto(objetos[i]);
                 }
@@ -1432,7 +1429,7 @@ $partida = $_POST['partida'] ?? 0;
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    //console.log(porcion.daño_aux);
+                                    console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1463,7 +1460,7 @@ $partida = $_POST['partida'] ?? 0;
                                             {
                                                 if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(objetos.indexOf(objetos[i]), 1);
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
                                                     break;
                                                 }
                                             }  
@@ -1496,11 +1493,8 @@ $partida = $_POST['partida'] ?? 0;
                             }
                             else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                             {
-                                if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
-                                {
-                                    colisiones.derecha = false;
-                                }
-                                else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
+                                colisiones.derecha = false;
+                                if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                                 {
                                     snd_daño.play();
                                     if (porcion.id != 1)
@@ -1513,7 +1507,7 @@ $partida = $_POST['partida'] ?? 0;
                                         esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                         porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
                                     }
-                                    //console.log(porcion.daño_aux);
+                                    console.log(porcion.daño_aux);
                                     porcion.velocidadx = 0;
                                     porcion.contador_limite = 5;
                                     porcion.contador = 0;
@@ -1543,7 +1537,7 @@ $partida = $_POST['partida'] ?? 0;
                                             {
                                                 if (((jugador.orientado == 1 && objetos[i].x >= jugador.x && objetos[i].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[i].x <= jugador.x && objetos[i].x >= jugador.x - jugador.ancho)) || objetos[i].y >= jugador.y + jugador.altura)
                                                 {
-                                                    objetos.splice(objetos.indexOf(objetos[i]), 1);
+                                                    objetos.splice(Math.abs(objetos[i].id), 1);
                                                     break;
                                                 }
                                             }  
@@ -1767,7 +1761,7 @@ $partida = $_POST['partida'] ?? 0;
         {
             mover_enemigos(personajes[i]);
         }
-        for (let i = 0; i < objetos.length; i++)
+        for (let i = 1; i < objetos.length; i++)
         {
             cambiar(objetos[i], -1);
         }
