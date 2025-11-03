@@ -10,5 +10,17 @@
     {
         "id": 3,
         "nombre": "a"
+    },
+    {
+        "x": 22,
+        "y": 400,
+        "clase": "Arquero",
+        "id": 3
+    }
+]    {
+        "x": 22,
+        "y": 400,
+        "clase": "Arquero",
+        "id": 3
     }
 ]
