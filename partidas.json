@@ -1,33 +1,14 @@
-{
-    "0": {
+[
+    {
         "id": 1,
-        "nombre": null
+        "nombre": "robertito"
     },
-    "1": {
+    {
         "id": 2,
         "nombre": null
     },
-    "2": {
+    {
         "id": 3,
         "nombre": null
-    },
-<<<<<<< HEAD
-    {
-        "x": 22,
-        "y": 400,
-        "clase": "Arquero",
-        "id": 3
     }
-]    {
-        "x": 22,
-        "y": 400,
-        "clase": "Arquero",
-        "id": 3
-=======
-    "372": {
-        "x": 22,
-        "y": 400,
-        "clase": "Guerrero"
->>>>>>> 7b012bea3d57fa6d90dd0c577b51b8e4c87c36ee
-    }
-}
+]
