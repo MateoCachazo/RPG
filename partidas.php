@@ -31,7 +31,7 @@ if (isset($_POST['crear'])) {
 if (isset($_POST['cargar'])) {
     $id = (int)$_POST['id'];
     $_SESSION['partida'] = $id;
-    header("Location: selec.php");
+    header("Location: juego.php");
     exit;
 }
 
@@ -229,6 +229,7 @@ if (isset($_POST['borrar'])) {
         <h1>Seleccionar Partida</h1>
         <div class="subtitle">Elige una ranura para crear, cargar o borrar tu partida</div>
       </div>
+        <div class="subtitle">No hay partidas disponibles.</div>
       <div class="subtitle">Slots disponibles: <?= count($partidas) ?></div>
     </header>
 
