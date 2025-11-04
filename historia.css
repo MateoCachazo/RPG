@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  background-color: #0b0b0d;
+  color: #ffff;
+  font-family: 'Press Start 2P';
+  padding-top: 10px;
+  text-align: center;
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  height: auto;
+  overflow-y: auto;
+}
+#story-text {
+  width: 60%;
+  max-width: 800px;
+  text-align: left; 
+  white-space: pre-line; 
+  margin: 0 auto;
+  font-family: 'Press Start 2P';
+  line-height: 1.6rem;
+  height: 70vh;            
+  overflow-y: auto;       
+  scroll-behavior: smooth; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+
+#intro-container {
+  width: 60%;
+  max-width: 800px;
+  text-align: left;
+  white-space: pre-line;
+  font-family: 'Press Start 2P';
+  line-height: 1.6rem;
+  margin: 80px auto 0 auto;
+}
+
+
+.hidden {
+  display: none;
+}
+
+#continue-hint {
+  color: #a44;
+  margin-top: 40px;
+  animation: blink 1.5s infinite;
+}
+#skip-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background-color: transparent;
+  color: #a44;
+  border: 1px solid #a44;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Press Start 2P';
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+#skip-btn:hover {
+  color: rgba(192, 71, 91, 1);
+            text-shadow: #ba1e1eff 0 0 12px;
+            background: none;
+            animation: blink 3s infinite;
+}
+
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+#ash-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.ash {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(160, 160, 160, 0.4);
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(1px);
+  animation: fallAsh linear infinite;
+}
+
+@keyframes fallAsh {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) translateX(-10vw);
+    opacity: 0.1;
+  }
+}
+
+.spark {
+  position: absolute;
+  width: 2px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,80,0,0.8) 0%, rgba(180,30,0,0.2) 100%);
+  box-shadow: 0 0 6px rgba(255,60,0,0.6);
+  opacity: 0.9;
+  animation: fallSpark linear infinite;
+}
+
+@keyframes fallSpark {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+    filter: blur(0.5px);
+  }
+  100% {
+    transform: translateY(110vh) translateX(8vw) scale(0.3);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
