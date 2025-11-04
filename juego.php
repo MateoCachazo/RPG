@@ -1319,274 +1319,257 @@ $partida = $_POST['partida'] ?? 0;
 
     function revisar_porcion(porcion)
     {
-        let colisiones = {abajo: true, arriba: true, izquierda: true, derecha: true};
-        if(porcion.id > 0)
+        porcion.x += porcion.velocidadx;
+        porcion.y += porcion.velocidady;
+        hitbox.fillStyle = "rgb(125,0,125)";
+        //hitbox.fillRect (porcion.x, porcion.y, porcion.ancho, porcion.altura);
+        dibujar_hitbox(porcion);
+    
+        porcion.base = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
+        importante(porcion.base);
+        for (let i = 0; i < personajes.length; i++)
         {
-                porcion.x += porcion.velocidadx;
-                porcion.y += porcion.velocidady;
-                hitbox.fillStyle = "rgb(125,0,125)";
-                //hitbox.fillRect (porcion.x, porcion.y, porcion.ancho, porcion.altura);
-                dibujar_hitbox(porcion);
-           
-                porcion.base = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
-                importante(porcion.base);
-                for (let i = 0; i < personajes.length; i++)
+            if(personajes[i].id != porcion.id)
+            {
+                dibujar_personaje(personajes[i], hitbox);
+            }
+        }  
+    
+        for (let i = 0; i < obstaculos_daño.length; i++)
+        {
+            hitbox.fillStyle = "rgba(0,255,0,0.5)";
+            hitbox.clearRect(obstaculos_daño[i].x, obstaculos_daño[i].y, obstaculos_daño[i].ancho, obstaculos_daño[i].altura);
+            dibujar_obstaculo(obstaculos_daño[i],hitbox);
+        }
+
+        for (let i = 0; i < obstaculos.length; i++)
+        {
+            hitbox.fillStyle = "black";
+            dibujar_obstaculo(obstaculos[i], hitbox);
+        }
+        
+        for (let i = 0; i < objetos.length; i++)
+        {
+            hitbox.fillStyle = "black";
+            //hitbox.clearRect(objetos[i].x, objetos[i].y, objetos[i].ancho, objetos[i].altura);
+            dibujar_objeto(objetos[i]);
+        }
+        for (let i = 0; i < proyectiles.length; i++)
+        {
+            hitbox.fillStyle = "black";
+            if(proyectiles[i].id != porcion.id)
+            {
+                dibujar_proyectil(proyectiles[i],hitbox);
+            }
+        }
+        let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
+        porcion.x -= porcion.velocidadx;
+        porcion.y -= porcion.velocidady;
+        let colisiones = {abajo: true, arriba: true, izquierda: true, derecha: true};
+        for(let i = 0; i < pixeles.length;i+=4)
+        {
+            if (pixeles[i] != porcion.base[i] || porcion.base[i+1] != pixeles[i+1] || porcion.base[i+2] != pixeles[i+2])
+            {
+                let pixelIndex = i / 4;
+                let x = pixelIndex % porcion.ancho;
+                let y = Math.floor(pixelIndex / porcion.ancho);
+
+
+                // ARRIBA / ABAJO
+                if /*(*/(porcion.base[i+2] == 255 && porcion.base[i+1] == 0 && porcion.base[i] == 0 )
                 {
-                    if(personajes[i].id != porcion.id)
+                    if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0 )
                     {
-                        dibujar_personaje(personajes[i], hitbox);
+                        colisiones.arriba = false;
                     }
-                }  
-           
-                for (let i = 0; i < obstaculos_daño.length; i++)
-                {
-                    hitbox.fillStyle = "rgba(0,255,0,0.5)";
-                    hitbox.clearRect(obstaculos_daño[i].x, obstaculos_daño[i].y, obstaculos_daño[i].ancho, obstaculos_daño[i].altura);
-                    dibujar_obstaculo(obstaculos_daño[i],hitbox);
                 }
-
-                for (let i = 0; i < obstaculos.length; i++)
+                else if(porcion.base[i+2] == 0 && porcion.base[i+1] == 0 && porcion.base[i] == 255 )
                 {
-                    hitbox.fillStyle = "black";
-                    dibujar_obstaculo(obstaculos[i], hitbox);
-                }
-               
-                for (let i = 0; i < objetos.length; i++)
-                {
-                    hitbox.fillStyle = "black";
-                    //hitbox.clearRect(objetos[i].x, objetos[i].y, objetos[i].ancho, objetos[i].altura);
-                    dibujar_objeto(objetos[i]);
-                }
-                for (let i = 0; i < proyectiles.length; i++)
-                {
-                    hitbox.fillStyle = "black";
-                    if(proyectiles[i].id != porcion.id)
+                    if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0 )
                     {
-                        dibujar_proyectil(proyectiles[i],hitbox);
+                        colisiones.abajo = false;  
                     }
-                }
-                let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
-                porcion.x -= porcion.velocidadx;
-                porcion.y -= porcion.velocidady;
-                colisiones = {abajo: true, arriba: true, izquierda: true, derecha: true};
-                for(let i = 0; i < pixeles.length;i+=4)
-                {
-                    if (pixeles[i] != porcion.base[i] || porcion.base[i+1] != pixeles[i+1] || porcion.base[i+2] != pixeles[i+2])
+                    else if (pixeles[i] == 0 && pixeles[i+1] == 1 && pixeles[i+2] == 0)
                     {
-                        let pixelIndex = i / 4;
-                        let x = pixelIndex % porcion.ancho;
-                        let y = Math.floor(pixelIndex / porcion.ancho);
-
-
-                        // ARRIBA / ABAJO
-                        if /*(*/(porcion.base[i+2] == 255 && porcion.base[i+1] == 0 && porcion.base[i] == 0 )
+                        colisiones.abajo = false;  
+                        for (let j = 0; j < objetos.length; j++)
                         {
-                            if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0 )
+                            if (objetos[j].id == -1)
                             {
-                                colisiones.arriba = false;
-                            }
-                        }
-                        else if(porcion.base[i+2] == 0 && porcion.base[i+1] == 0 && porcion.base[i] == 255 )
-                        {
-                            if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0 )
-                            {
-                                colisiones.abajo = false;  
-                            }
-                            else if (pixeles[i] == 0 && pixeles[i+1] == 1 && pixeles[i+2] == 0)
-                            {
-                                colisiones.abajo = false;  
-                                for (let j = 0; j < objetos.length; i++)
+                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                 {
-                                    if (objetos[j].id == -1)
+                                    objetos[j].estado = "animacion";
+                                    objetos[j].animacion_continua = false;
+                                    break;
+                                }
+                            }  
+                        }
+                    }
+                }
+                if (y < porcion.altura - 3)
+                {
+                    if (x < porcion.ancho / 2 && y < porcion.altura -2)
+                    {
+                        if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
+                        {
+                            colisiones.izquierda = false;
+                        }
+                        
+                        else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
+                        {
+                            snd_daño.play();
+                            if (porcion.id != 1)
+                            {
+                                jugador.critico = Math.floor(Math.random() * 3) + 1;
+                                porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico1.defensa) / 50 + 2);
+                            }
+                            else
+                            {
+                                esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
+                                porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
+                            }
+                            //console.log(porcion.daño_aux);
+                            porcion.velocidadx = 0;
+                            porcion.contador_limite = 5;
+                            porcion.contador = 0;
+                            porcion.animacion_continua = false;
+                            porcion.estado = "daño";
+                            porcion.ximagen = 0;
+                            //porcion.velocidadx += 5;
+                        
+                        }
+                        else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
+                        {
+                            if (jugador.daño_aux >= 0)
+                            {
+                                if (jugador.vida + 7 <= estadisticas[clasee].vida)
+                                {
+                                    jugador.daño_aux = -7;
+                                }
+                                else
+                                {
+                                    jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
+                                }
+
+                                snd_pocion.play();
+
+                                for (let j = 0; j < objetos.length; j++)
+                                {
+                                    if (objetos[j].id == -3)
                                     {
                                         if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                         {
-                                            objetos[j].estado = "animacion";
-                                            objetos[j].animacion_continua = false;
+                                            objetos.splice(Math.abs(objetos[j].id), 1);
                                             break;
                                         }
                                     }  
                                 }
-                            }
+                                
+                            }                  
                         }
-                        if (y < porcion.altura - 3)
+                        else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
                         {
-                            if (x < porcion.ancho / 2 && y < porcion.altura -2)
-                            {
-                                if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
+                            for (let j = 0; j < objetos.length; j++)
                                 {
-                                    colisiones.izquierda = false;
-                                }
-                               
-                                else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
-                                {
-                                    snd_daño.play();
-                                    if (porcion.id != 1)
+                                    if (objetos[j].id == -5)
                                     {
-                                        jugador.critico = Math.floor(Math.random() * 3) + 1;
-                                        porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / esqueletodiabolico1.defensa) / 50 + 2);
-                                    }
-                                    else
-                                    {
-                                        esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
-                                        porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
-                                    }
-                                    //console.log(porcion.daño_aux);
-                                    porcion.velocidadx = 0;
-                                    porcion.contador_limite = 5;
-                                    porcion.contador = 0;
-                                    porcion.animacion_continua = false;
-                                    porcion.estado = "daño";
-                                    porcion.ximagen = 0;
-                                    //porcion.velocidadx += 5;
-                               
-                                }
-                                else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
-                                {
-                                    if (jugador.daño_aux >= 0)
-                                    {
-                                        if (jugador.vida + 7 <= estadisticas[clasee].vida)
+                                        if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                         {
-                                            jugador.daño_aux = -7;
-                                        }
-                                        else
-                                        {
-                                            jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
-                                        }
-
-                                        snd_pocion.play();
-
-                                        for (let j = 0; j < objetos.length; j++)
-                                        {
-                                            if (objetos[j].id == -3)
+                                            if (objetos[j].estado == "apagado" && porcion.id == 1)
                                             {
-                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
-                                                {
-                                                    objetos.splice(Math.abs(objetos[j].id), 1);
-                                                    break;
-                                                }
-                                            }  
-                                        }
-                                       
-                                    }                  
-                                }
-                                else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
-                                {
-                                    for (let j = 0; j < objetos.length; j++)
-                                        {
-                                            if (objetos[j].id == -5)
-                                            {
-                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
-                                                
-                                                    if (objetos[j].estado == "apagado" && porcion.id == 1)
-                                                    {
-                                                        objetos[j].estado = "animacion";
-                                                        xinicio = objetos[j].x;
-                                                        yinicio = objetos[j].y;
-                                                        //console.log("se cambiooo");
-                                                        console.log(xinicio, " ", yinicio)
-                                                    }
-                                                   
-                                                    break;
-                                                }
-                                            }  
-                                    }
-                            }
-                            
-                            else if (x > porcion.ancho / 2 && y < porcion.altura -2)
-                            {
-                                colisiones.derecha = false;
-                                if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
-                                {
-                                    snd_daño.play();
-                                    if (porcion.id != 1)
-                                    {
-                                        jugador.critico = Math.floor(Math.random() * 3) + 1;
-                                        porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / porcion.defensa) / 50 + 2);
-                                    }
-                                    else
-                                    {
-                                        esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
-                                        porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
-                                    }
-                                    //console.log(porcion.daño_aux);
-                                    porcion.velocidadx = 0;
-                                    porcion.contador_limite = 5;
-                                    porcion.contador = 0;
-                                    porcion.animacion_continua = false;
-                                    porcion.estado = "daño";
-                                    porcion.ximagen = 0;
-                                    //porcion.velocidadx -= 5;
-                                }
-                                else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
-                                {
-                                    if (jugador.daño_aux >= 0)
-                                    {                                  
-                                        if (jugador.vida + 7 <= estadisticas[clasee].vida)
-                                        {
-                                            jugador.daño_aux = -7;
-                                        }
-                                        else
-                                        {
-                                            jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
-                                        }
-
-                                        snd_pocion.play();
-
-                                        for (let j = 0; i < objetos.length; j++)
-                                        {
-                                            if (objetos[j].id == -3)
-                                            {
-                                                if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
-                                                {
-                                                    objetos.splice(Math.abs(objetos[j].id), 1);
-                                                    break;
-                                                }
-                                            }  
+                                                objetos[j].estado = "animacion";
+                                                xinicio = objetos[j].x;
+                                                yinicio = objetos[j].y;
+                                                //console.log("se cambiooo");
+                                                console.log(xinicio, " ", yinicio)
+                                            }
+                                            
+                                            break;
                                         }
                                     }  
                                 }
-                                else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
-                                {
-                                    for (let j = 0; j < objetos.length; j++)
-                                    {
-                                        if (objetos[j].id == -5)
-                                        {
-                                            if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
-                                            {
-                                                if (objetos[j].estado == "apagado" && porcion.id == 1)
-                                                {
-                                                    objetos[j].estado = "animacion";
-                                                    xinicio = objetos[j].x;
-                                                    yinicio = objetos[j].y;
-                                                   // console.log("se cambiooo");
-                                                    console.log(xinicio, " ", yinicio)
-                                                }
-                                               
-                                                break;
-                                            }
-                                        }  
-                                    }
-                                }      
-                            }
-                                           
                         }
                     }
-                }
-        }       
-        else
-        {
-                    let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
-                    colisiones = {arriba: true};
-                        for(let i = 0; i < pixeles.length;i+=4)
+                    else if (x > porcion.ancho / 2 && y < porcion.altura -2)
+                    {
+                        colisiones.derecha = false;
+                        if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                         {
-                                // ARRIBA / ABAJO
-                                if /*(*/(pixeles[i+2] != 0 || pixeles[i+1] == 0 || pixeles[i] == 0 )
-                                {
-                                    colisiones.arriba = false;  
-                                }
+                            snd_daño.play();
+                            if (porcion.id != 1)
+                            {
+                                jugador.critico = Math.floor(Math.random() * 3) + 1;
+                                porcion.daño_aux = Math.floor(((2 * jugador.ataque)/5) + 2 * jugador.critico * (jugador.ataque / porcion.defensa) / 50 + 2);
+                            }
+                            else
+                            {
+                                esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
+                                porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
+                            }
+                            //console.log(porcion.daño_aux);
+                            porcion.velocidadx = 0;
+                            porcion.contador_limite = 5;
+                            porcion.contador = 0;
+                            porcion.animacion_continua = false;
+                            porcion.estado = "daño";
+                            porcion.ximagen = 0;
+                            //porcion.velocidadx -= 5;
                         }
-        }
+                        else if (pixeles[i] == 255 && pixeles[i+1] == 255 && pixeles[i+2] == 64)
+                        {
+                            if (jugador.daño_aux >= 0)
+                            {                                  
+                                if (jugador.vida + 7 <= estadisticas[clasee].vida)
+                                {
+                                    jugador.daño_aux = -7;
+                                }
+                                else
+                                {
+                                    jugador.daño_aux = (estadisticas[clasee].vida - jugador.vida) * -1;
+                                }
+
+                                snd_pocion.play();
+
+                                for (let j = 0; i < objetos.length; j++)
+                                {
+                                    if (objetos[j].id == -3)
+                                    {
+                                        if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
+                                        {
+                                            objetos.splice(Math.abs(objetos[j].id), 1);
+                                            break;
+                                        }
+                                    }  
+                                }
+                            }  
+                        }
+                        else if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 255)
+                        {
+                            for (let j = 0; j < objetos.length; j++)
+                            {
+                                if (objetos[j].id == -5)
+                                {
+                                    if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
+                                    {
+                                        if (objetos[j].estado == "apagado" && porcion.id == 1)
+                                        {
+                                            objetos[j].estado = "animacion";
+                                            xinicio = objetos[j].x;
+                                            yinicio = objetos[j].y;
+                                            // console.log("se cambiooo");
+                                            console.log(xinicio, " ", yinicio)
+                                        }
+                                        
+                                        break;
+                                    }
+                                }  
+                            }
+                        }      
+                    }
+                                    
+                }
+            }
+        }    
                
        
        
