@@ -6,6 +6,15 @@
     <title>Inicio de Sesión</title>
 </head>
 <style>
+   :root{
+      --bg:#0f1113;
+      --card: rgba(255,255,255,0.04);
+      --accent:#5cc0ff;
+      --muted:#bfc8d1;
+      --glass: rgba(255,255,255,0.03);
+      --radius:12px;
+      --gap:18px;
+    }
  body {
     background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
     color: #fff;
@@ -15,13 +24,14 @@
     margin: 0;
         }
 .form-container {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(39, 38, 38, 0.63));
+      border-radius:var(--radius);
+      padding:40px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 1);
   width: 320px;
-  border-radius: 0.75rem;
-  background-color: rgba(17, 24, 39, 1);
   text-align: left;
   margin-left: 570px;
   margin-top: 100px;
-  padding: 3rem;
   color: rgba(243, 244, 246, 1);
   transition: transform 0,3s ease;
   animation: agrandar 2s ease-in infinite;
@@ -98,9 +108,9 @@
 }
 
 .sign {
-  display: block;
+    display: block;
   width: 109%;
-  background-color: rgba(167, 139, 250, 1);
+ background-color: #5cc0ff;
   padding: 0.75rem;
   text-align: center;
   margin-top: 20px;
@@ -112,7 +122,7 @@
   cursor: pointer;
 }
 .sign:hover{
-  background-color: rgba(139, 92, 246, 1);
+  background-color: #129cf3ff;
 }
 
 
@@ -195,7 +205,7 @@
   <br>
 	
 	<p class="signup">¿No tienes una cuenta?
-		<a rel="" href="Sign.php">Regístrate</a>
+		<a rel="" href="registro.php">Regístrate</a>
 	</p>
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->

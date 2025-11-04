@@ -1,12 +1,41 @@
 <?php
+// ...existing code...
 session_start();
-$username = isset($_SESSION["username"]) ? $_SESSION["username"] : "Invitado";
-$email = isset($_SESSION["email"]) ? $_SESSION["email"] : "sin@correo.local";
-$nivel = isset($_SESSION["nivel"]) ? intval($_SESSION["nivel"]) : 1;
-$xp = isset($_SESSION["xp"]) ? intval($_SESSION["xp"]) : 0;
+
+$archivoUsuarios = 'USUARIOS.json';
+
+// Tomamos valores desde la sesión (puede ser null)
+$username = isset($_SESSION["username"]) ? $_SESSION["username"] : null;
+$email    = isset($_SESSION["email"]) ? $_SESSION["email"] : null;
+$nivel    = isset($_SESSION["nivel"]) ? intval($_SESSION["nivel"]) : 1;
+$xp       = isset($_SESSION["xp"]) ? intval($_SESSION["xp"]) : 0;
 $partidas = isset($_SESSION["partidas"]) ? intval($_SESSION["partidas"]) : 0;
-$victorias = isset($_SESSION["victorias"]) ? intval($_SESSION["victorias"]) : 0;
+$victorias= isset($_SESSION["victorias"]) ? intval($_SESSION["victorias"]) : 0;
 $derrotas = isset($_SESSION["derrotas"]) ? intval($_SESSION["derrotas"]) : 0;
+
+// Si hay un usuario en sesión, intentamos rellenar datos desde USUARIOS.json
+if (!empty($username) && file_exists($archivoUsuarios)) {
+    $contenido = file_get_contents($archivoUsuarios);
+    $usuarios = json_decode($contenido, true);
+    if (is_array($usuarios)) {
+        foreach ($usuarios as $u) {
+            if (isset($u['username']) && $u['username'] === $username) {
+                // Sobrescribe email si no viene por sesión o está vacío
+                if (empty($email) && !empty($u['email'])) {
+                    $email = $u['email'];
+                }
+                // Si más adelante añades campos al JSON (nivel, xp, etc.), los puedes cargar aquí:
+                // if (isset($u['nivel'])) { $nivel = intval($u['nivel']); }
+                // if (isset($u['xp'])) { $xp = intval($u['xp']); }
+                break;
+            }
+        }
+    }
+}
+
+// Valores por defecto si no hay usuario válido
+if (empty($username)) $username = "Invitado";
+if (empty($email)) $email = "sin@correo.local";
 ?>
 <!DOCTYPE html>
 <html lang="es">
