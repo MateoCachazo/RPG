@@ -535,7 +535,7 @@ $partida = $_POST['partida'] ?? 0;
     let caja3 = {ancho:47, y: 610, altura: 26, x: 2524};
     let pared = {x: 2574, y: 450, ancho:56, altura: 187};
     let pared1 = {x: -5, y: 0, ancho:7, altura: canvas.height};
-    let pared2 = {x: canvas.width - 10, y: 0, ancho:40, altura: canvas.height};
+    let pared2 = {x: canvas.width - 10, y: 0, ancho:10, altura: canvas.height};
     let nenufar1 = {ximagen:0, yimagen:0,x: 699, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let tabla = {ximagen:0, yimagen:0,x: 765, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let nenufar2 = {ximagen:0, yimagen:0,x: 835, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
@@ -549,7 +549,7 @@ $partida = $_POST['partida'] ?? 0;
     let checkpoint1 = {ximagen:0, yimagen:0,x: 1567, y: 596, altura: 42, ancho: 10, altoimagen: 60, anchoimagen: 10, imagen: imagenes.Faro, contador: 0, contador_limite: 15, id: -5, animacion_continua: false, estado: "apagado"};
     let checkpoint2 = {ximagen:0, yimagen:0,x: 2980, y: 859, altura: 42, ancho: 10, altoimagen: 60, anchoimagen: 10, imagen: imagenes.Faro, contador: 0, contador_limite: 15, id: -5, animacion_continua: false, estado: "apagado"};
     let sacrificio = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 20, altura: 10, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true}; //este sacrificio es para que ande el resto de objetos
-    let tp1 = {x: 2980, y: 613, ancho:10, altura: 20, id: 100};
+    let tp1 = {x: 2988, y: 613, ancho:10, altura: 20, id: 100};
 
     let proyectiles = [];
 
@@ -871,7 +871,7 @@ $partida = $_POST['partida'] ?? 0;
             
         }
         
-        //ctx.drawImage(nivel1_adelante, canvas.width - 82, canvas.height - 390, 82, 100);
+        ctx.drawImage(nivel1_adelante, canvas.width - 82, 571, 82, 66);
         /*hud_ctx.fillStyle = "black";
         hud_ctx.strokeStyle = "white";
         hud_ctx.lineWidth = 2;
