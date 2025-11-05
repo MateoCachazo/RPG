@@ -203,10 +203,19 @@ $partida = $_POST['partida'] ?? 0;
    let xp_aux2 = 0; //contador
     
     
-    let nivel1 = new Image();
-    nivel1.src = "sprites/nivel1-1.webp";
-    let nivel1_colision = new Image();
-    nivel1_colision.src = "sprites/Nivel 1 Solo Colisiones.png";
+    let nivel1 = [];
+
+    for (let i = 1; i < 8; i++)
+    {
+        const img = new Image();
+        img.src = `sprites/nivel1-${i}.webp`;
+        nivel1.push(img);
+    }
+
+    let fondo_ximagen = 0;
+    let fondo_contador = 0;
+
+
     let nivel1_adelante = new Image();
     nivel1_adelante.src = "sprites/Nivel 1 Objetos por delante.png";
 
@@ -809,7 +818,18 @@ $partida = $_POST['partida'] ?? 0;
     {
         //ctx.fillStyle = "rgb(100,100,100)";
         //ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(nivel1, 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
+        fondo_contador += 1;
+        if (fondo_contador > 10)
+        {
+            fondo_ximagen += 1;
+            fondo_contador = 0;
+            if (fondo_ximagen > 6)
+            {
+                fondo_ximagen = 0;
+            }
+        }
+        
+        ctx.drawImage(nivel1[fondo_ximagen], 0, 0, 3000, 960, 0, 0, canvas.width, canvas.height);
         for (let i = 0; i < personajes.length; i++)
         {
             if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
