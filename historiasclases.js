@@ -82,8 +82,20 @@ function typeWriter() {
 }
 
 function handleKey(e) {
-  if (e.key === "Enter") {
-    window.location.href = "juego.php";
+  if (e.key === "Enter") 
+  {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "juego.php";
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "personaje";
+    input.value = playerClass;
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
   }
 }
 

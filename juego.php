@@ -9,6 +9,7 @@ $partida = $_POST['partida'] ?? 0;
     //$xinicio = $j['x'] ?? 22;
     //$yinicio = $j['y'] ?? 400;
     $clase = $_POST['personaje'] ?? "Guerrero";
+    $clase = ucfirst(strtolower($clase));
 
 ?>
 
@@ -181,8 +182,9 @@ $partida = $_POST['partida'] ?? 0;
     no_se_ve.width = canvas.width;
     no_se_ve.height = canvas.height;
     let clasee = "<?php echo $clase;?>";
+    //console.log(clasee);
     let partida = <?php echo $partida;?>;
-    clasee = "Admin";
+    //clasee = "Admin";
     let xinicio = <?php echo $xinicio?>;
     let yinicio = <?php echo $yinicio?>;
 
@@ -454,7 +456,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 6,
             vida: 20,
             ataque: 12,
-            defensa: 15
+            defensa: 15,
+            altura: 25
         },
         "Golem":
         {
@@ -462,7 +465,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 10,
             vida: 30,
             ataque: 5,
-            defensa: 20
+            defensa: 20,
+            altura: 38
         },
         "Mago":
         {
@@ -470,7 +474,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 8,
             vida: 15,
             ataque: 20,
-            defensa: 5
+            defensa: 5,
+            altura: 25
         },
         "Arquero":
         {
@@ -478,7 +483,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 6,
             vida: 10,
             ataque: 15,
-            defensa: 6
+            defensa: 6,
+            altura: 25
         },
         "Ninja":
         {
@@ -486,7 +492,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 6,
             vida: 10,
             ataque: 15,
-            defensa: 5
+            defensa: 5,
+            altura: 25
         },
         "Vampiro":
         {
@@ -494,7 +501,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 3,
             vida: 10,
             ataque: 10,
-            defensa: 5
+            defensa: 5,
+            altura: 25
         },
         "Admin":
         {
@@ -502,7 +510,8 @@ $partida = $_POST['partida'] ?? 0;
             velocidady_max: 2,
             vida: 1000,
             ataque: 1000,
-            defensa: 5
+            defensa: 5,
+            altura: 25
         }
     };
 
