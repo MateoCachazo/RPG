@@ -1867,8 +1867,6 @@ $partida = $_POST['partida'] ?? 0;
         {
             camarax_aux = canvas.width - 250;
         }
-
-        dibujar(ctx);
        
         //console.log(jugador.y);
         moverJugador();
@@ -1900,6 +1898,7 @@ $partida = $_POST['partida'] ?? 0;
             }
             
         }
+        dibujar(ctx);
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
         //console.log(camaray_aux);
         //console.log(jugador.velocidady);
