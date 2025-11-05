@@ -3,7 +3,7 @@ $json = json_decode(file_get_contents("partidas.json"), true);
 $partida = $_POST['partida'] ?? 0;
 
         $xinicio = 79;
-        $yinicio = 500;
+        $yinicio = 555;
         //$clase = "Guerrero";
 
     //$xinicio = $j['x'] ?? 22;
@@ -518,9 +518,9 @@ $partida = $_POST['partida'] ?? 0;
     //clasee = "Arquero";
 
     let jugador = { altura_hitbox: estadisticas[clasee].altura, contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: xinicio, y: yinicio, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: 0, ataque: estadisticas[clasee].ataque, critico: 1, defensa: estadisticas[clasee].defensa, nivel: 1, xp: 0};
-    let esqueletodiabolico1 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 2, y: 530, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
-    let esqueletodiabolico2 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 500, y: canvas.height - 400, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
-    let esqueletodiabolico3 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 1400, y: canvas.height - 400, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
+    let esqueletodiabolico1 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 500, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
+    let esqueletodiabolico2 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 1612, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
+    let esqueletodiabolico3 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 2800, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
     let personajes = [jugador, esqueletodiabolico1, esqueletodiabolico2, esqueletodiabolico3];
 
     let piso = {x:0, y:637,altura:20, ancho:655};
@@ -543,7 +543,7 @@ $partida = $_POST['partida'] ?? 0;
     let caja2 = {ancho:57, y: 579, altura:57, x: 2462};
     let caja3 = {ancho:47, y: 610, altura: 26, x: 2524};
     let pared = {x: 2574, y: 450, ancho:56, altura: 187};
-    let pared1 = {x: -5, y: 0, ancho:7, altura: canvas.height};
+    let pared1 = {x: 0, y: 0, ancho:31, altura: canvas.height};
     let pared2 = {x: canvas.width - 10, y: 0, ancho:10, altura: canvas.height};
     let nenufar1 = {ximagen:0, yimagen:0,x: 699, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let tabla = {ximagen:0, yimagen:0,x: 765, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
