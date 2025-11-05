@@ -277,7 +277,7 @@ if (isset($_SESSION['username']) && file_exists(__DIR__ . '/USUARIOS.json')) {
     }
 }
 
-// Fallbacks
+// Preparar datos para mostrar
 $displayName = $userData['username'] ?? ($_SESSION['username'] ?? null);
 $displayEmail = $userData['email'] ?? ($_SESSION['email'] ?? null);
 $displayNivel = isset($userData['nivel']) ? intval($userData['nivel']) : (isset($_SESSION['nivel']) ? intval($_SESSION['nivel']) : null);
