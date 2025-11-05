@@ -48,7 +48,7 @@ function playTypeSound() {
 //Botón de saltar
 document.getElementById("skip-btn").addEventListener("click", skipStory);
 function skipStory() {
-  //Detener el efecto de escritura
+  //detiene el efecto de escritura
   i = story.length;
   storyText.innerHTML = story;
   continueHint.classList.remove("hidden");
