@@ -184,7 +184,7 @@ body {
 </video>
 
 <!-- Formulario oculto para enviar la clase seleccionada -->
-<form id="formSeleccion" action="juego.php" method="POST" style="display:none;">
+<form id="formSeleccion" action="historiasclases.html" method="POST" style="display:none;">
   <input type="hidden" name="personaje" id="inputPersonaje">
 </form>
 
@@ -306,6 +306,17 @@ clases.forEach((clase, i) => {
     const nombre = clase.dataset.personaje;
 
     if (claseSeleccionada === clase) {
+      const nombre = clase.dataset.personaje;
+      document.getElementById('inputPersonaje').value = nombre;
+      clase.classList.add('elegida');
+
+      //guarda la clase elegida en localStorage
+      localStorage.setItem("playerClass", nombre);
+
+      setTimeout(() => {
+        //redirige a la historia
+        window.location.href = "historiasclases.html";
+      }, 600);
       // Segundo clic → Enviar formulario
       document.getElementById('inputPersonaje').value = nombre;
       clase.classList.add('elegida');
