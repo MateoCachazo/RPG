@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selector de Clases 3D</title>
+<title>Khaos Doom - Selector de Clases</title>
 <style>
 body {
   background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
