@@ -1093,7 +1093,7 @@ $partida = $_POST['partida'] ?? 0;
                         {
                             xp_aux1 = a.xp / jugador.nivel;
                             xp_aux2 = 8;
-                            personajes.splice(a.id-1, 1);
+                            personajes.splice(personajes.indexOf(a), 1);
                         }
                         else
                         {
@@ -1538,7 +1538,7 @@ $partida = $_POST['partida'] ?? 0;
                                     {
                                         if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                         {
-                                            objetos.splice(Math.abs(objetos[j].id), 1);
+                                            objetos.splice(objetos.indexOf(objetos[j]), 1);
                                             break;
                                         }
                                     }  
@@ -1627,7 +1627,7 @@ $partida = $_POST['partida'] ?? 0;
                                     {
                                         if (((jugador.orientado == 1 && objetos[j].x >= jugador.x && objetos[j].x <= jugador.x + jugador.ancho) || (jugador.orientado == -1 && objetos[j].x <= jugador.x && objetos[j].x >= jugador.x - jugador.ancho)) || objetos[j].y >= jugador.y + jugador.altura)
                                         {
-                                            objetos.splice(Math.abs(objetos[j].id), 1);
+                                            objetos.splice(objetos.indexOf(objetos[j]), 1);
                                             break;
                                         }
                                     }  
