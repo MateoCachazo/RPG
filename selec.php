@@ -172,6 +172,17 @@ body {
   font-size: 10px;
 }
 
+.title-select{
+  position: absolute;
+  top: 20px;
+  left: 50%; 
+  transform: translateX(-50%);
+  font-family: 'Arial Black', sans-serif; 
+  font-size: 32px; 
+  color: white; 
+  text-shadow: 2px 2px 4px #000000;
+}
+
 </style>
 </head>
 <body>
@@ -187,6 +198,9 @@ body {
 <form id="formSeleccion" action="historiasclases.html" method="POST" style="display:none;">
   <input type="hidden" name="personaje" id="inputPersonaje">
 </form>
+
+<!-- titulo "selecciona tu clase" -->
+<h1 class= "title-select">Selecciona tu clase</h1>
 
 <div class="carrusel-container">
   <button id="izquierda" class="flecha">⟨</button>

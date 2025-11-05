@@ -329,7 +329,6 @@ $avatarPath = $userData['avatar'] ?? 'imagenes/perfil2.png';
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='partidas.php'">Iniciar partida</button>   
         <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
-        <button class="menu-btn" onclick="window.location.href='exit.php'">Salir del juego</button>
     </div>
 
     <script> 
