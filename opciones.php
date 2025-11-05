@@ -13,14 +13,14 @@
       --radius: 12px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family: Inter, system-ui, Arial; background: radial-gradient(circle at 10% 10%, #0b1014, #071018); color:#eaf6ff}
+    html,body{height:100%; margin:0; font-family: Inter, system-ui, Arial; background: linear-gradient(180deg, rgba(34, 34, 34, 1), rgba(39, 38, 38, 0.63)); color:#eaf6ff}
     .wrap{max-width:1100px; margin:28px auto; padding:20px;}
     header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px;}
     h1{margin:0; font-size:20px; color:var(--accent)}
     .subtitle{color:var(--muted); font-size:13px}
 
     /* Menús */
-    .panel { display:none; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.14)); padding:18px; border-radius:var(--radius); box-shadow:0 12px 40px rgba(0,0,0,0.6); }
+    .panel { display:none; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0, 0, 0, 0.14)); padding:18px; border-radius:var(--radius); box-shadow:0 12px 40px rgba(0,0,0,0.6); }
     .panel.active { display:block; }
 
     .menu-buttons { display:flex; flex-direction:column; gap:12px; width:320px; }
@@ -58,7 +58,7 @@
         <div class="subtitle">Ajustes del juego</div>
       </div>
       <div>
-        <button class="btn-ghost" id="btnBackAll" onclick="location.href='index.php'">Volver</button>
+        <button class="btn-ghost" onclick="location.href='index.php'">Volver</button>
       </div>
     </header>
 

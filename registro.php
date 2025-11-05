@@ -31,10 +31,12 @@
   width: 320px;
   text-align: left;
   margin-left: 570px;
-  margin-top: 100px;
+  margin-top: 50px;
   color: rgba(243, 244, 246, 1);
   transition: transform 0,3s ease;
   animation: agrandar 2s ease-in infinite;
+
+  position: relative; /* añadido para posicionar el botón dentro del form */
 }
 
 
@@ -54,10 +56,6 @@
   font-weight: 700;
 }
 
-.form {
-  margin-top: 1.5rem;
-}
-
 .input-group {
   margin-top: 0.25rem;
   margin-right: 0.3rem;
@@ -75,7 +73,6 @@
   width: 100%;
   border-radius: 0.375rem;
   border: 1px solid rgba(55, 65, 81, 1);
-  outline: 0;
   background-color: rgba(17, 24, 39, 1);
   padding: 0.75rem 1rem;
   color: rgba(243, 244, 246, 1);
@@ -171,6 +168,20 @@
   min-height: 100%; /* Asegura que el video cubra toda la altura */
   z-index: -1; /* Coloca el video detrás del resto del contenido */
 }
+
+.btn-volver {
+  position: absolute;
+  bottom: 12px;
+  right: 12px; /* cambia a right:12px; para ubicarlo en la esquina superior derecha */
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:700;
+  background: linear-gradient(#0f1113, #2d2d2dff);
+  border:1px solid rgba(255,255,255,0.04);
+  color:#fff;
+  cursor:pointer;
+  z-index: 5;
+}
 </style>
 <body>
     <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
@@ -179,9 +190,16 @@
     <!-- Puedes agregar más etiquetas source para distintos formatos -->
     Tu navegador no soporta la etiqueta de video.
   </video>  
+ 
+   
+
 <div class="form-container">
 	<p class="title">Registro</p>
     <form class="form" action="registroo.php" method="post">
+        <div>
+        <button class="btn-volver" onclick="location.href='index.php'">Volver</button>
+
+       </div>
         <div class="input-group">
             <label for="username">Nombre de Usuario: </label>
             <input type="text" id="username" name="username" required>
@@ -202,6 +220,7 @@
 			
 		
 		<button class="sign">Regístrate</button>
+    
 	</form>
   <br>
   <br>
@@ -210,6 +229,7 @@
 	<p class="signup">¿Ya tienes una cuenta?
 		<a rel="" href="login.php">Inicia Sesión</a>
 	</p>
+      
 </div>
 </body> <!-- ESTA PAGINA VA A PONER EL LOGIN CENTRADO EN LA PAGINA, JUNTO CON UN VIDEO DESDE ATRAS DEL MISMO JUEGO -->
 </html>
