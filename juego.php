@@ -509,8 +509,10 @@ $partida = $_POST['partida'] ?? 0;
     let pisoagua = {x:340, y:canvas.height - 286,altura:20, ancho:139};
     let antisuicidio1 = {x:338, y:canvas.height - 296,altura:5, ancho:5};
     let antisuicidio2 = {x:479, y:canvas.height - 296,altura:5, ancho:5};
-    /*let piso3 = {x: 592, y: canvas.height - 292, altura: 20, ancho: 22};
-    let piso4 = {x: 640, y: canvas.height - 292, altura: 20, ancho: 20};
+    let piso3 = {x: canvas.width - 297, y: canvas.height - 54, altura: 20, ancho: 772};
+    let techo3 = {x: canvas.width - 297, y: canvas.height - 139, altura: 20, ancho: 772};
+    let pared3 = {x: canvas.width - 300, y: canvas.height - 139, altura: 90, ancho: 10};
+   /* let piso4 = {x: 640, y: canvas.height - 292, altura: 20, ancho: 20};
     let piso5 = {x: 684, y: canvas.height - 292, altura: 20, ancho: 214};
     let piso6 = {x: 939, y: canvas.height - 292, altura: 20, ancho: canvas.width};*/
     let agua = {x: 340, y: canvas.height - 288, altura: 20, ancho: 139};
@@ -521,7 +523,7 @@ $partida = $_POST['partida'] ?? 0;
     let caja1 = {ancho:20, y:canvas.height - 326, altura: 35, x: canvas.width - 297};
     let caja2 = {ancho:28, y:canvas.height - 342, altura:52, x: canvas.width - 275};
     let caja3 = {ancho:23, y:canvas.height - 315, altura: 24, x: canvas.width - 243};
-    let pared = {x: canvas.width - 218, y: canvas.height - 452, ancho:27, altura: 180};
+    let pared = {x: canvas.width - 218, y: canvas.height - 452, ancho:32, altura: 185};
     let pared1 = {x: -5, y: 0, ancho:7, altura: canvas.height};
     let pared2 = {x: canvas.width - 10, y: 0, ancho:40, altura: canvas.height};
     let nenufar1 = {ximagen:0, yimagen:0,x: 360, y: canvas.height - 296, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
@@ -535,12 +537,14 @@ $partida = $_POST['partida'] ?? 0;
     let pinchogrande = {ximagen:0, yimagen:0,x: 900, y: canvas.height - 362, altura: 32, ancho: 63, altoimagen: 90, anchoimagen: 63, imagen: imagenes.Pinchogrande, contador: 0, contador_limite: 15, id: -4, animacion_continua: true};
     let checkpoint1 = {ximagen:0, yimagen:0,x: 1000, y: canvas.height - 332, altura: 42, ancho: 10, altoimagen: 60, anchoimagen: 10, imagen: imagenes.Faro, contador: 0, contador_limite: 15, id: -5, animacion_continua: false, estado: "apagado"};
     let sacrificio = {ximagen:0, yimagen:0,x: 435, y: canvas.height - 20, altura: 10, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true}; //este sacrificio es para que ande el resto de objetos
+    let tp1 = {x: canvas.width - 20, y: canvas.height - 312, ancho:10, altura: 20, id: 100};
 
     let proyectiles = [];
 
-    let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
+    let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, piso3, techo3, pared3, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
     let objetos = [nenufar1,tabla, nenufar2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande, checkpoint1];
     let obstaculos_daño = [agua];
+    let tps = [tp1];
 
     let camaray_aux = jugador.y;
     let camarax_aux = jugador.x;
@@ -832,7 +836,8 @@ $partida = $_POST['partida'] ?? 0;
             contexto.fillStyle = "black";
             dibujar_proyectil(proyectiles[i],contexto);
         }
-        ctx.drawImage(nivel1_adelante, canvas.width - 82, canvas.height - 390, 82, 100);
+        
+        //ctx.drawImage(nivel1_adelante, canvas.width - 82, canvas.height - 390, 82, 100);
         /*hud_ctx.fillStyle = "black";
         hud_ctx.strokeStyle = "white";
         hud_ctx.lineWidth = 2;
@@ -1362,6 +1367,20 @@ $partida = $_POST['partida'] ?? 0;
                 dibujar_proyectil(proyectiles[i],hitbox);
             }
         }
+        for (let i = 0; i < tps.length; i++)
+        {
+            switch (tps[i].id)
+            {
+                case 100:
+                    hitbox.fillStyle = "rgba(100,100,100,0.8)";
+                break;
+                case 101:
+                    hitbox.fillStyle = "rgb(100,100,101)";
+                break;
+            }
+            
+            dibujar_obstaculo(tps[i],hitbox);
+        }
         let pixeles = hitbox.getImageData(porcion.x, porcion.y, porcion.ancho, porcion.altura).data;
         porcion.x -= porcion.velocidadx;
         porcion.y -= porcion.velocidady;
@@ -1414,7 +1433,15 @@ $partida = $_POST['partida'] ?? 0;
                         {
                             colisiones.izquierda = false;
                         }
-                        
+                        else if (pixeles[i] == 100 && pixeles[i+1] == 100 && pixeles[i+2] == 100 && pixeles[i+3] == 204)
+                        {
+                            if (porcion.id == 1)
+                            {
+                                jugador.x = piso3.x;
+                                jugador.y = piso3.y - jugador.altura;
+                                camaray_aux += 20;
+                            }
+                        }
                         else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
                         {
                             snd_daño.play();
@@ -1492,8 +1519,20 @@ $partida = $_POST['partida'] ?? 0;
                     }
                     else if (x > porcion.ancho / 2 && y < porcion.altura -2)
                     {
-                        colisiones.derecha = false;
-                        if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
+                        if (pixeles[i] == 0 && pixeles[i+1] == 0 && pixeles[i+2] == 0)
+                        {
+                            colisiones.derecha = false;
+                        }
+                        else if (pixeles[i] == 100 && pixeles[i+1] == 100 && pixeles[i+2] == 100 && pixeles[i+3] == 204)
+                        {
+                            if (porcion.id == 1)
+                            {
+                                jugador.x = piso3.x;
+                                jugador.y = piso3.y - jugador.altura;
+                                camaray_aux = piso3.y - 300;
+                            }
+                        }
+                        else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
                         {
                             snd_daño.play();
                             if (porcion.id != 1)
@@ -1731,8 +1770,8 @@ $partida = $_POST['partida'] ?? 0;
        }
        else
        {
-         //console.log(jugador.estado);
-        musica.play();
+        //console.log(jugador.estado);
+        //musica.play();
         hitbox.clearRect (0,0,canvas.width, canvas.height);
         ctx.clearRect (0,0,canvas.width, canvas.height);
         hud_ctx.clearRect(0,0,screen.width,screen.height);
@@ -1753,21 +1792,28 @@ $partida = $_POST['partida'] ?? 0;
             mover_proyectil(proyectiles[i]);
         }
         //hitbox.clearRect (0,0,canvas.width, canvas.height);
-        if (jugador.y - camaray_aux >= 100 || jugador.y - camaray_aux <= -100)
+        //console.log(camaray_aux);
+        if (jugador.y - 300 > canvas.height - 450)
         {
+            //console.log("en teoria esta entrando aca");
+            camaray_aux = canvas.height - 200;
         }
-        else if (revisar_porcion(jugador).abajo == false && (jugador.y - camaray_aux >= 30 || jugador.y - camaray_aux <= -30))
+        else if (jugador.y - 300 <= 0)
+        {
+            //console.log("en teoria esta entrando aca");
+            camaray_aux = 300;
+        }
+        /*else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
         {
             camaray_aux += 2;
-        }
-
-        if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) > 60)
+        }*/
+        else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
         {
             camaray_aux += jugador.velocidady;
         }
         else if(revisar_porcion(jugador).abajo == false  && Math.abs(jugador.y - camaray_aux) > 30)
         {
-            camaray_aux += (jugador.y - camaray_aux) / Math.abs(jugador.y - camaray_aux) * 2;
+            camaray_aux += 4;
         }
 
         if (jugador.x - 300 > 0 && jugador.x - 300 < canvas.width - 450)
