@@ -173,6 +173,20 @@
   z-index: -1; /* Coloca el video detrás del resto del contenido */
 }
 
+.btn-volver {
+  position: absolute;
+  bottom: 12px;
+  right: 12px; /* cambia a right:12px; para ubicarlo en la esquina superior derecha */
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:700;
+  background: linear-gradient(#0f1113, #2d2d2dff);
+  border:1px solid rgba(255,255,255,0.04);
+  color:#fff;
+  cursor:pointer;
+  z-index: 5;
+}
+
 </style>
 <body>
     <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
@@ -182,7 +196,13 @@
     Tu navegador no soporta la etiqueta de video.
   </video>
 
+   
+
 <div class="form-container">
+   <div>
+        <button class="btn-volver" onclick="location.href='index.php'">Volver</button>
+
+       </div>
 	<p class="title">Inicio de Sesión</p>
 	<form class="form" action="login2.php" method="post">
 		<div class="input-group">

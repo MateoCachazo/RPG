@@ -23,7 +23,7 @@ if (isset($_POST['crear'])) {
     $partidas[$id - 1]['nombre'] = $nombre;
     file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
     $_SESSION['partida'] = $id;
-    header("Location: selec.php");
+    header("Location: historia.html");
     exit;
 }
 
