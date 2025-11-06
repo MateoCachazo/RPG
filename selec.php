@@ -278,6 +278,14 @@ body {
 </div>
 
 <script>
+const voces = {Vampiro: {}, Arquero: {}, Guerrero: {}, Ninja: {}, Mago: {}, Golem: {}};
+let voz_vamp = new Audio();
+voz_vamp.src = "sonidos/Vampiro Nombre.wav";
+voces.Vampiro = voz_vamp;
+let voz_guerrero = new Audio();
+voz_guerrero.src = "sonidos/Guerrero-Nombre.wav";
+voces.Guerrero = voz_guerrero;
+
 const carrusel = document.getElementById('carrusel');
 const clases = document.querySelectorAll('.clase');
 const total = clases.length;
@@ -346,6 +354,7 @@ clases.forEach((clase, i) => {
       clases.forEach(c => c.classList.remove('seleccionada'));
       clase.classList.add('seleccionada');
       claseSeleccionada = clase;
+      voces[nombre].play();
       actualizarCarrusel();
     }
   });
