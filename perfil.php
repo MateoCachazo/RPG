@@ -42,7 +42,7 @@ if (empty($email)) $email = "sin@correo.local";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Perfil — RPG-1</title>
+  <title>Khaos Doom - Perfil de Jugador</title>
   <style>
     :root{
       --bg:#0f1113;

@@ -18,7 +18,7 @@ $partida = $_POST['partida'] ?? 0;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPG</title>
+  <title>Khaos Doom - Juego</title>
   <style>
     body
     {

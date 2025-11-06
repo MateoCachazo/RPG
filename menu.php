@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menú del Juego</title>
+  <title>Khaos Doom - Pausa</title>
   <style>
 body {
     background: radial-gradient(circle at center, #1d1919ff 0%, #3a3b3cff 100%);
