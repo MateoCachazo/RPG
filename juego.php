@@ -1806,19 +1806,18 @@ $partida = $_POST['partida'] ?? 0;
     {
        if (jugador.vida <= 0)
        {
-            /*fetch("guardar_partida.php",
-            {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                id: partida,
-                x: xinicio,
-                y: yinicio,
-                clase: clasee
-            })
-            }
-        );*/
-        window.location.href = "juego.php";
+         const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "juego.php";
+
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "personaje";
+        input.value = clasee;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
        }
        else
        {
