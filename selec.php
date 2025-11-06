@@ -14,7 +14,8 @@ body {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
-  image-rendering: pixelated;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .carrusel-container {
@@ -30,9 +31,11 @@ body {
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 1s;
+  
 }
 
 .clase {
+  will-change: transform;
   position: absolute;
   width: 200px;
   height: 250px;
@@ -182,6 +185,21 @@ body {
   color: white; 
   text-shadow: 2px 2px 4px #000000;
 }
+
+.clase, .clase * {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-transform: translateZ(0);
+}
+.clase img {
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  filter: none;
+}
+
 
 </style>
 </head>

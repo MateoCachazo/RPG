@@ -43,5 +43,10 @@
         "username": "rocco.bruno.22",
         "email": "correoderocco@gmail.com",
         "password": "rocco"
+    },
+    {
+        "username": "rocco",
+        "email": "rocco@gmail.com",
+        "password": "rocco"
     }
 ]
