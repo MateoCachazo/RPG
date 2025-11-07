@@ -997,10 +997,12 @@ $partida = $_POST['partida'] ?? 0;
         if (pausa == true)
         {
             menuPausa.style.display = "block";
+            musica.volume = 0.2;
         }
         else
         {
             menuPausa.style.display = "none";
+            musica.volume = 0.5;
         }
        
       /*  for (let i = 0; i < obstaculos_daño.length; i++)
@@ -1948,7 +1950,7 @@ $partida = $_POST['partida'] ?? 0;
         else
         {
             //console.log(jugador.estado);
-            //musica.play();
+            
             hitbox.clearRect (0,0,canvas.width, canvas.height);
             ctx.clearRect (0,0,canvas.width, canvas.height);
             hud_ctx.clearRect(0,0,screen.width,screen.height);
@@ -2038,7 +2040,7 @@ $partida = $_POST['partida'] ?? 0;
             // console.log(personajes[0].vida);
         }
        
-        
+        musica.play();
 
 
         requestAnimationFrame(loop);
