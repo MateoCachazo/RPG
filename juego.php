@@ -65,6 +65,24 @@ $partida = $_POST['partida'] ?? 0;
         z-index: 2;
         image-rendering: pixelated;
     }
+
+    #menuPausa 
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
+
+    #iframePausa 
+    {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
   </style>
 </head>
 <body>
@@ -73,6 +91,10 @@ $partida = $_POST['partida'] ?? 0;
     <canvas id="juego"></canvas>
     <canvas id= "hud"></canvas>
   </div>
+  <div id="menuPausa" style="display:none;">
+  <iframe src="menu.php" id="iframePausa" frameborder="0"
+    style="width:100%; height:100vh; border:none;"></iframe>
+    </div>
 </body>
 </html>
 <?php
@@ -86,6 +108,8 @@ $partida = $_POST['partida'] ?? 0;
     const hitbox = no_se_ve.getContext("2d", { willReadFrequently: true })
     const hud = document.getElementById("hud");
     const hud_ctx = hud.getContext("2d", {willReadFrequently: true})
+    const menuPausa = document.getElementById("menuPausa");
+
 
     class proyectil
     {
@@ -187,7 +211,7 @@ $partida = $_POST['partida'] ?? 0;
     //clasee = "Admin";
     let xinicio = <?php echo $xinicio?>;
     let yinicio = <?php echo $yinicio?>;
-
+    let pausa = false;
     let rutaBase = 'sprites/clases/';          //Creo una constante con una parte de las rutas de las imagees
     let clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
     let accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee", especial: " Ataque-Especial"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
@@ -576,7 +600,7 @@ $partida = $_POST['partida'] ?? 0;
 
     function cambiar_estado ()
     {
-       if (jugador.vida > 0)
+       if (jugador.vida > 0 && pausa == false)
         {
              if (jugador.animacion_continua == true)
             {
@@ -638,12 +662,40 @@ $partida = $_POST['partida'] ?? 0;
     document.addEventListener("keydown", (e) =>
     {
         teclas[e.key.toLowerCase()] = true;
+        if (e.key == "Enter")
+        {
+            if (pausa == false)
+            {
+                pausa = true;
+                
+            }
+            else
+            {
+                pausa = false;
+            }
+        }
+        else
+        {
         if (e.repeat == false)
         {
             cambiar_estado();
         }
+        }     
     });
 
+
+    window.addEventListener("message", (e) => 
+    {
+        if (e.data === "reanudar")
+        {
+            pausa = false;
+            window.focus();
+        }
+        else if (e.data === "salir")
+        {
+            window.location.href = "index.php";
+        }
+    });
 
     document.addEventListener("keyup", (e) =>
     {
@@ -941,7 +993,15 @@ $partida = $_POST['partida'] ?? 0;
         hud_ctx.fillStyle = "#55b15e";
         hud_ctx.fillRect(19,40,((38 * jugador.xp) / 2),7);
         hud_ctx.drawImage(barra_xp, 10, 20, 48, 48);
-       
+
+        if (pausa == true)
+        {
+            menuPausa.style.display = "block";
+        }
+        else
+        {
+            menuPausa.style.display = "none";
+        }
        
       /*  for (let i = 0; i < obstaculos_daño.length; i++)
         {
@@ -1072,252 +1132,257 @@ $partida = $_POST['partida'] ?? 0;
 
     function cambiar(a, b)
     {
-        switch(b)
+        if (pausa == false)
         {
-            case 1:
-                if(a.contador >= a.contador_limite)
-                {
-                    a.contador = 0;
-                    a.ximagen+=b;
-                    if(a.estado == "salto")
-                    {
-                        a.ximagen = 1;
-                    }
-                    else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua)
-                    {
-                        a.ximagen = 0;
-                    }
-                    else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
-                    {
-                        if (a.estado == "muerte")
-                        {
-                            xp_aux1 = a.xp / jugador.nivel;
-                            xp_aux2 = 8;
-                            personajes.splice(personajes.indexOf(a), 1);
-                        }
-                        else
-                        {
-                            a.ximagen = 0;
-                            a.estado = "quieto";
-                            a.animacion_continua = true;
-                            a.contador_limite = 7;
-                            cambiar_estado();
-                        }    
-                    }
-                    //console.log(a.ximagen + "  " + a.yimagen);
-                }
-                else
-                {
-                    a.contador++;
-                }
-            break;
-
-            case -1:
-                if (a.id == -2)
-                {
-                    switch (a.ximagen)
-                    {
-                        case 0:
-                            a.altura = 22;
-                            a.contador_limite = 2;
-                        break;
-                        case 1:
-                            a.altura = 35;
-                            a.contador_limite = 2;
-                        break;
-                        case 2:
-                            a.altura = 50;
-                            a.contador_limite = 2;
-                        break;
-                        case 3:
-                            a.altura = 50;
-                            a.contador_limite = 4;
-                        break;
-                        case 4:
-                            a.altura = 50;
-                            a.contador_limite = 4;
-                        break;
-                        case 5:
-                            a.altura = 35;
-                            a.contador_limite = 4;
-                        break;
-                        case 6:
-                            a.altura = 22;
-                            a.contador_limite = 2;
-                        break;
-                        case 7:
-                            a.altura = 9;
-                            a.contador_limite = 2;
-                        break;
-                        case 8:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 9:
-                            a.altura = 0;
-                            a.contador_limite = 60;
-                        break;
-                    }
+            switch(b)
+            {
+                case 1:
                     if(a.contador >= a.contador_limite)
                     {
                         a.contador = 0;
-                        a.ximagen++;
-                        if(a.ximagen >= a.imagen.naturalWidth / 30)
+                        a.ximagen+=b;
+                        if(a.estado == "salto")
+                        {
+                            a.ximagen = 1;
+                        }
+                        else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua)
                         {
                             a.ximagen = 0;
-                            //a.altura = ;
                         }
-                    }
-                    else
-                    {
-                        a.contador++;
-                    }
-                }
-                else if (a.id == -4)
-                {
-                    switch (a.ximagen)
-                    {
-                        case 0:
-                            a.altura = 0;
-                            a.contador_limite = 4;
-                        break;
-                        case 1:
-                            a.altura = 39;
-                            a.contador_limite = 4;
-                        break;
-                        case 2:
-                            a.altura = 56;
-                            a.contador_limite = 4;
-                        break;
-                        case 3:
-                            a.altura = 88;
-                            a.contador_limite = 7;
-                        break;
-                        case 4:
-                            a.altura = 88;
-                            a.contador_limite = 7;
-                        break;
-                        case 5:
-                            a.altura = 88;
-                            a.contador_limite = 7;
-                        break;
-                        case 6:
-                            a.altura = 88;
-                            a.contador_limite = 7;
-                        break;
-                        case 7:
-                            a.altura = 88;
-                            a.contador_limite = 7;
-                        break;
-                        case 8:
-                            a.altura = 54;
-                            a.contador_limite = 4;
-                        break;
-                        case 9:
-                            a.altura = 38;
-                            a.contador_limite = 4;
-                        break;
-                        case 10:
-                            a.altura = 4;
-                            a.contador_limite = 7;
-                        break;
-                        case 11:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 12:
-                            a.altura = 0;
-                            a.contador_limite = 15;
-                        break;
-                        case 13:
-                            a.altura = 0;
-                            a.contador_limite = 90;
-                        break;
-                    }
-                    if(a.contador >= a.contador_limite)
-                    {
-                        a.contador = 0;
-                        a.ximagen++;
-                        if(a.ximagen >= a.imagen.naturalWidth / 63)
+                        else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
                         {
-                            a.ximagen = 0;
-                            //a.altura = ;
-                        }
-                    }
-                    else
-                    {
-                        a.contador++;
-                    }
-                }
-                else if (a.id == -5)
-                {
-                    if (a.estado == "animacion")
-                    {
-                        if(a.contador >= a.contador_limite)
-                        {
-                        a.contador = 0;
-                        a.ximagen++;
-                            if(a.ximagen >= a.imagen.naturalWidth / 10)
+                            if (a.estado == "muerte")
                             {
-                                a.ximagen = 4;
-                                a.estado = "prendido";
+                                xp_aux1 = a.xp / jugador.nivel;
+                                xp_aux2 = 8;
+                                personajes.splice(personajes.indexOf(a), 1);
                             }
-                        }
-                    }
-                    else if (a.estado == "apagado")
-                    {
-                        a.ximagen = 0;
-                    }
-                    else if (a.estado == "prendido")
-                    {
-                        a.ximagen = 4;
-                    }
-                }
-                else
-                {
-                    if(a.contador >= a.contador_limite)
-                    {
-                        a.contador=0;
-                        a.ximagen++;
-                        if(a.id> 0)
-                        {
-                            if(a.ximagen >= a.imagen.naturalWidth / a.imagen.naturalHeight && a.animacion_continua)
+                            else
                             {
-                                a.ximagen = 0;
-                            }
-                        }
-                        else
-                        {
-                            if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == true)
-                            {
-                                a.ximagen = 0;
-                            }
-                            else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
-                            {
-                                //console.log(a.estado);
                                 a.ximagen = 0;
                                 a.estado = "quieto";
                                 a.animacion_continua = true;
-                            }
+                                a.contador_limite = 7;
+                                cambiar_estado();
+                            }    
                         }
-                        //if(clasee != "Mago" && clasee != "Golem"){
-                            
-                        //}
-                        
+                        //console.log(a.ximagen + "  " + a.yimagen);
                     }
                     else
                     {
                         a.contador++;
                     }
-                    //console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
-                    if(!a.animacion_continua && a.ximagen >= a.imagen.naturalWidth/a.imagen.naturalHeight/* && a.contador == a.contador_limite*/)
+                break;
+
+                case -1:
+                    if (a.id == -2)
                     {
-                        console.log("puuuuuuum");
-                        proyectiles.splice(proyectiles.indexOf(a), 1);
+                        switch (a.ximagen)
+                        {
+                            case 0:
+                                a.altura = 22;
+                                a.contador_limite = 2;
+                            break;
+                            case 1:
+                                a.altura = 35;
+                                a.contador_limite = 2;
+                            break;
+                            case 2:
+                                a.altura = 50;
+                                a.contador_limite = 2;
+                            break;
+                            case 3:
+                                a.altura = 50;
+                                a.contador_limite = 4;
+                            break;
+                            case 4:
+                                a.altura = 50;
+                                a.contador_limite = 4;
+                            break;
+                            case 5:
+                                a.altura = 35;
+                                a.contador_limite = 4;
+                            break;
+                            case 6:
+                                a.altura = 22;
+                                a.contador_limite = 2;
+                            break;
+                            case 7:
+                                a.altura = 9;
+                                a.contador_limite = 2;
+                            break;
+                            case 8:
+                                a.altura = 0;
+                                a.contador_limite = 15;
+                            break;
+                            case 9:
+                                a.altura = 0;
+                                a.contador_limite = 60;
+                            break;
+                        }
+                        if(a.contador >= a.contador_limite)
+                        {
+                            a.contador = 0;
+                            a.ximagen++;
+                            if(a.ximagen >= a.imagen.naturalWidth / 30)
+                            {
+                                a.ximagen = 0;
+                                //a.altura = ;
+                            }
+                        }
+                        else
+                        {
+                            a.contador++;
+                        }
                     }
-                }
-            break;
+                    else if (a.id == -4)
+                    {
+                        switch (a.ximagen)
+                        {
+                            case 0:
+                                a.altura = 0;
+                                a.contador_limite = 4;
+                            break;
+                            case 1:
+                                a.altura = 39;
+                                a.contador_limite = 4;
+                            break;
+                            case 2:
+                                a.altura = 56;
+                                a.contador_limite = 4;
+                            break;
+                            case 3:
+                                a.altura = 88;
+                                a.contador_limite = 7;
+                            break;
+                            case 4:
+                                a.altura = 88;
+                                a.contador_limite = 7;
+                            break;
+                            case 5:
+                                a.altura = 88;
+                                a.contador_limite = 7;
+                            break;
+                            case 6:
+                                a.altura = 88;
+                                a.contador_limite = 7;
+                            break;
+                            case 7:
+                                a.altura = 88;
+                                a.contador_limite = 7;
+                            break;
+                            case 8:
+                                a.altura = 54;
+                                a.contador_limite = 4;
+                            break;
+                            case 9:
+                                a.altura = 38;
+                                a.contador_limite = 4;
+                            break;
+                            case 10:
+                                a.altura = 4;
+                                a.contador_limite = 7;
+                            break;
+                            case 11:
+                                a.altura = 0;
+                                a.contador_limite = 15;
+                            break;
+                            case 12:
+                                a.altura = 0;
+                                a.contador_limite = 15;
+                            break;
+                            case 13:
+                                a.altura = 0;
+                                a.contador_limite = 90;
+                            break;
+                        }
+                        if(a.contador >= a.contador_limite)
+                        {
+                            a.contador = 0;
+                            a.ximagen++;
+                            if(a.ximagen >= a.imagen.naturalWidth / 63)
+                            {
+                                a.ximagen = 0;
+                                //a.altura = ;
+                            }
+                        }
+                        else
+                        {
+                            a.contador++;
+                        }
+                    }
+                    else if (a.id == -5)
+                    {
+                        if (a.estado == "animacion")
+                        {
+                            if(a.contador >= a.contador_limite)
+                            {
+                            a.contador = 0;
+                            a.ximagen++;
+                                if(a.ximagen >= a.imagen.naturalWidth / 10)
+                                {
+                                    a.ximagen = 4;
+                                    a.estado = "prendido";
+                                }
+                            }
+                        }
+                        else if (a.estado == "apagado")
+                        {
+                            a.ximagen = 0;
+                        }
+                        else if (a.estado == "prendido")
+                        {
+                            a.ximagen = 4;
+                        }
+                    }
+                    else
+                    {
+                        if(a.contador >= a.contador_limite)
+                        {
+                            a.contador=0;
+                            a.ximagen++;
+                            if(a.id> 0)
+                            {
+                                if(a.ximagen >= a.imagen.naturalWidth / a.imagen.naturalHeight && a.animacion_continua)
+                                {
+                                    a.ximagen = 0;
+                                }
+                            }
+                            else
+                            {
+                                if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == true)
+                                {
+                                    a.ximagen = 0;
+                                }
+                                else if(a.ximagen >= a.imagen[a.estado].naturalWidth / 48 && a.animacion_continua == false)
+                                {
+                                    //console.log(a.estado);
+                                    a.ximagen = 0;
+                                    a.estado = "quieto";
+                                    a.animacion_continua = true;
+                                }
+                            }
+                            //if(clasee != "Mago" && clasee != "Golem"){
+                                
+                            //}
+                            
+                        }
+                        else
+                        {
+                            a.contador++;
+                        }
+                        //console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
+                        if(!a.animacion_continua && a.ximagen >= a.imagen.naturalWidth/a.imagen.naturalHeight/* && a.contador == a.contador_limite*/)
+                        {
+                            console.log("puuuuuuum");
+                            proyectiles.splice(proyectiles.indexOf(a), 1);
+                        }
+                    }
+                break;
+            }
         }
+        
+        
     }
 
    
@@ -1804,113 +1869,174 @@ $partida = $_POST['partida'] ?? 0;
 
     function loop()
     {
-       if (jugador.vida <= 0)
-       {
-         const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "juego.php";
+        if (pausa == true)
+        {
+            //musica.play();
+            hitbox.clearRect (0,0,canvas.width, canvas.height);
+            ctx.clearRect (0,0,canvas.width, canvas.height);
+            hud_ctx.clearRect(0,0,screen.width,screen.height);
 
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "personaje";
-        input.value = clasee;
+            if (jugador.y + 200 >= canvas.height)
+            {
+                //console.log("en teoria esta entrando aca");
+                camaray_aux = canvas.height - 200;
+            }
+            else if (jugador.y - 200 <= 0)
+            {
+                //console.log("en teoria esta entrando aca");
+                camaray_aux = 200;
+            }
+            else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
+            {
+                if (camaray_aux > jugador.y)
+                {
+                    camaray_aux -= 2;
+                }
+                else
+                {
+                    camaray_aux += 2;
+                }
+                
+            }
+            else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
+            {
+                camaray_aux += jugador.velocidady;
+            }
 
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-       }
-       else
-       {
-        //console.log(jugador.estado);
-        //musica.play();
-        hitbox.clearRect (0,0,canvas.width, canvas.height);
-        ctx.clearRect (0,0,canvas.width, canvas.height);
-        hud_ctx.clearRect(0,0,screen.width,screen.height);
+            if (jugador.x - 300 <= 0)
+            {
+                camarax_aux = 300;
+            }
+            else if (jugador.x + 250 < canvas.width -250)
+            {
+                camarax_aux = jugador.x;
+            }
+            else if (jugador.x + 250 >= canvas.width - 250)
+            {
+                camarax_aux = canvas.width - 250;
+            }
+        
+            //console.log(jugador.y);
+           
+            dibujar(ctx);
+            //hitbox.clearRect (0,0,canvas.width, canvas.height);
+            //console.log(camaray_aux);
+            //console.log(jugador.velocidady);
+        
 
-        if (jugador.y + 200 >= canvas.height)
+            hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            //console.log(camarax_aux - 300, " ", camaray_aux - 300, " ", jugador.ancho + 500, " ", jugador.altura + 300);
+            ctx.clearRect (0,0,canvas.width, canvas.height);
+            ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
+            hitbox.clearRect(0,0,canvas.width, canvas.height);
+        } 
+        else if (jugador.vida <= 0)
         {
-            //console.log("en teoria esta entrando aca");
-            camaray_aux = canvas.height - 200;
-        }
-        else if (jugador.y - 200 <= 0)
-        {
-            //console.log("en teoria esta entrando aca");
-            camaray_aux = 200;
-        }
-        else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
-        {
-            if (camaray_aux > jugador.y)
-            {
-                camaray_aux -= 2;
-            }
-            else
-            {
-                camaray_aux += 2;
-            }
-            
-        }
-        else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
-        {
-            camaray_aux += jugador.velocidady;
-        }
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "juego.php";
 
-        if (jugador.x - 300 <= 0)
-        {
-            camarax_aux = 300;
-        }
-        else if (jugador.x + 250 < canvas.width -250)
-        {
-            camarax_aux = jugador.x;
-        }
-        else if (jugador.x + 250 >= canvas.width - 250)
-        {
-            camarax_aux = canvas.width - 250;
-        }
-       
-        //console.log(jugador.y);
-        moverJugador();
-        for (let i = 1; i < personajes.length; i++)
-        {
-            if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
-            {
-                mover_enemigos(personajes[i]);
-            }
-            
-        }
-        for (let i = 0; i < objetos.length; i++)
-        {
-            if ((objetos[i].x >= camarax_aux - 300 && objetos[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (objetos[i].y >= camaray_aux - 210 && objetos[i].y <= (camaray_aux - 210) + jugador.altura + 300))
-            {
-                cambiar(objetos[i], -1);
-            }
-            
-        }
-        for (let i = 0; i < proyectiles.length; i++)
-        {
-            if ((proyectiles[i].x >= camarax_aux - 300 && proyectiles[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (proyectiles[i].y >= camaray_aux - 210 && proyectiles[i].y <= (camaray_aux - 210) + jugador.altura + 300))
-            {
-                mover_proyectil(proyectiles[i]);
-            }
-            else
-            {
-                proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
-            }
-            
-        }
-        dibujar(ctx);
-        //hitbox.clearRect (0,0,canvas.width, canvas.height);
-        //console.log(camaray_aux);
-        //console.log(jugador.velocidady);
-      
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "personaje";
+            input.value = clasee;
 
-        hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
-        //console.log(camarax_aux - 300, " ", camaray_aux - 300, " ", jugador.ancho + 500, " ", jugador.altura + 300);
-        ctx.clearRect (0,0,canvas.width, canvas.height);
-        ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
-        hitbox.clearRect(0,0,canvas.width, canvas.height);
-        //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
-        // console.log(personajes[0].vida);
-       }
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        else
+        {
+            //console.log(jugador.estado);
+            //musica.play();
+            hitbox.clearRect (0,0,canvas.width, canvas.height);
+            ctx.clearRect (0,0,canvas.width, canvas.height);
+            hud_ctx.clearRect(0,0,screen.width,screen.height);
+
+            if (jugador.y + 200 >= canvas.height)
+            {
+                //console.log("en teoria esta entrando aca");
+                camaray_aux = canvas.height - 200;
+            }
+            else if (jugador.y - 200 <= 0)
+            {
+                //console.log("en teoria esta entrando aca");
+                camaray_aux = 200;
+            }
+            else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
+            {
+                if (camaray_aux > jugador.y)
+                {
+                    camaray_aux -= 2;
+                }
+                else
+                {
+                    camaray_aux += 2;
+                }
+                
+            }
+            else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
+            {
+                camaray_aux += jugador.velocidady;
+            }
+
+            if (jugador.x - 300 <= 0)
+            {
+                camarax_aux = 300;
+            }
+            else if (jugador.x + 250 < canvas.width -250)
+            {
+                camarax_aux = jugador.x;
+            }
+            else if (jugador.x + 250 >= canvas.width - 250)
+            {
+                camarax_aux = canvas.width - 250;
+            }
+        
+            //console.log(jugador.y);
+            moverJugador();
+            for (let i = 1; i < personajes.length; i++)
+            {
+                if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                {
+                    mover_enemigos(personajes[i]);
+                }
+                
+            }
+            for (let i = 0; i < objetos.length; i++)
+            {
+                if ((objetos[i].x >= camarax_aux - 300 && objetos[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (objetos[i].y >= camaray_aux - 210 && objetos[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                {
+                    cambiar(objetos[i], -1);
+                }
+                
+            }
+            for (let i = 0; i < proyectiles.length; i++)
+            {
+                if ((proyectiles[i].x >= camarax_aux - 300 && proyectiles[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (proyectiles[i].y >= camaray_aux - 210 && proyectiles[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                {
+                    mover_proyectil(proyectiles[i]);
+                }
+                else
+                {
+                    proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
+                }
+                
+            }
+            dibujar(ctx);
+            //hitbox.clearRect (0,0,canvas.width, canvas.height);
+            //console.log(camaray_aux);
+            //console.log(jugador.velocidady);
+        
+
+            hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            //console.log(camarax_aux - 300, " ", camaray_aux - 300, " ", jugador.ancho + 500, " ", jugador.altura + 300);
+            ctx.clearRect (0,0,canvas.width, canvas.height);
+            ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
+            hitbox.clearRect(0,0,canvas.width, canvas.height);
+            //console.log(jugador.ximagen + " " + jugador.contador_limite + " " + jugador.contador);
+            // console.log(personajes[0].vida);
+        }
        
         
 
