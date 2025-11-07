@@ -1045,7 +1045,7 @@ $partida = $_POST['partida'] ?? 0;
         else if (a.id == -2 || a.id == -4)
         {
             hitbox.fillStyle = "rgba(0,255,0,0.5)";
-            hitbox.fillRect(a.x, 575 - a.altura,20,a.altura);
+            hitbox.fillRect(a.x, 637 - a.altura,20,a.altura);
         }
         else if (a.id == -5)
         {
