@@ -932,7 +932,7 @@ $partida = $_POST['partida'] ?? 0;
             
         }
         
-        ctx.drawImage(nivel1_adelante, canvas.width - 82, 571, 82, 66);
+        ctx.drawImage(nivel1_adelante, canvas.width - 82, 572, 82, 66);
         /*hud_ctx.fillStyle = "black";
         hud_ctx.strokeStyle = "white";
         hud_ctx.lineWidth = 2;
