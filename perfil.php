@@ -63,8 +63,9 @@ if (empty($email)) $email = "sin@correo.local";
     }
 
     .container{
+      margin-top: 70px;
+      margin-left: 100px;
       max-width:1100px;
-      margin:0 auto;
       display:flex;
       gap:var(--gap);
       align-items:flex-start;
@@ -207,6 +208,37 @@ if (empty($email)) $email = "sin@correo.local";
   z-index: -1; /* Coloca el video detrás del resto del contenido */
   object-fit: cover; /* Recorta el video para que cubra todo el contenedor, manteniendo su relación de aspecto */
 } 
+.navbar {
+  position: fixed;   
+  margin-top: 0px;
+  margin-bottom: 20px ;
+
+  width: 100%;
+  height: 70px;            
+  background: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;         
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  margin-top: 10px;
+  height: 100px;         
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.20);
+}
   </style>
 </head>
 <body>
@@ -216,6 +248,11 @@ if (empty($email)) $email = "sin@correo.local";
     <!-- Puedes agregar más etiquetas source para distintos formatos -->
     Tu navegador no soporta la etiqueta de video.
   </video>
+  <nav class="navbar">
+  <a href="index.php" class="logo-link">
+    <img src="imagenes/khaos.png" alt="Logo" class="logo">
+  </a>
+</nav>
   <div class="container">
     <aside class="panel-left" aria-label="Perfil">
       <div class="avatar" title="Imagen de perfil">

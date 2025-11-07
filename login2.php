@@ -36,8 +36,12 @@ foreach ($usuarios as $user) {
         }
     }
 }
-
+    echo "<script>
+localStorage.setItem('username', " . json_encode($user['username']) . ");
+window.location.href = 'historia.php';
+</script>";
 if ($loginCorrecto) {
+
     header("Location:perfil.php");
     exit;
 } else {

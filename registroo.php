@@ -43,6 +43,11 @@ $usuarios[] = [
 // Guardar en el archivo
 file_put_contents($archivo, json_encode($usuarios, JSON_PRETTY_PRINT));
 
+echo "<script>
+localStorage.setItem('username', " . json_encode($username) . ");
+window.location.href = 'login.php?registro=exitoso';
+</script>";
+
 header("Location: login.php?registro=exitoso");
 exit;
 ?>

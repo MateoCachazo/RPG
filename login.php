@@ -176,7 +176,7 @@
 .btn-volver {
   position: absolute;
   bottom: 12px;
-  right: 12px; /* cambia a right:12px; para ubicarlo en la esquina superior derecha */
+  right: 12px; 
   padding:8px 10px;
   border-radius:8px;
   font-weight:700;
@@ -186,7 +186,36 @@
   cursor:pointer;
   z-index: 5;
 }
+.navbar {
+  position: fixed;   
+  margin-top: 10px;
+  margin-bottom: 10px ;
 
+  width: 100%;
+  height: 70px;            
+  background: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;         
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  height: 100px;         
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.20);
+}
 </style>
 <body>
     <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
@@ -195,6 +224,11 @@
     <!-- Puedes agregar más etiquetas source para distintos formatos -->
     Tu navegador no soporta la etiqueta de video.
   </video>
+<nav class="navbar">
+  <a href="index.php" class="logo-link">
+    <img src="imagenes/khaos.png" alt="Logo" class="logo">
+  </a>
+</nav>
 
    
 
