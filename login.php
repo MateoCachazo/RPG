@@ -30,6 +30,7 @@
       box-shadow: 0 8px 30px rgba(0, 0, 0, 1);
   width: 320px;
   text-align: left;
+  position: fixed;
   margin-left: 570px;
   margin-top: 100px;
   color: rgba(243, 244, 246, 1);
@@ -187,17 +188,12 @@
   z-index: 5;
 }
 .navbar {
-  position: fixed;   
-  margin-top: 10px;
-  margin-bottom: 10px ;
-
+  position: fixed;    
   width: 100%;
   height: 70px;            
   background: transparent;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  z-index: 1000;         
 }
 
 .logo-link {
@@ -207,6 +203,8 @@
 }
 
 .logo {
+   margin-left: -20px;
+  margin-top: 20px;
   height: 100px;         
   width: auto;
   cursor: pointer;

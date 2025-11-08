@@ -203,6 +203,8 @@
 }
 
 .logo {
+  margin-left: -20px;
+  margin-bottom: 80px;
   height: 100px;         
   width: auto;
   cursor: pointer;
