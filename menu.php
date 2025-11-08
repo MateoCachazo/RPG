@@ -146,7 +146,7 @@ button:hover {
   </style>
 </head>
 <body>
-<audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
+
   <!-- Menú principal -->
   <div id="mainMenu" class="menu active">
     <button id="btnResume">Reanudar</button>
@@ -179,11 +179,11 @@ button:hover {
 
     // Acciones de ejemplo
     document.getElementById("btnResume").addEventListener("click", () => {
-      alert("Reanudando juego...");
+      window.parent.postMessage("reanudar", "*");
     });
 
     document.getElementById("btnExit").addEventListener("click", () => {
-      alert("Saliendo del juego...");
+      window.parent.postMessage("salir", "*");
     });
   </script>
 
