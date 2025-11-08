@@ -5,7 +5,7 @@ const typeSound = new Audio("../sonidos/tecleo.wav");//sonido de tecleo
 
 //verificar si hay clase elegida
 const playerClass = (localStorage.getItem("playerClass") || "").toLowerCase();
-const username = localStorage.getItem("username"); 
+const username = localStorage.getItem("username") || "El Héroe"; 
 
 if (!playerClass) {
   window.location.href = "selec.php";
