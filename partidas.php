@@ -43,6 +43,12 @@ if (isset($_POST['borrar'])) {
     header("Location: partidas.php");
     exit;
 }
+
+// Contador de partidas guardadas (no nulas / no vacías)
+$guardadas = 0;
+foreach ($partidas as $p) {
+    if (!empty($p['nombre'])) $guardadas++;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -229,8 +235,22 @@ if (isset($_POST['borrar'])) {
         <h1>Seleccionar Partida</h1>
         <div class="subtitle">Elige una ranura para crear, cargar o borrar tu partida</div>
       </div>
-        <div class="subtitle">No hay partidas disponibles.</div>
-      <div class="subtitle">Slots disponibles: <?= count($partidas) ?></div>
+      <div>
+       <div class="subtitle">
+          <?php if ($guardadas > 0): ?>
+            Partidas guardadas: <?= $guardadas ?>
+          <?php else: ?>
+            No hay partidas guardadas.
+          <?php endif; ?>
+        </div>
+        <div class="subtitle">
+          <?php if ($guardadas > 0): ?>
+            Ranuras ocupadas: <?= $guardadas ?> / <?= count($partidas) ?>
+          <?php else: ?>
+            Ranuras ocupadas: 0 / <?= count($partidas) ?>
+          <?php endif; ?>
+        </div>
+      </div>
     </header>
 
     <main class="slots-grid">

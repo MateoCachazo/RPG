@@ -308,7 +308,6 @@ $avatarPath = $userData['avatar'] ?? 'imagenes/perfil2.png';
 
       <div style="margin-top:12px; display:flex; gap:8px;">
         <a href="perfil.php" style="padding:8px 10px; border-radius:8px; background:#1f8cff; color:#041017; text-decoration:none; font-weight:700;">Ver perfil</a>
-        <a href="editar_perfil.php" style="padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); color:#ddd; text-decoration:none;">Editar</a>
         <a href="logout.php" style="padding:8px 10px; border-radius:8px; background:#ff6b6b; color:#fff; text-decoration:none;">Cerrar sesión</a>
       </div>
     <?php else: ?>
