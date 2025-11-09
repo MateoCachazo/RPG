@@ -191,6 +191,7 @@ body {
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .clase img {
   image-rendering: -webkit-optimize-contrast;
