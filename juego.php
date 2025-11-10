@@ -239,7 +239,7 @@ $partida = $_POST['partida'] ?? 0;
     const snd_daño = new Audio('sonidos/daño.wav');
     const snd_golpe_guerrero = new Audio('sonidos/golpe-guerrero.wav');
     const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
-    let global_id = 1;
+    let global_id = 2;
 
     canvas.width = 3000;
     canvas.height = 960;
@@ -886,7 +886,7 @@ $partida = $_POST['partida'] ?? 0;
 
     function ataque_ojito()
     {
-        console.log ("A");
+        //console.log ("A");
         /*if(Math.abs(this.x - jugador.x) >= 60 && (this.estado == "vuelo" || this.estado == "quieto") && this.delay_ataque == 0)
         {
             this.contador_limite = 5;
@@ -927,13 +927,13 @@ $partida = $_POST['partida'] ?? 0;
         if(this.delay_ataque == 0)
         {
             [this.imagen["ataque"], this.imagen["especial"]] = [this.imagen["especial"], this.imagen["ataque"]];
-            console.log("A");
+            //console.log("A");
         }
     }
 
     function spawnear()
     {
-        if(personajes.length <= 4)
+        if(personajes.length <= 2)
         {
             let spawnx = 0;
             let spawny = 555;
@@ -956,7 +956,7 @@ $partida = $_POST['partida'] ?? 0;
                 break;
 
                 default:
-                    console.log("random falla");
+                    //console.log("random falla");
                 break
             }
             ubicacion_spawn = Math.floor(Math.random() * 3) + 1;
@@ -975,7 +975,7 @@ $partida = $_POST['partida'] ?? 0;
                 break;
 
                 default:
-                    console.log("random falla");
+                    //console.log("random falla");
                 break
             }
             global_id++;
@@ -2461,8 +2461,6 @@ $partida = $_POST['partida'] ?? 0;
 
     function loop()
     {
-       //musica.play();
-            spawnear();
         if (pausa == true)
         {
             
@@ -2547,7 +2545,7 @@ $partida = $_POST['partida'] ?? 0;
             ctx.clearRect (0,0,canvas.width, canvas.height);
             hud_ctx.clearRect(0,0,screen.width,screen.height);
 
-           
+            spawnear();
             camara();
             //console.log(jugador.y);
             moverJugador();
