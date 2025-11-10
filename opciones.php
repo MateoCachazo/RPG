@@ -42,7 +42,7 @@
     .key-overlay { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:9999; background:rgba(1,2,4,0.6); }
     .key-overlay.active { display:flex; }
     .key-overlay .box { background:#071017; padding:22px; border-radius:12px; text-align:center; color:#eaf6ff; box-shadow:0 12px 40px rgba(0,0,0,0.7); }
-    .hint-small{ color:var(--muted); margin-top:8px; font-size:13px; }
+    .hint-small{ color:var(--muted); margin-top:8px; font-size:13px }
 
     @media (max-width:760px){
       .controls-grid{ grid-template-columns: 1fr 120px 120px; }
@@ -81,22 +81,58 @@
         </div>
       </section>
 
-
-      <!-- panel de controles -->
+      <!-- panel de controles (filas estáticas en HTML, sin foreach) -->
       <section id="panelControles" class="panel" style="flex:2;">
         <div class="row-title">Controles</div>
-        <p class="subtitle">Haz click en "Cambiar" y presiona la tecla que quieras asignar.</p>
+        <p class="subtitle">Haz click en "Cambiar" — la reasignación se implementa en backend.</p>
 
-        <div id="controlsList" class="controls-grid" role="list">
-          <!-- filas pobladas por JS -->
+        <div id="controlsList" class="controls-grid" role="list" aria-label="Lista de controles">
+          <!-- filas estáticas -->
+          <div class="label">Mover arriba</div>
+          <div class="key-box" data-action="moverArriba">W</div>
+          <button class="change-btn" data-action="moverArriba">Cambiar</button>
+
+          <div class="label">Mover abajo</div>
+          <div class="key-box" data-action="moverAbajo">S</div>
+          <button class="change-btn" data-action="moverAbajo">Cambiar</button>
+
+          <div class="label">Mover izquierda</div>
+          <div class="key-box" data-action="moverIzq">A</div>
+          <button class="change-btn" data-action="moverIzq">Cambiar</button>
+
+          <div class="label">Mover derecha</div>
+          <div class="key-box" data-action="moverDer">D</div>
+          <button class="change-btn" data-action="moverDer">Cambiar</button>
+
+          <div class="label">Ataque</div>
+          <div class="key-box" data-action="ataque">J</div>
+          <button class="change-btn" data-action="ataque">Cambiar</button>
+
+          <div class="label">Saltar</div>
+          <div class="key-box" data-action="saltar">K</div>
+          <button class="change-btn" data-action="saltar">Cambiar</button>
+
+          <div class="label">Interactuar</div>
+          <div class="key-box" data-action="interactuar">E</div>
+          <button class="change-btn" data-action="interactuar">Cambiar</button>
+
+          <div class="label">Abrir inventario</div>
+          <div class="key-box" data-action="inventario">I</div>
+          <button class="change-btn" data-action="inventario">Cambiar</button>
+
+          <div class="label">Pausa</div>
+          <div class="key-box" data-action="pausa">Escape</div>
+          <button class="change-btn" data-action="pausa">Cambiar</button>
         </div>
+
        <!-- acciones -->
         <div class="controls-actions">
           <button class="btn-primary" id="restoreDefaults">Restaurar por defecto</button>
           <button class="btn-ghost" id="saveControls">Guardar</button>
         </div>
       </section>
-        <!-- panel de audio -->
+
+      <!-- panel de audio -->
       <section id="panelAudio" class="panel" style="flex:1;">
         <div class="row-title">Audio</div>
         <p class="subtitle">Volúmenes y efectos.</p>
@@ -108,8 +144,9 @@
       </section>
     </div>
   </div>
+
 <script>
-  // lógica reducida: mantener solo la estética del panel "Controles"
+  // lógica mínima: estética intacta, reasignación delegada a backend
   const DEFAULT_CONTROLS = {
     moverArriba: 'W',
     moverAbajo: 'S',
@@ -122,15 +159,14 @@
     pausa: 'Escape'
   };
 
-  // elementos UI
+  // panel switching
   const btnGeneral = document.getElementById('btnGeneral');
   const btnControles = document.getElementById('btnControles');
+  const btnAudio = document.getElementById('btnAudio');
   const panelGeneral = document.getElementById('panelGeneral');
   const panelControles = document.getElementById('panelControles');
   const panelAudio = document.getElementById('panelAudio');
-  const controlsList = document.getElementById('controlsList');
 
-  // cambiar paneles
   function showPanel(panel){
     panelGeneral.classList.remove('active');
     panelControles.classList.remove('active');
@@ -141,69 +177,58 @@
   btnControles.addEventListener('click', ()=> showPanel(panelControles));
   btnAudio.addEventListener('click', ()=> showPanel(panelAudio));
 
-  // Columna de controles
+  // bind a botones "Cambiar" (sin lógica de reasignación, solo aviso)
+  document.querySelectorAll('#controlsList .change-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const action = btn.getAttribute('data-action') || 'acción';
+      alert(`Reasignación no implementada aquí. Dejen esto a back para "${action}".`);
+    });
+  });
 
-  function renderControlsUI(values = DEFAULT_CONTROLS){ // valores por defecto
-    controlsList.innerHTML = ''; // limpiar
-    Object.keys(values).forEach(action => { // por cada acción
-      const label = document.createElement('div'); // etiqueta
-      label.className = 'label'; // clase
-      label.textContent = prettifyAction(action); // texto legible
+  // Restaurar valores por defecto (UI solamente)
+  document.getElementById('restoreDefaults').addEventListener('click', ()=>{
+    Object.keys(DEFAULT_CONTROLS).forEach(k=>{
+      const el = document.querySelector(`#controlsList .key-box[data-action="${k}"]`);
+      if(el) el.textContent = DEFAULT_CONTROLS[k];
+    });
+    alert('Interfaz restaurada a valores por defecto (sin persistir).');
+  });
 
-      const keyBox = document.createElement('div'); // caja de tecla
-      keyBox.className = 'key-box'; // clase
-      keyBox.textContent = values[action]; // tecla asignada
+  // Guardar (solo aviso, backend debe implementar)
+  document.getElementById('saveControls').addEventListener('click', ()=>{
+    alert('Guardar no implementado. Integrar con backend para persistencia.');
+  });
 
-      const changeBtn = document.createElement('button'); // botón cambiar
-      changeBtn.className = 'change-btn'; // clase
-      changeBtn.textContent = 'Cambiar'; // texto
-      // botón sin funcionalidad: solo muestra estética
-
-
-      controlsList.appendChild(label);
-      controlsList.appendChild(keyBox);
-      controlsList.appendChild(changeBtn);
+  // Fullscreen toggle
+  const fullscreenToggle = document.getElementById('fullscreenToggle');
+  if (fullscreenToggle) {
+    fullscreenToggle.addEventListener('change', (e)=>{
+      if (e.target.checked) {
+        document.documentElement.requestFullscreen?.().catch(()=>{});
+      } else {
+        document.exitFullscreen?.().catch(()=>{});
+      }
     });
   }
 
-  function prettifyAction(k){
-    const map = {
-      moverArriba: 'Mover arriba',
-      moverAbajo: 'Mover abajo',
-      moverIzq: 'Mover izquierda',
-      moverDer: 'Mover derecha',
-      ataque: 'Ataque',
-      saltar: 'Saltar',
-      interactuar: 'Interactuar',
-      inventario: 'Abrir inventario',
-      pausa: 'Pausa'
-    };
-    return map[k] || k;
-  }
-
-  // restaurar visual a los valores por defecto (solo UI)
-  document.getElementById('restoreDefaults').addEventListener('click', ()=>{
-    alert('Haganlo ustedes, no soy back :).');
-
+  // sliders de audio (persistencia local mínima)
+  ['volMaster','volMusic','volSfx'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', (e)=>{
+      localStorage.setItem('rpg_' + id, e.target.value);
+    });
   });
+  (function loadVolumes(){
+    const master = localStorage.getItem('rpg_volMaster');
+    const music = localStorage.getItem('rpg_volMusic');
+    const sfx = localStorage.getItem('rpg_volSfx');
+    if(master) document.getElementById('volMaster').value = master;
+    if(music) document.getElementById('volMusic').value = music;
+    if(sfx) document.getElementById('volSfx').value = sfx;
+  })();
 
-  // guardar: notificar que no está implementado (no toca controles)
-  document.getElementById('saveControls').addEventListener('click', ()=>{
-    alert('Haganlo ustedes, no soy back :).');
-  });
-
-  // Fullscreen 
-  document.getElementById('fullscreenToggle').addEventListener('change', (e)=>{
-    if (e.target.checked) {
-      document.documentElement.requestFullscreen?.().catch(()=>{});
-    } else {
-      document.exitFullscreen?.().catch(()=>{});    
-    }
-  });
-
-// Lista de controles
-  renderControlsUI();
-
+  // inicial: nada más que mostrar la UI (los botones ya están en HTML)
 </script>
 
 </body>
