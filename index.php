@@ -254,7 +254,7 @@ h2{
   </video>
   
     <div class="image-container">
-    <img src="imagenes/logo khaos doomS.png" alt="Logo" style="width:500px;">
+    <img src="imagenes/Khaos Doom - Logo.png" alt="Logo" style="width:500px;">
     </div>
 
 <div class= "imagen-perfil" id="abrir-perfil">
@@ -327,6 +327,7 @@ $avatarPath = $userData['avatar'] ?? 'imagenes/perfil2.png';
 
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='partidas.php'">Iniciar partida</button>   
+        <button class="menu-btn" onclick="window.location.href='his_proyecto.php'">Historia</button>
         <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
     </div>
 
