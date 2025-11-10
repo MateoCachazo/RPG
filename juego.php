@@ -1191,11 +1191,26 @@ $partida = $_POST['partida'] ?? 0;
                 hitbox.fillStyle = "rgba(0,255,0,0.5)";
                 if (a.orientado == 1)
                 {
-                    hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+                    if (a.id == 1)
+                    {
+                        hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+                    }
+                    else
+                    {
+                        hitbox.fillRect(a.x, a.y + 20 + 10, 45, 60);
+                    }
                 }
                 else if (a.orientado == -1)
                 {
-                    hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+                    if (a.id == 1)
+                    {
+                        hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+                    }
+                    else
+                    {
+                        hitbox.fillRect(a.x - 5, a.y + 20 + 10, 45, 60);
+                    }
+                    
                 }
                 snd_golpe_guerrero.play();
                 a.contador_ataque -= 1;
