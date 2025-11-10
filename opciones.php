@@ -1,4 +1,20 @@
-<!DOCTYPE html>
+<?php
+
+session_start();
+
+$_SESSION["controles"] ?? [
+    "moverArriba" => "w",
+    "moverAbajo" => "s",
+    "moverIzq" => "a",
+    "moverDer" => "d",
+    "ataque" => "j",
+    "saltar" => "k",
+    "interactuar" => "e",
+    "inventario" => "i",
+    "ataqueEspecial" => "u",
+    "pausa" => "Escape"]; 
+ ?>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -90,39 +106,43 @@
           <!-- filas estáticas -->
           <div class="label">Mover arriba</div>
           <div class="key-box" data-action="moverArriba">W</div>
-          <button class="change-btn" data-action="moverArriba">Cambiar</button>
+          <button onclick="boton('arriba');" class="change-btn" data-action="moverArriba">Cambiar</button>
 
           <div class="label">Mover abajo</div>
           <div class="key-box" data-action="moverAbajo">S</div>
-          <button class="change-btn" data-action="moverAbajo">Cambiar</button>
+          <button onclick="boton('abajo');" class="change-btn" data-action="moverAbajo">Cambiar</button>
 
           <div class="label">Mover izquierda</div>
           <div class="key-box" data-action="moverIzq">A</div>
-          <button class="change-btn" data-action="moverIzq">Cambiar</button>
+          <button onclick="boton('izquierda');" class="change-btn" data-action="moverIzq">Cambiar</button>
 
           <div class="label">Mover derecha</div>
           <div class="key-box" data-action="moverDer">D</div>
-          <button class="change-btn" data-action="moverDer">Cambiar</button>
+          <button onclick="boton('derecha');" class="change-btn" data-action="moverDer">Cambiar</button>
 
           <div class="label">Ataque</div>
           <div class="key-box" data-action="ataque">J</div>
-          <button class="change-btn" data-action="ataque">Cambiar</button>
+          <button onclick="boton('ataque');" class="change-btn" data-action="ataque">Cambiar</button>
 
           <div class="label">Saltar</div>
           <div class="key-box" data-action="saltar">K</div>
-          <button class="change-btn" data-action="saltar">Cambiar</button>
+          <button onclick="boton('saltar');" class="change-btn" data-action="saltar">Cambiar</button>
 
           <div class="label">Interactuar</div>
           <div class="key-box" data-action="interactuar">E</div>
-          <button class="change-btn" data-action="interactuar">Cambiar</button>
+          <button onclick="boton('interactuar');" class="change-btn" data-action="interactuar">Cambiar</button>
 
           <div class="label">Abrir inventario</div>
           <div class="key-box" data-action="inventario">I</div>
-          <button class="change-btn" data-action="inventario">Cambiar</button>
+          <button onclick="boton('inventario');" class="change-btn" data-action="inventario">Cambiar</button>
+
+          <div class="label">Ataque Especial</div>
+          <div class="key-box" data-action="ataqueEspecial">U</div>
+          <button onclick="boton('ataqueEspecial');" class="change-btn" data
 
           <div class="label">Pausa</div>
           <div class="key-box" data-action="pausa">Escape</div>
-          <button class="change-btn" data-action="pausa">Cambiar</button>
+          <button onclick="boton('pausa');" class="change-btn" data-action="pausa">Cambiar</button>
         </div>
 
        <!-- acciones -->
@@ -167,6 +187,30 @@
   const panelControles = document.getElementById('panelControles');
   const panelAudio = document.getElementById('panelAudio');
 
+  let controles = {
+    "arriba":        false,
+    "abajo":         false,
+    "izquierda":     false,
+    "derecha":       false,
+    "ataque":        false,
+    "saltar":        false,
+    "interactuar":   false,
+    "inventario":    false,
+    "ataqueEspecial":false,
+    "pausa":         false} ;
+
+    let controles_aux = {
+    "arriba":        <?php echo json_encode($_SESSION["controles"]["moverArriba"]); ?>,
+    "abajo":         <?php echo json_encode($_SESSION["controles"]["moverAbajo"]); ?>,
+    "izquierda":     <?php echo json_encode($_SESSION["controles"]["moverIzq"]); ?>,
+    "derecha":       <?php echo json_encode($_SESSION["controles"]["moverDer"]); ?>,
+    "ataque":        <?php echo json_encode($_SESSION["controles"]["ataque"]); ?>,
+    "saltar":        <?php echo json_encode($_SESSION["controles"]["saltar"]); ?>,
+    "interactuar":   <?php echo json_encode($_SESSION["controles"]["interactuar"]); ?>,
+    "inventario":    <?php echo json_encode($_SESSION["controles"]["inventario"]); ?>,
+    "ataqueEspecial":<?php echo json_encode($_SESSION["controles"]["ataqueEspecial"]); ?>,
+    "pausa":         <?php echo json_encode($_SESSION["controles"]["pausa"]); ?>};
+
   function showPanel(panel){
     panelGeneral.classList.remove('active');
     panelControles.classList.remove('active');
@@ -176,6 +220,23 @@
   btnGeneral.addEventListener('click', ()=> showPanel(panelGeneral));
   btnControles.addEventListener('click', ()=> showPanel(panelControles));
   btnAudio.addEventListener('click', ()=> showPanel(panelAudio));
+
+  function boton(a){
+    controles[a] = true;
+    controles.foreach ((key) => {
+      if (key !== a){
+        controles[key] = false;
+      }
+    });
+  }
+  document.addEventListener("keydown", (e) =>
+    {
+        controles.foreach ((key) => {
+          if (controles[key] == true){
+            controles_aux[key] = e.key.toLowerCase();
+          }
+        });
+    });
 
   // bind a botones "Cambiar" (sin lógica de reasignación, solo aviso)
   document.querySelectorAll('#controlsList .change-btn').forEach(btn=>{
