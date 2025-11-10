@@ -1,3 +1,10 @@
+<?php
+
+$username = $_SESSION['username'] ?? 'El Héroe';
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
