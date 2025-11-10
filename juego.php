@@ -575,9 +575,10 @@ $partida = $_POST['partida'] ?? 0;
     let pared1 = {x: 0, y: 0, ancho:17, altura: canvas.height};
     let pared2 = {x: canvas.width - 10, y: 0, ancho:10, altura: canvas.height};
     let nenufar1 = {ximagen:0, yimagen:0,x: 699, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
-    let tabla = {ximagen:0, yimagen:0,x: 765, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
-    let nenufar2 = {ximagen:0, yimagen:0,x: 835, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
-    let tabla2 = {ximagen:0, yimagen:0,x: 900, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let tabla = {ximagen:0, yimagen:0,x: 742, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let tabla2 = {ximagen:0, yimagen:0,x: 850, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Tabla_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let nenufar2 = {ximagen:0, yimagen:0,x: 800, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.Nenúfar_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
+    let nenufar3 = {ximagen:0, yimagen:0,x: 890, y: 634, altura: 48, ancho: 48, altoimagen: 48, anchoimagen: 48, imagen: imagenes.NenúfarFlor_N1, estado: "quieto", contador: 0, contador_limite: 6, id: -1, animacion_continua: true};
     let pocion1 = {ximagen:0, yimagen:0,x: 810, y: 600, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
     let pocion2 = {ximagen:0, yimagen:0,x: 2448, y: 570, altura: 20, ancho: 20, altoimagen: 20, anchoimagen: 20, imagen: imagenes.PócimaCuración, estado: "animacion", contador: 0, contador_limite: 6, id: -3, animacion_continua: true};
     let pincho1 = {ximagen:0, yimagen:0,x: 1130, y: 607, altura: 32, ancho: 30, altoimagen: 50, anchoimagen: 30, imagen: imagenes.Pincho, contador: 0, contador_limite: 15, id: -2, animacion_continua: true};
@@ -609,7 +610,7 @@ $partida = $_POST['partida'] ?? 0;
     let proyectiles = [];
 
     let obstaculos = [pared1, pared2, antisuicidio1, antisuicidio2, piso, piso2, piso3, techo3, pared3, pisoagua, plataforma1, plataforma2, plataforma3, caja1, caja2, caja3, plataforma4, pared];
-    let objetos = [nenufar1,tabla, nenufar2, tabla2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande/*, checkpoint1, checkpoint2*/];
+    let objetos = [nenufar1,tabla, nenufar2, nenufar3, tabla2, pocion1, pocion2, pincho1, pincho2, pincho3, pinchogrande/*, checkpoint1, checkpoint2*/];
     let obstaculos_daño = [agua];
     let tps = [tp1, tp2];
     let obstaculosjefe = [pisojefe, pared1, pared2, plataforma5, plataforma6, plataforma7, plataforma8, plataforma9, plataforma10, plataforma11, plataforma12, plataforma13, plataforma14, plataforma15];
@@ -2091,9 +2092,10 @@ $partida = $_POST['partida'] ?? 0;
 
     function loop()
     {
+        musica.play();
         if (pausa == true)
         {
-            //musica.play();
+            
             hitbox.clearRect (0,0,canvas.width, canvas.height);
             ctx.clearRect (0,0,canvas.width, canvas.height);
             hud_ctx.clearRect(0,0,screen.width,screen.height);
