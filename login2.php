@@ -38,11 +38,13 @@ foreach ($usuarios as $user) {
 }
     echo "<script>
 localStorage.setItem('username', " . json_encode($user['username']) . ");
-window.location.href = 'historia.php';
 </script>";
 if ($loginCorrecto) {
-
-    header("Location:perfil.php");
+    $_SESSION['username'] = $user['username'];
+     echo "<script>
+localStorage.setItem('username', " . json_encode($user['username']) . ")
+window.location.href = 'perfil.php';
+</script>";
     exit;
 } else {
     // Si no coincide usuario o contraseña

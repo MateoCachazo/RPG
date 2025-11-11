@@ -241,6 +241,13 @@ $partida = $_POST['partida'] ?? 0;
     const snd_pocion = new Audio('sonidos/snd-curarse.mp3');
     let global_id = 2;
 
+
+
+
+
+
+
+
     canvas.width = 3000;
     canvas.height = 960;
     no_se_ve.width = canvas.width;
@@ -256,6 +263,33 @@ $partida = $_POST['partida'] ?? 0;
     let rutaBase = 'sprites/clases/';          //Creo una constante con una parte de las rutas de las imagees
     let clases = ['Arquero', 'Golem', 'Guerrero', 'Mago', 'Ninja', 'Vampiro'];    
     let accion = { quieto: ' Quieto', caminando: " Caminando", daño: " Daño", salto: " Salto", ataque: " Ataque-Melee", especial: " Ataque-Especial"};   //  "personajes" y "accion" se usan en la asignacion dinamica de las rutas de las imagenes
+    const voz_accion =
+    {
+        Ataque1: 'Ataque1_',
+        Ataque2: 'Ataque2_',
+        Ataque3: 'Ataque3_',
+        AtaqueEspecial: 'AtaqueEspecial_',
+        Salto: 'Salto_',
+        Daño: 'Daño_',
+    };
+    
+    const voces = { Guerrero: {}, /*Arquero: {},*/ Vampiro: {}/*, Ninja: {}, Mago: {}, Golem: {}*/};   // creo el objeto donde guardare las voces
+    const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes y voces
+
+
+    for (const a in voz_accion)
+    {
+        const sufijo = voz_accion[a];
+        Object.keys(voces).forEach(p => {
+            const snd = new Audio();
+            const src = `sonidos/${sufijo}${p}.wav`;
+            snd.src = src;
+            voces[p][a] = snd;
+            });
+    };
+    
+
+
 
     let barra_vida = new Image();
     barra_vida.src = "sprites/Barra de Vida.png";
@@ -297,7 +331,7 @@ $partida = $_POST['partida'] ?? 0;
     salajefe.src = "sprites/Sala Jefe 1.png";
 
     const imagenes = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}, Ojo_Flotante: {}, Sabueso_Infernal: {}, Esqueleto_Diabólico: {}, Nenúfar_N1: {}, Tabla_N1: {}, NenúfarFlor_N1: {}, ColeccionableAlma_N1: {}, PócimaCuración: {}, Pincho: {}, Pinchogrande: {}, PinchoAlt: {}, Faro: {}};   // creo el objeto donde guardare las imagenes
-    const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes
+    
 
     promesasCarga.push(new Promise(res => {
         hueso.onload = res;
@@ -642,6 +676,7 @@ $partida = $_POST['partida'] ?? 0;
                 }
             break;
         }
+        voces[clasee].AtaqueEspecial.play();
     }
 
     let teclas = {};
@@ -1033,14 +1068,14 @@ $partida = $_POST['partida'] ?? 0;
                 {
                     jugador.estado = "quieto";
                 }
-                if(teclas["o"])
+                /*if(teclas["o"])
                 {
                     jugador.contador_limite = 5;
                     jugador.contador = 0;
                     jugador.animacion_continua = false;
                     jugador.estado = "daño";
                     jugador.ximagen = 0;
-                }
+                }*/
                 if(teclas["p"])
                 {
                     jugador.contador_limite = 5;
@@ -1049,6 +1084,19 @@ $partida = $_POST['partida'] ?? 0;
                     jugador.estado = "ataque";
                     jugador.ximagen = 0;
                     jugador.contador_ataque = 4;
+                    let voz_aux = Math.floor(Math.random() * 3) + 1;
+                    switch (voz_aux)
+                    {
+                        case 1:
+                            voces[clasee].Ataque1.play();
+                        break;
+                        case 2:
+                            voces[clasee].Ataque2.play();
+                        break;
+                        case 3:
+                            voces[clasee].Ataque3.play();
+                        break;
+                    }
                 }
                 if(teclas["q"])
                 {
@@ -1184,6 +1232,7 @@ $partida = $_POST['partida'] ?? 0;
         if (teclas["w"] && revisar_porcion(jugador).abajo == false && jugador.estado != "salto"  && jugador.estado != "ataque" && jugador.estado != "especial" && jugador.estado != "daño") //este if hay que cambiarlo para que solo revise colisiones de abajo
         {
             snd_salto.play();
+            voces[clasee].Salto.play();
             jugador.estado = "salto";
             jugador.contador = 0;
             jugador.ximagen = 1;
@@ -1588,6 +1637,19 @@ $partida = $_POST['partida'] ?? 0;
                     if (a.id == 1)
                     {
                         hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+                        let voz_aux = Math.floor(Math.random() * 3) + 1;
+                        switch (voz_aux)
+                        {
+                            case 1:
+                                voces[clasee].Ataque1.play();
+                            break;
+                            case 2:
+                                voces[clasee].Ataque2.play();
+                            break;
+                            case 3:
+                                voces[clasee].Ataque3.play();
+                            break;
+                        }
                     }
                     else
                     {
@@ -1595,6 +1657,8 @@ $partida = $_POST['partida'] ?? 0;
                     }
                     
                 }
+                
+                
                 snd_golpe_guerrero.play();
                 a.contador_ataque -= 1;
             }
@@ -2073,6 +2137,7 @@ $partida = $_POST['partida'] ?? 0;
                             {
                                 esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                 porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
+                                voces[clasee].Daño.play();
                             }
                             //console.log(porcion.daño_aux);
                             porcion.velocidadx = 0;
@@ -2176,6 +2241,7 @@ $partida = $_POST['partida'] ?? 0;
                             {
                                 esqueletodiabolico1.critico = Math.floor(Math.random() * 2) + 1;
                                 porcion.daño_aux = Math.floor(((2 * esqueletodiabolico1.ataque)/5) + 2 * esqueletodiabolico1.critico * (esqueletodiabolico1.ataque / jugador.defensa) / 50 + 2);
+                                voces[clasee].Daño.play();
                             }
                             //console.log(porcion.daño_aux);
                             porcion.velocidadx = 0;
@@ -2468,45 +2534,7 @@ $partida = $_POST['partida'] ?? 0;
             ctx.clearRect (0,0,canvas.width, canvas.height);
             hud_ctx.clearRect(0,0,screen.width,screen.height);
 
-            if (jugador.y + 200 >= canvas.height)
-            {
-                //console.log("en teoria esta entrando aca");
-                camaray_aux = canvas.height - 200;
-            }
-            else if (jugador.y - 200 <= 0)
-            {
-                //console.log("en teoria esta entrando aca");
-                camaray_aux = 200;
-            }
-            else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
-            {
-                if (camaray_aux > jugador.y)
-                {
-                    camaray_aux -= 2;
-                }
-                else
-                {
-                    camaray_aux += 2;
-                }
-               
-            }
-            else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
-            {
-                camaray_aux += jugador.velocidady;
-            }
-
-            if (jugador.x - 300 <= 0)
-            {
-                camarax_aux = 300;
-            }
-            else if (jugador.x + 250 < canvas.width -250)
-            {
-                camarax_aux = jugador.x;
-            }
-            else if (jugador.x + 250 >= canvas.width - 250)
-            {
-                camarax_aux = canvas.width - 250;
-            }
+            camara();
        
             //console.log(jugador.y);
            
@@ -2592,7 +2620,7 @@ $partida = $_POST['partida'] ?? 0;
             // console.log(personajes[0].vida);
         }
        
-        //musica.play();
+        musica.play();
 
 
         requestAnimationFrame(loop);
