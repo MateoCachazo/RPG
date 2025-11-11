@@ -16,7 +16,7 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%; margin:0; font-family:Inter,system-ui,Arial; background:
-      linear-gradient(180deg,#020406 0%, #313436ff 60%); color:#e6eef7; -webkit-font-smoothing:antialiased;}
+      linear-gradient(180deg, #333334ff 0%, #373839ff 60%); color:#e6eef7; -webkit-font-smoothing:antialiased;}
     .wrap{
       min-height:100vh;
       display:flex;
@@ -27,7 +27,7 @@
 
     .panel{
       width:min(var(--maxw),96%);
-      background: linear-gradient(180deg, rgba(126, 42, 42, 0.02), rgba(255, 255, 255, 0.18));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(24, 22, 22, 0.18));
       border-radius:var(--radius);
       padding:26px;
       box-shadow: 0 18px 60px rgba(0,0,0,0.6);
@@ -71,7 +71,7 @@
       align-items:center;
       padding:20px;
       border-radius:12px;
-      background: linear-gradient(90deg, rgba(43, 41, 41, 0.01), rgba(0,0,0,0.12));
+      background: linear-gradient(90deg, rgba(114, 113, 113, 0.01), rgba(242, 232, 232, 0.12));
       width:100%;
       min-height:320px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.5);
