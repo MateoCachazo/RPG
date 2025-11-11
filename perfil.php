@@ -229,6 +229,8 @@ if (empty($email)) $email = "sin@correo.local";
 }
 
 .logo {
+   margin-left: -60px;
+  margin-bottom: 60px;
   margin-top: 10px;
   height: 100px;         
   width: auto;

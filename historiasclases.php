@@ -1,3 +1,10 @@
+<?php
+
+$username = $_SESSION['username'] ?? 'El Héroe';
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,6 +29,7 @@
 
 
 <script>
+localStorage.setItem("nombreUsuario", "<?php echo $username; ?>");
 document.addEventListener("DOMContentLoaded", () => {
   const ashContainer = document.getElementById('ash-background');
 
@@ -42,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spark.classList.add('spark');
     spark.style.left = Math.random() * 100 + 'vw';
     spark.style.top = '-' + (Math.random() * 20 + 5) + 'vh';
-    spark.style.animationDelay = sMath.random() * 6 + 's';
+    spark.style.animationDelay = Math.random() * 6 + 's';
     spark.style.animationDuration = 3 + Math.random() * 3 + 's';
     ashContainer.appendChild(spark);
   }

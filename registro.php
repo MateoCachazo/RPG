@@ -51,7 +51,7 @@
 
 .title {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   line-height: 2rem;
   font-weight: 700;
 }
@@ -59,7 +59,7 @@
 .input-group {
   margin-top: 0.25rem;
   margin-right: 0.3rem;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   line-height: 1.25rem;
 }
 
@@ -92,7 +92,14 @@
   margin: 8px 0 14px 0;
 }
 
-
+input {
+      font-family: 'Press Start 2P', cursive;
+      color: white;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #6ec6ff;
+      padding: 10px;
+      font-size: 0.7rem;
+    }
 
 .forgot a,.signup a {
   color: rgba(243, 244, 246, 1);
@@ -105,6 +112,8 @@
 }
 
 .sign {
+  font-family: 'Press Start 2P';
+  font-size: 10px;
   display: block;
   width: 109%;
  background-color: #5cc0ff;
@@ -130,20 +139,24 @@
   background-color: rgba(55, 65, 81, 1);
 }
 
-.social-message .message {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: rgba(156, 163, 175, 1);
-}
 
 .signup {
+    display: block;
+    width: 109%;
+    margin-left: -4%;
+    margin-top: 12px;
   text-align: center;
-  font-size: 0.75rem;
+    font-size: 10px;
   line-height: 1rem;
   color: rgba(156, 163, 175, 1);
   cursor: pointer;
+}
+
+.signup a {
+  color: rgba(243, 244, 246, 1);
+  font-size: 10px;
+
+  text-decoration: none;
 }
 
 .input-group label {
@@ -203,6 +216,8 @@
 }
 
 .logo {
+  margin-left: -20px;
+  margin-bottom: 80px;
   height: 100px;         
   width: auto;
   cursor: pointer;
@@ -213,6 +228,7 @@
   transform: scale(1.20);
 }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <body>
     <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
     <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
@@ -230,10 +246,6 @@
 <div class="form-container">
 	<p class="title">Registro</p>
     <form class="form" action="registroo.php" method="post">
-        <div>
-        <button class="btn-volver" onclick="location.href='index.php'">Volver</button>
-
-       </div>
         <div class="input-group">
             <label for="username">Nombre de Usuario: </label>
             <input type="text" id="username" name="username" required>
@@ -261,6 +273,7 @@
 	<br>
   <br>
 	<p class="signup">¿Ya tienes una cuenta?
+    <br>
 		<a rel="" href="login.php">Inicia Sesión</a>
 	</p>
       

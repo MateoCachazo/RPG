@@ -18,7 +18,7 @@
  body {
     background: radial-gradient(ellipse at center, #2f4b7bff 0%, #1e2b4aff 100%);
     color: #fff;
-    font-family: 'Press Start 2P';
+     font-family: 'Press Start 2P';
     text-align: center;
     min-height: 100vh;
     margin: 0;
@@ -30,6 +30,7 @@
       box-shadow: 0 8px 30px rgba(0, 0, 0, 1);
   width: 320px;
   text-align: left;
+  position: fixed;
   margin-left: 570px;
   margin-top: 100px;
   color: rgba(243, 244, 246, 1);
@@ -49,7 +50,7 @@
 
 .title {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   line-height: 2rem;
   font-weight: 700;
 }
@@ -61,7 +62,7 @@
 .input-group {
   margin-top: 0.25rem;
   margin-right: 0.3rem;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   line-height: 1.25rem;
 }
 
@@ -89,18 +90,24 @@
 .forgot {
   display: flex;
   justify-content: flex-end;
-  font-size: 0.75rem;
   line-height: 1rem;
   color: rgba(156, 163, 175,1);
   margin: 8px 0 14px 0;
 }
 
-
+input {
+      font-family: 'Press Start 2P', cursive;
+      color: white;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #6ec6ff;
+      padding: 10px;
+      font-size: 0.7rem;
+    }
 
 .forgot a,.signup a {
   color: rgba(243, 244, 246, 1);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .forgot a:hover, .signup a:hover {
@@ -108,6 +115,7 @@
 }
 
 .sign {
+   font-family: 'Press Start 2P';
     display: block;
   width: 109%;
  background-color: #5cc0ff;
@@ -119,6 +127,7 @@
   border: none;
   border-radius: 0.375rem;
   font-weight: 600;
+  font-size: 10px;
   cursor: pointer;
 }
 .sign:hover{
@@ -187,17 +196,12 @@
   z-index: 5;
 }
 .navbar {
-  position: fixed;   
-  margin-top: 10px;
-  margin-bottom: 10px ;
-
+  position: fixed;    
   width: 100%;
   height: 70px;            
   background: transparent;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  z-index: 1000;         
 }
 
 .logo-link {
@@ -207,6 +211,8 @@
 }
 
 .logo {
+   margin-left: -20px;
+  margin-top: 20px;
   height: 100px;         
   width: auto;
   cursor: pointer;
@@ -217,6 +223,7 @@
   transform: scale(1.20);
 }
 </style>
+ <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <body>
     <audio id="audioFondo" src="rpg-titulo.wav" autoplay loop></audio>
 <video autoplay muted loop playsinline poster="imagen_carga.jpg" id="videoFondo">
@@ -233,10 +240,6 @@
    
 
 <div class="form-container">
-   <div>
-        <button class="btn-volver" onclick="location.href='index.php'">Volver</button>
-
-       </div>
 	<p class="title">Inicio de Sesión</p>
 	<form class="form" action="login2.php" method="post">
 		<div class="input-group">

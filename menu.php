@@ -6,7 +6,7 @@
   <title>Khaos Doom - Pausa</title>
   <style>
 body {
-    background: radial-gradient(circle at center, #1d1919ff 0%, #3a3b3cff 100%);
+  background: rgba(0, 0, 0, 0.4); /* negro translúcido */
     animation: fondo 10s ease-in-out infinite alternate;
     margin: 0;
     color: white;
