@@ -273,7 +273,7 @@ $partida = $_POST['partida'] ?? 0;
         Daño: 'Daño_',
     };
     
-    const voces = { Guerrero: {}, /*Arquero: {},*/ Vampiro: {}/*, Ninja: {}, Mago: {}, Golem: {}*/};   // creo el objeto donde guardare las voces
+    const voces = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {},/* Mago: {},*/ Golem: {}};   // creo el objeto donde guardare las voces
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes y voces
 
 
@@ -2314,7 +2314,7 @@ $partida = $_POST['partida'] ?? 0;
        
         //console.log(colisiones.abajo,porcion.x, porcion.y, porcion.ancho, porcion.altura, porcion.velocidady/* + "    " + colisiones.izquierda*/);
        
-        //hitbox.clearRect (0,0,canvas.width, canvas.height);
+        //hitbox.clearRect (0,0,canvas.width, canvas.height); 
         return colisiones;
     }
    
@@ -2620,7 +2620,7 @@ $partida = $_POST['partida'] ?? 0;
             // console.log(personajes[0].vida);
         }
        
-        musica.play();
+        //musica.play();
 
 
         requestAnimationFrame(loop);

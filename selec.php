@@ -304,6 +304,15 @@ voces.Vampiro = voz_vamp;
 let voz_guerrero = new Audio();
 voz_guerrero.src = "sonidos/Guerrero-Nombre.wav";
 voces.Guerrero = voz_guerrero;
+let voz_arquero = new Audio();
+voz_arquero.src = "sonidos/Arquero Nombre.wav";
+voces.Arquero = voz_arquero;
+let voz_ninja = new Audio();
+voz_ninja.src = "sonidos/Ninja Nombre.wav";
+voces.Ninja = voz_ninja;
+let voz_golem = new Audio();
+voz_golem.src = "sonidos/Golem Nombre.wav";
+voces.Golem = voz_golem;
 
 const carrusel = document.getElementById('carrusel');
 const clases = document.querySelectorAll('.clase');
