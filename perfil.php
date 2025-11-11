@@ -258,7 +258,7 @@ if (empty($email)) $email = "sin@correo.local";
   <div class="container">
     <aside class="panel-left" aria-label="Perfil">
       <div class="avatar" title="Imagen de perfil">
-        <img src="imagenes/perfil2.png" alt="Avatar de <?php echo htmlspecialchars($username, ENT_QUOTES); ?>">
+        <img src="imagenes/Foto de Perfil.png" alt="Avatar de <?php echo htmlspecialchars($username, ENT_QUOTES); ?>">
       </div>
       <div style="text-align:center;">
         <div class="name"><?php echo htmlspecialchars($username, ENT_QUOTES); ?></div>

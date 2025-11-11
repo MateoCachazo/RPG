@@ -258,7 +258,7 @@ h2{
     </div>
 
 <div class= "imagen-perfil" id="abrir-perfil">
-  <img src="imagenes/perfil2.png" alt="Perfil" class="perfil-img">
+  <img src="imagenes/Foto de Perfil.png" alt="Perfil" class="perfil-img">
 </div>
 
 <?php
