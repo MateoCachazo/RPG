@@ -2625,19 +2625,43 @@ if (isset($_SESSION["username"]))
         }
         else if (jugador.vida <= 0)
         {
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "juego.php";
+            // Mostrar pantalla de derrota
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas antes de dibujar
+            ctx.fillStyle = "rgba(0, 0, 0, 0.32)"; // Fondo semi-transparente
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Dibujar el fondo
+        
+            ctx.font = "bold 60px 'Press Start 2P', monospace";
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center";
+            
+            ctx.fillText("💀 DERROTADO 💀", canvas.width / 2, canvas.height / 2 - 30); // mensaje de derrota
+        
+            ctx.font = "bold 25px 'Press Start 2P', monospace";
+            ctx.fillStyle = "white";
+            ctx.fillText("Presiona ENTER para reintentar", canvas.width / 2, canvas.height / 2 + 50); // Instrucción para reiniciar
+        
+            // Detiene el loop del juego
+            cancelAnimationFrame(loop);
 
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "personaje";
-            input.value = clasee;
+            // Espera ENTER para reiniciar
+            window.addEventListener("keydown", function(e) { // Escucha la tecla ENTER
+            if (e.key === "Enter") {
+            const form = document.createElement("form"); // Crea un formulario
+            form.method = "POST"; // Establece el método POST
+            form.action = "juego.php"; // Establece la acción al mismo archivo
 
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
-        }
+            const input = document.createElement("input"); // Crea un campo de entrada
+            input.type = "hidden"; // Tipo oculto
+            input.name = "personaje"; // Nombre del campo
+            input.value = clasee; // Valor del campo (clase del personaje)
+
+            form.appendChild(input); // Agrega el campo al formulario
+            document.body.appendChild(form); // Agrega el formulario al cuerpo del documento
+            form.submit(); // Envía el formulario para reiniciar el juego
+           }
+    }, { once: true }); // El listener se ejecuta solo una vez
+}
+
         else
         {
             //console.log(jugador.estado);
