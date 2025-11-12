@@ -1192,7 +1192,8 @@ $partida = $_POST['partida'] ?? 0;
         if (xp_aux2 > 0)
         {
             xp_aux2 -= 1;
-            jugador.xp += xp_aux1 / 8;
+            jugador.xp += Math.ceil(xp_aux1 / 8);
+            
         }
 
        
@@ -1693,7 +1694,7 @@ $partida = $_POST['partida'] ?? 0;
                         {
                             if (a.estado == "muerte")
                             {
-                                xp_aux1 = a.xp / jugador.nivel;
+                                xp_aux1 = Math.ceil(a.xp / jugador.nivel);
                                 xp_aux2 = 8;
                                 personajes.splice(personajes.indexOf(a), 1);
                             }
