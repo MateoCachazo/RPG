@@ -1047,7 +1047,7 @@ if (isset($_SESSION["username"]))
     function crear_esqueleto(spawn_x, spawn_y)
     {
         let sans = new enemigo(25, 200, 1, spawn_x, spawn_y, 78, 48, imagenes.Esqueleto_Diabólico, global_id, 3, 5, 15, 6, 6, 2,1);
-        sans.ataque_2 = ataque_esqueleto;
+        //sans.ataque_2 = ataque_esqueleto;
         personajes.push(sans);
     }
 
@@ -2011,7 +2011,7 @@ if (isset($_SESSION["username"]))
                         //console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
                         if(!a.animacion_continua && a.ximagen >= a.imagen.naturalWidth/a.imagen.naturalHeight/* && a.contador == a.contador_limite*/)
                         {
-                            console.log("puuuuuuum");
+                            //console.log("puuuuuuum");
                             proyectiles.splice(proyectiles.indexOf(a), 1);
                             if (jugador.estado == "especial")
                             {
@@ -2059,7 +2059,7 @@ if (isset($_SESSION["username"]))
         }
         else if(Math.abs(objeto.ancho) > 400)
         {
-            console.log(4);
+            //console.log(4);
             objeto.animacion_continua = false;
             ximagen=0;
         }
@@ -2073,7 +2073,7 @@ if (isset($_SESSION["username"]))
             objeto.contador_limite = 2;
         }
         objeto.x +=objeto.velocidadx * objeto.orientado;
-        console.log(objeto.ancho);
+        //console.log(objeto.ancho);
         cambiar(objeto, -1);
 
         if(clasee == "Mago" || clasee == "Golem")
@@ -2300,7 +2300,7 @@ if (isset($_SESSION["username"]))
                                                 xinicio = objetos[j].x;
                                                 yinicio = objetos[j].y;
                                                 //console.log("se cambiooo");
-                                                console.log(xinicio, " ", yinicio)
+                                                //console.log(xinicio, " ", yinicio)
                                             }
                                            
                                             break;
@@ -2406,7 +2406,7 @@ if (isset($_SESSION["username"]))
                                             xinicio = objetos[j].x;
                                             yinicio = objetos[j].y;
                                             // console.log("se cambiooo");
-                                            console.log(xinicio, " ", yinicio)
+                                            //console.log(xinicio, " ", yinicio)
                                         }
                                        
                                         break;
@@ -2668,8 +2668,8 @@ if (isset($_SESSION["username"]))
             document.body.appendChild(form); // Agrega el formulario al cuerpo del documento
             form.submit(); // Envía el formulario para reiniciar el juego
            }
-    }, { once: true }); // El listener se ejecuta solo una vez
-}
+            }, { once: true }); // El listener se ejecuta solo una vez
+        }
 
         else
         {
