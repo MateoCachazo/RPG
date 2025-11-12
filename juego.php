@@ -702,7 +702,7 @@ if (isset($_SESSION["username"]))
                 }
             break;
         }
-        voces[clasee].AtaqueEspecial.play();
+        
     }
 
     let teclas = {};
@@ -1132,6 +1132,7 @@ if (isset($_SESSION["username"]))
                     jugador.animacion_continua = false;
                     jugador.estado = "especial";
                     jugador.ximagen = 0;
+                    voces[clasee].AtaqueEspecial.play();
                     //jugador.contador_ataque = 4;
                 }
                 }
@@ -2681,6 +2682,10 @@ if (isset($_SESSION["username"]))
                     else
                     {
                         proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
+                        if (jugador.estado == "especial")
+                        {
+                            jugador.estado = "quieto";
+                        }
                     }
                 
                 }
