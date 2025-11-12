@@ -3,18 +3,18 @@
         "id": 1,
         "nombre": "asfsa",
         "usuario": "Eric",
-        "personaje": null
+        "personaje": "Guerrero"
     },
     "19": {
         "id": 2,
-        "nombre": "sfd",
+        "nombre": "sdf",
         "usuario": "Eric",
-        "personaje": null
+        "personaje": "Guerrero"
     },
     "20": {
         "id": 3,
-        "nombre": null,
+        "nombre": "ewr",
         "usuario": "Eric",
-        "personaje": null
+        "personaje": "Ninja"
     }
 }

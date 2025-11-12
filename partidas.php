@@ -69,17 +69,8 @@ unset($partida);
 // Cargar partida existente
 if (isset($_POST['cargar'])) {
     $id = (int)$_POST['id'];
-    foreach ($partidas as &$i)
-    {
-      if ($i['id'] == $id)
-      {
-        $_SESSION['partida'] = $id;
-    
-        header("Location: juego.php");
-        exit;
-      }
-    }
-
+    $_SESSION['partida'] = $id;
+    header("Location: juego.php");
 }
 
 // Borrar partida
@@ -327,7 +318,7 @@ foreach ($partidas as $p) {
               <?php if ($p['nombre']): ?>
                 <form method="post" style="display:inline;">
                   <input type="hidden" name="id" value="<?= $p['id'] ?>">
-                  <input type="hidden" name="id" value="<?= $p['personaje'] ?>">
+                  <input type="hidden" name="personaje" value="<?= $p['personaje'] ?>">
                   <button type="submit" name="cargar" class="btn-primary" title="Cargar partida">Cargar</button>
                 </form>
                 <form method="post" style="display:inline;">
