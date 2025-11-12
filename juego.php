@@ -1192,7 +1192,7 @@ $partida = $_POST['partida'] ?? 0;
         if (xp_aux2 > 0)
         {
             xp_aux2 -= 1;
-            jugador.xp += Math.ceil(xp_aux1 / 8);
+            jugador.xp += xp_aux1 / 8;
             
         }
 
