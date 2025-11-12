@@ -687,33 +687,33 @@ $partida = $_POST['partida'] ?? 0;
             velocidadx_max: 4,
             velocidady_max: 6,
             vida: 20,
-            ataque: 12,
-            defensa: 15,
+            ataque: 20,
+            defensa: 13,
             altura: 25
         },
         "Golem":
         {
-            velocidadx_max: 1,
-            velocidady_max: 10,
+            velocidadx_max: 2,
+            velocidady_max: 9,
             vida: 30,
-            ataque: 5,
+            ataque: 15,
             defensa: 20,
             altura: 38
         },
         "Mago":
         {
-            velocidadx_max: 2,
+            velocidadx_max: 3,
             velocidady_max: 8,
-            vida: 15,
-            ataque: 20,
-            defensa: 5,
+            vida: 10,
+            ataque: 27,
+            defensa: 4,
             altura: 25
         },
         "Arquero":
         {
-            velocidadx_max: 5,
+            velocidadx_max: 4,
             velocidady_max: 6,
-            vida: 10,
+            vida: 15,
             ataque: 15,
             defensa: 6,
             altura: 25
@@ -722,7 +722,7 @@ $partida = $_POST['partida'] ?? 0;
         {
             velocidadx_max: 6,
             velocidady_max: 6,
-            vida: 10,
+            vida: 13,
             ataque: 15,
             defensa: 5,
             altura: 25
@@ -731,9 +731,9 @@ $partida = $_POST['partida'] ?? 0;
         {
             velocidadx_max: 6,
             velocidady_max: 3,
-            vida: 10,
-            ataque: 10,
-            defensa: 5,
+            vida: 12,
+            ataque: 13,
+            defensa: 6,
             altura: 25
         },
         "Admin":
@@ -795,6 +795,7 @@ $partida = $_POST['partida'] ?? 0;
     let tp2 = {x: 2988, y: 880, ancho:10, altura: 20, id: 101};
 
     //objetos sala jefe
+    //jugador.y = 140;
     //jefe = true;
     //pared2.x = 713;
     let pisojefe = {x:0, y:577,altura:20, ancho:723};
@@ -1019,7 +1020,7 @@ $partida = $_POST['partida'] ?? 0;
    
     function crear_esqueleto(spawn_x, spawn_y)
     {
-        let sans = new enemigo(25, 200, 1, spawn_x, spawn_y, 78, 48, imagenes.Esqueleto_Diabólico, global_id, 3, 5, 7, 5, 3, 2,1);
+        let sans = new enemigo(25, 200, 1, spawn_x, spawn_y, 78, 48, imagenes.Esqueleto_Diabólico, global_id, 3, 5, 15, 6, 6, 2,1);
         sans.ataque_2 = ataque_esqueleto;
         personajes.push(sans);
     }
@@ -1027,14 +1028,14 @@ $partida = $_POST['partida'] ?? 0;
     function crear_ojo(spawn_x, spawn_y)
     {
         //altura_hitbox, vision, orientado, x, y, altura, ancho, imagen, id, velocidadx_max, velocidady_max, vida, ataque, defensa, xp, tipo
-        let william = new enemigo(25, 300, 1, spawn_x, spawn_y - 50, 78, 48, imagenes.Ojo_Flotante, global_id, 2, 0, 5, 4, 2, 2,2);
+        let william = new enemigo(25, 300, 1, spawn_x, spawn_y - 50, 78, 48, imagenes.Ojo_Flotante, global_id, 2, 0, 5, 4, 4, 1,2);
         william.ataque_2 = ataque_ojito;
         personajes.push(william);
     }
 
     function crear_sabueso(spawn_x, spawn_y)
     {
-        let scooby  = new enemigo(25, 350, 1, spawn_x, spawn_y, 78, 48, imagenes.Sabueso_Infernal, global_id, 3, 5, 5, 5, 2, 2,1);
+        let scooby  = new enemigo(25, 350, 1, spawn_x, spawn_y, 78, 48, imagenes.Sabueso_Infernal, global_id, 5, 5, 10, 5, 5, 3,1);
         scooby.ataque_2 = ataque_perro;
         personajes.push(scooby);
     }
@@ -1416,12 +1417,9 @@ $partida = $_POST['partida'] ?? 0;
             ctx.drawImage(salajefe, 0, 0, 511, 400, 0, 0, 723, 600);
             for (let i = 0; i < personajes.length; i++)
             {
-                if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
-                {
-                    contexto.fillStyle = "#FF0000";
-                    dibujar_personaje(personajes[i],contexto);
-                    cambiar(personajes[i], 1);
-                }          
+                contexto.fillStyle = "#FF0000";
+                dibujar_personaje(personajes[i],contexto);
+                cambiar(personajes[i], 1);        
             }
             for (let i = 0; i < obstaculosjefe.length; i++)
             {
@@ -1431,12 +1429,8 @@ $partida = $_POST['partida'] ?? 0;
                
             for (let i = 0; i < proyectiles.length; i++)
             {
-                if ((proyectiles[i].x >= camarax_aux - 300 && proyectiles[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (proyectiles[i].y >= camaray_aux - 210 && proyectiles[i].y <= (camaray_aux - 210) + jugador.altura + 300))
-                {
-                    contexto.fillStyle = "black";
-                    dibujar_proyectil(proyectiles[i],contexto);
-                }
-               
+                contexto.fillStyle = "black";
+                dibujar_proyectil(proyectiles[i],contexto);          
             }
            
             //ctx.drawImage(nivel1_adelante, canvas.width - 82, 572, 82, 66);
@@ -1593,9 +1587,84 @@ $partida = $_POST['partida'] ?? 0;
     }
     function dibujar_personaje(a,contexto)
     {
-        if ((a.x >= camarax_aux - 300 && a.x <= (camarax_aux - 300) + jugador.ancho + 500) && (a.y >= camaray_aux - 210 && a.y <= (camaray_aux - 210) + jugador.altura + 300))
+        if ((a.x >= camarax_aux - 300 && a.x <= (camarax_aux - 300) + jugador.ancho + 500) && (a.y >= camaray_aux - 210 && a.y <= (camaray_aux - 210) + jugador.altura + 300) && jefe == false)
         {
             let estado = a.estado;
+            //console.log(a.orientado);
+            contexto.save();
+            /*if (!(personaje.sprite instanceof HTMLImageElement)) {
+                console.error("Sprite inválido en personaje:", personaje);
+                return;
+            }*/
+            if(a.orientado == -1)
+            {
+                contexto.scale(-1, 1); // Invierte horizontalmente
+                contexto.translate(-a.ancho - a.x * 2, 0);
+            }
+
+
+            if(estado == "salto" && a.id > 1)
+            {
+                contexto.drawImage(a.imagen["quieto"], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+            }
+            else
+            {
+                contexto.drawImage(a.imagen[estado], a.ximagen * a.anchoimagen, a.yimagen * a.altoimagen, a.anchoimagen, a.altoimagen, a.x, a.y, a.ancho, a.altura);
+            }
+            contexto.restore();
+
+            if (a.contador_ataque > 0 && a.estado == "ataque")
+            {
+                hitbox.fillStyle = "rgba(0,255,0,0.5)";
+                if (a.orientado == 1)
+                {
+                    if (a.id == 1)
+                    {
+                        hitbox.fillRect(a.x, a.y + 20 + 10, 55, 60);
+                    }
+                    else
+                    {
+                        hitbox.fillRect(a.x, a.y + 20 + 10, 45, 60);
+                    }
+                }
+                else if (a.orientado == -1)
+                {
+                    if (a.id == 1)
+                    {
+                        hitbox.fillRect(a.x - 15, a.y + 20 + 10, 55, 60);
+                        let voz_aux = Math.floor(Math.random() * 3) + 1;
+                        switch (voz_aux)
+                        {
+                            case 1:
+                                voces[clasee].Ataque1.play();
+                            break;
+                            case 2:
+                                voces[clasee].Ataque2.play();
+                            break;
+                            case 3:
+                                voces[clasee].Ataque3.play();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        hitbox.fillRect(a.x - 5, a.y + 20 + 10, 45, 60);
+                    }
+                    
+                }
+                
+                
+                snd_golpe_guerrero.play();
+                a.contador_ataque -= 1;
+            }
+            else if(a.estado == "especial" && a.contador == 3 && a.ximagen == 5)
+            {
+                ataque_especial(a, 1);
+            }
+        }
+        else if (jefe == true)
+        {
+             let estado = a.estado;
             //console.log(a.orientado);
             contexto.save();
             /*if (!(personaje.sprite instanceof HTMLImageElement)) {
@@ -2124,6 +2193,10 @@ $partida = $_POST['partida'] ?? 0;
                                 pared2.x = 713;
                                 musica.pause();
                                 musica.src = 'cancion-rpg-alt.wav';
+                                for (let j = 1; j < personajes.length; j++)
+                                {
+                                    personajes.splice(personajes.indexOf(personajes[j]),1);
+                                }
                             }
                         }
                         else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 26 && porcion.estado != "daño")
@@ -2228,6 +2301,10 @@ $partida = $_POST['partida'] ?? 0;
                                 pared2.x = 713;
                                 musica.pause();
                                 musica.src = 'cancion-rpg-alt.wav';
+                                for (let j = 1; j < personajes.length; j++)
+                                {
+                                    personajes.splice(personajes.indexOf(personajes[j]),1);
+                                }
                             }
                         }
                         else if(/*pixeles[i] == 0 && pixeles[i+1] == 255 && pixeles[i+2] == 0 */pixeles[i+3] == 128 && porcion.estado != "daño")
@@ -2480,46 +2557,9 @@ $partida = $_POST['partida'] ?? 0;
         }
         else
         {
-            //723 600
-            if (jugador.y + 210 >= 630)
-            {
-                //console.log("en teoria esta entrando aca");
-                camaray_aux = 420;
-            }
-            else if (jugador.y - 210 <= 0)
-            {
-                //console.log("en teoria esta entrando aca");
-                camaray_aux = 210;
-            }
-            else if (revisar_porcion(jugador).abajo == false && Math.abs(jugador.y - camaray_aux )>= 30)
-            {
-                if (camaray_aux > jugador.y)
-                {
-                    camaray_aux -= 2;
-                }
-                else
-                {
-                    camaray_aux += 2;
-                }
-               
-            }
-            else if(revisar_porcion(jugador).abajo && Math.abs(jugador.y - camaray_aux) >= 60)
-            {
-                camaray_aux += jugador.velocidady;
-            }
+            camaray_aux = 210;
 
-            if (jugador.x - 300 <= 0)
-            {
-                camarax_aux = 300;
-            }
-            else if (jugador.x + 250 < 473)
-            {
-                camarax_aux = jugador.x;
-            }
-            else if (jugador.x + 250 >= 473)
-            {
-                camarax_aux = 473;
-            }
+            camarax_aux = 300;
         }
 
        
@@ -2545,7 +2585,14 @@ $partida = $_POST['partida'] ?? 0;
             //console.log(jugador.velocidady);
        
 
-            hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            if (jefe == false)
+            {
+                hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            }
+            else
+            {
+                hitbox.drawImage(canvas, 0, 0, 723, 600, 0,0,canvas.width, canvas.height);            
+            }
             //console.log(camarax_aux - 300, " ", camaray_aux - 300, " ", jugador.ancho + 500, " ", jugador.altura + 300);
             ctx.clearRect (0,0,canvas.width, canvas.height);
             ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
@@ -2581,41 +2628,62 @@ $partida = $_POST['partida'] ?? 0;
             camara();
             //console.log(jugador.y);
             moverJugador();
-            for (let i = 1; i < personajes.length; i++)
+            if (jefe == false)
             {
-                if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                for (let i = 1; i < personajes.length; i++)
                 {
-                    personajes[i].mover();
+                    if ((personajes[i].x >= camarax_aux - 300 && personajes[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (personajes[i].y >= camaray_aux - 210 && personajes[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                    {
+                        personajes[i].mover();
+                    }
+                
                 }
-               
-            }
-            for (let i = 0; i < objetos.length; i++)
-            {
-                if ((objetos[i].x >= camarax_aux - 300 && objetos[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (objetos[i].y >= camaray_aux - 210 && objetos[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                for (let i = 0; i < objetos.length; i++)
                 {
-                    cambiar(objetos[i], -1);
+                    if ((objetos[i].x >= camarax_aux - 300 && objetos[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (objetos[i].y >= camaray_aux - 210 && objetos[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                    {
+                        cambiar(objetos[i], -1);
+                    }
+                
                 }
-               
+                for (let i = 0; i < proyectiles.length; i++)
+                {
+                    if ((proyectiles[i].x >= camarax_aux - 300 && proyectiles[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (proyectiles[i].y >= camaray_aux - 210 && proyectiles[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                    {
+                        mover_proyectil(proyectiles[i]);
+                    }
+                    else
+                    {
+                        proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
+                    }
+                
+                }
             }
-            for (let i = 0; i < proyectiles.length; i++)
+            else
             {
-                if ((proyectiles[i].x >= camarax_aux - 300 && proyectiles[i].x <= (camarax_aux - 300) + jugador.ancho + 500) && (proyectiles[i].y >= camaray_aux - 210 && proyectiles[i].y <= (camaray_aux - 210) + jugador.altura + 300))
+                for (let i = 1; i < personajes.length; i++)
+                {
+                    personajes[i].mover();      
+                }
+                for (let i = 0; i < proyectiles.length; i++)
                 {
                     mover_proyectil(proyectiles[i]);
                 }
-                else
-                {
-                    proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
-                }
-               
             }
+           
             dibujar(ctx);
             //hitbox.clearRect (0,0,canvas.width, canvas.height);
             //console.log(camaray_aux);
             //console.log(jugador.velocidady);
        
-
-            hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            if (jefe == false)
+            {
+                hitbox.drawImage(canvas, camarax_aux - 300, camaray_aux - 210, jugador.ancho + 500, jugador.altura + 300, 0,0,canvas.width, canvas.height);
+            }
+            else
+            {
+                hitbox.drawImage(canvas, 0, 0, 723, 600, 0,0,canvas.width, canvas.height);
+            }
             //console.log(camarax_aux - 300, " ", camaray_aux - 300, " ", jugador.ancho + 500, " ", jugador.altura + 300);
             ctx.clearRect (0,0,canvas.width, canvas.height);
             ctx.drawImage(no_se_ve, 0,0,canvas.width, canvas.height);
