@@ -2635,19 +2635,19 @@ if (isset($_SESSION["username"]))
         else if (jugador.vida <= 0)
         {
             // Mostrar pantalla de derrota
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas antes de dibujar
-            ctx.fillStyle = "rgba(0, 0, 0, 0.32)"; // Fondo semi-transparente
-            ctx.fillRect(0, 0, canvas.width, canvas.height); // Dibujar el fondo
+            hud_ctx.clearRect(0,0,screen.width,screen.height);
+            hud_ctx.fillStyle = "rgba(0, 0, 0, 0.4)"; // Fondo semi-transparente
+            hud_ctx.fillRect(0, 0, canvas.width, canvas.height); // Dibujar el fondo
         
-            ctx.font = "bold 60px 'Press Start 2P', monospace";
-            ctx.fillStyle = "red";
-            ctx.textAlign = "center";
+            hud_ctx.font = "bold 60px 'Press Start 2P', monospace";
+            hud_ctx.fillStyle = "red";
+            hud_ctx.textAlign = "center";
             
-            ctx.fillText("💀 DERROTADO 💀", canvas.width / 2, canvas.height / 2 - 30); // mensaje de derrota
+            hud_ctx.fillText("💀 DERROTADO 💀", canvas.width / 2, canvas.height / 2 - 30); // mensaje de derrota
         
-            ctx.font = "bold 25px 'Press Start 2P', monospace";
-            ctx.fillStyle = "white";
-            ctx.fillText("Presiona ENTER para reintentar", canvas.width / 2, canvas.height / 2 + 50); // Instrucción para reiniciar
+            hud_ctx.font = "bold 25px 'Press Start 2P', monospace";
+            hud_ctx.fillStyle = "white";
+            hud_ctx.fillText("Presiona ENTER para reintentar", canvas.width / 2, canvas.height / 2 + 50); // Instrucción para reiniciar
         
             // Detiene el loop del juego
             cancelAnimationFrame(loop);
