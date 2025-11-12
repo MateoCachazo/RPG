@@ -1,14 +1,20 @@
-[
-    {
+{
+    "18": {
         "id": 1,
-        "nombre": "a"
+        "nombre": "ww",
+        "usuario": "Eric",
+        "personaje": "Guerrero"
     },
-    {
+    "19": {
         "id": 2,
-        "nombre": "was"
+        "nombre": "sdf",
+        "usuario": "Eric",
+        "personaje": "Guerrero"
     },
-    {
+    "20": {
         "id": 3,
-        "nombre": "asdasd"
+        "nombre": "ewr",
+        "usuario": "Eric",
+        "personaje": "Ninja"
     }
-]
+}

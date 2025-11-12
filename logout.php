@@ -4,5 +4,10 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: index.php");
+
 ?>
+
+<script>
+localStorage.removeItem('username');
+window.location.href = "index.php";
+</script>
