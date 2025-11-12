@@ -29,7 +29,7 @@ if (!file_exists($archivo)) {
 }
 
 $aux = false;
-foreach ($archivo as $i)
+foreach ($partidas as $i)
 {
   if ($i['usuario'] == $_SESSION['username'])
   {
