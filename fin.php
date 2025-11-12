@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khaos Doom - Felicidades!</title>
+  <link rel="stylesheet" href="historia.css">
+</head>
+
+<body>
+  <audio id="audioFondo" src="rpg-tranquilo.wav" autoplay loop></audio>
+  <div id="ash-background"></div>
+
+  <div id="intro-container">
+    <p id="story-text"></p>
+    <p id="continue-hint" class="hidden">Presiona ENTER para continuar...</p>
+  </div>
+
+  <button id="skip-btn">SALTAR ►</button>
+
+  <script src="fin.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ashContainer = document.getElementById('ash-background');
+
+  // --- Ceniza gris (base) ---
+  for (let i = 0; i < 120; i++) {
+    const ash = document.createElement('div');
+    ash.classList.add('ash');
+    ash.style.left = Math.random() * 100 + 'vw';
+    ash.style.top = '-' + (Math.random() * 20 + 5) + 'vh';
+    ash.style.animationDelay = Math.random() * 8 + 's';
+    ash.style.animationDuration = 6 + Math.random() * 5 + 's';
+    ashContainer.appendChild(ash);
+  }
+
+  // --- Chispas rojas/naranjas ---
+  for (let i = 0; i < 25; i++) {
+    const spark = document.createElement('div');
+    spark.classList.add('spark');
+    spark.style.left = Math.random() * 100 + 'vw';
+    spark.style.top = '-' + (Math.random() * 20 + 5) + 'vh';
+    spark.style.animationDelay = sMath.random() * 6 + 's';
+    spark.style.animationDuration = 3 + Math.random() * 3 + 's';
+    ashContainer.appendChild(spark);
+  }
+});
+</script>
+
+
+
+</body>
+</html>
