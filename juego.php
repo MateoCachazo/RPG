@@ -2657,7 +2657,7 @@ if (isset($_SESSION["username"]))
             if (e.key === "Enter") {
             const form = document.createElement("form"); // Crea un formulario
             form.method = "POST"; // Establece el método POST
-            form.action = "juego.php"; // Establece la acción al mismo archivo
+            form.action = "fin.php"; // Establece la acción al mismo archivo
 
             const input = document.createElement("input"); // Crea un campo de entrada
             input.type = "hidden"; // Tipo oculto
