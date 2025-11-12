@@ -26,6 +26,28 @@ if (!file_exists($archivo)) {
     file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
 }
 
+$aux = false;
+foreach ($archivo as $i)
+{
+  if ($i['usuario'] == $_SESSION['username'])
+  {
+    $aux = true;
+    break;
+  }
+}
+
+if ($aux == false)
+{
+  $id_aux = 1;
+      for ($j = 0; $j < 3; $j++)
+      {
+        $partidas[] = [  "id" => $id_aux, "nombre" => null, "usuario" => $_SESSION['username'], "personaje" => null];
+        $id_aux++;
+      }   
+
+    file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
+}
+
 // Leer partidas
 $partidas = json_decode(file_get_contents($archivo), true);
 
