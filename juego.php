@@ -11,6 +11,7 @@ $partida = $_SESSION['partida'] ?? $_POST['id'] ?? 0;
     //$xinicio = $j['x'] ?? 22;
     //$yinicio = $j['y'] ?? 400;
     $clase = $_POST['personaje'] ?? "Guerrero";
+    $clase = ucfirst(strtolower($clase));
     //$clase = "Guerrero";
     //$jefe = $_POST['jefe'] ?? false;
 
@@ -298,7 +299,7 @@ if (isset($_SESSION["username"]))
         Daño: 'Daño_',
     };
     
-    const voces = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {},/* Mago: {},*/ Golem: {}};   // creo el objeto donde guardare las voces
+    const voces = { Guerrero: {}, Arquero: {}, Vampiro: {}, Ninja: {}, Mago: {}, Golem: {}};   // creo el objeto donde guardare las voces
     const promesasCarga = [];   //Creo un array donde guardare las "promesas" de la carga de las imagenes y voces
 
 
@@ -701,7 +702,7 @@ if (isset($_SESSION["username"]))
                 }
             break;
         }
-        voces[clasee].AtaqueEspecial.play();
+        
     }
 
     let teclas = {};
@@ -774,7 +775,7 @@ if (isset($_SESSION["username"]))
 
     //clasee = "Admin";
 
-    let jugador = { altura_hitbox: estadisticas[clasee].altura, contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: xinicio, y: yinicio, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: 0, ataque: estadisticas[clasee].ataque, critico: 1, defensa: estadisticas[clasee].defensa, nivel: 1, xp: 0};
+    let jugador = { /*altura_hitbox: estadisticas[clasee].altura,*/ contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: xinicio, y: yinicio, altura:78, ancho:48, imagen: imagenes[clasee], base: [], colicion: false, id: 1, velocidadx: 0,velocidady : 0, velocidadx_max: estadisticas[clasee].velocidadx_max, velocidady_max: estadisticas[clasee].velocidady_max, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: estadisticas[clasee].vida, daño_aux: 0, ataque: estadisticas[clasee].ataque, critico: 1, defensa: estadisticas[clasee].defensa, nivel: 1, xp: 0};
     let esqueletodiabolico1 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 500, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
     let esqueletodiabolico2 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 1612, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
     let esqueletodiabolico3 = { altura_hitbox:25, vision: 200,contador_limite: 6,orientado:1,contador: 0, ximagen: 0, yimagen: 0, anchoimagen: 48, altoimagen: 48,parado: true, x: 2800, y: 555, altura:78, ancho:48, imagen: imagenes.Esqueleto_Diabólico, base: [], colicion: false, id: 2, velocidadx: 0,velocidady : 0, velocidadx_max: 2, velocidady_max: 5, saltando : false, salto : 0, estado: "quieto", animacion_continua: true, contador_ataque: 0, vida: 7, daño_aux: 0, delay_ataque: 0, ataque: 5, defensa: 3, critico: 0, xp:2};
@@ -1046,7 +1047,7 @@ if (isset($_SESSION["username"]))
     function crear_esqueleto(spawn_x, spawn_y)
     {
         let sans = new enemigo(25, 200, 1, spawn_x, spawn_y, 78, 48, imagenes.Esqueleto_Diabólico, global_id, 3, 5, 15, 6, 6, 2,1);
-        sans.ataque_2 = ataque_esqueleto;
+        //sans.ataque_2 = ataque_esqueleto;
         personajes.push(sans);
     }
 
@@ -1131,6 +1132,7 @@ if (isset($_SESSION["username"]))
                     jugador.animacion_continua = false;
                     jugador.estado = "especial";
                     jugador.ximagen = 0;
+                    voces[clasee].AtaqueEspecial.play();
                     //jugador.contador_ataque = 4;
                 }
                 }
@@ -2009,8 +2011,15 @@ if (isset($_SESSION["username"]))
                         //console.log(!a.animacion_continua + " && " + a.ximagen + " >= " + a.imagen.naturalWidth + " / " + a.imagen.naturalHeight);
                         if(!a.animacion_continua && a.ximagen >= a.imagen.naturalWidth/a.imagen.naturalHeight/* && a.contador == a.contador_limite*/)
                         {
-                            console.log("puuuuuuum");
+                            //console.log("puuuuuuum");
                             proyectiles.splice(proyectiles.indexOf(a), 1);
+                            if (jugador.estado == "especial")
+                            {
+                                jugador.estado = "quieto";
+                                jugador.ximagen = 0;
+                                jugador.animacion_continua = true;
+                                cambiar_estado();
+                            }
                         }
                     }
                 break;
@@ -2050,7 +2059,7 @@ if (isset($_SESSION["username"]))
         }
         else if(Math.abs(objeto.ancho) > 400)
         {
-            console.log(4);
+            //console.log(4);
             objeto.animacion_continua = false;
             ximagen=0;
         }
@@ -2064,7 +2073,7 @@ if (isset($_SESSION["username"]))
             objeto.contador_limite = 2;
         }
         objeto.x +=objeto.velocidadx * objeto.orientado;
-        console.log(objeto.ancho);
+        //console.log(objeto.ancho);
         cambiar(objeto, -1);
 
         if(clasee == "Mago" || clasee == "Golem")
@@ -2291,7 +2300,7 @@ if (isset($_SESSION["username"]))
                                                 xinicio = objetos[j].x;
                                                 yinicio = objetos[j].y;
                                                 //console.log("se cambiooo");
-                                                console.log(xinicio, " ", yinicio)
+                                                //console.log(xinicio, " ", yinicio)
                                             }
                                            
                                             break;
@@ -2397,7 +2406,7 @@ if (isset($_SESSION["username"]))
                                             xinicio = objetos[j].x;
                                             yinicio = objetos[j].y;
                                             // console.log("se cambiooo");
-                                            console.log(xinicio, " ", yinicio)
+                                            //console.log(xinicio, " ", yinicio)
                                         }
                                        
                                         break;
@@ -2625,19 +2634,43 @@ if (isset($_SESSION["username"]))
         }
         else if (jugador.vida <= 0)
         {
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "juego.php";
+            // Mostrar pantalla de derrota
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas antes de dibujar
+            ctx.fillStyle = "rgba(0, 0, 0, 0.32)"; // Fondo semi-transparente
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Dibujar el fondo
+        
+            ctx.font = "bold 60px 'Press Start 2P', monospace";
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center";
+            
+            ctx.fillText("💀 DERROTADO 💀", canvas.width / 2, canvas.height / 2 - 30); // mensaje de derrota
+        
+            ctx.font = "bold 25px 'Press Start 2P', monospace";
+            ctx.fillStyle = "white";
+            ctx.fillText("Presiona ENTER para reintentar", canvas.width / 2, canvas.height / 2 + 50); // Instrucción para reiniciar
+        
+            // Detiene el loop del juego
+            cancelAnimationFrame(loop);
 
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "personaje";
-            input.value = clasee;
+            // Espera ENTER para reiniciar
+            window.addEventListener("keydown", function(e) { // Escucha la tecla ENTER
+            if (e.key === "Enter") {
+            const form = document.createElement("form"); // Crea un formulario
+            form.method = "POST"; // Establece el método POST
+            form.action = "juego.php"; // Establece la acción al mismo archivo
 
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
+            const input = document.createElement("input"); // Crea un campo de entrada
+            input.type = "hidden"; // Tipo oculto
+            input.name = "personaje"; // Nombre del campo
+            input.value = clasee; // Valor del campo (clase del personaje)
+
+            form.appendChild(input); // Agrega el campo al formulario
+            document.body.appendChild(form); // Agrega el formulario al cuerpo del documento
+            form.submit(); // Envía el formulario para reiniciar el juego
+           }
+            }, { once: true }); // El listener se ejecuta solo una vez
         }
+
         else
         {
             //console.log(jugador.estado);
@@ -2680,6 +2713,13 @@ if (isset($_SESSION["username"]))
                     else
                     {
                         proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
+                        if (jugador.estado == "especial")
+                            {
+                                jugador.estado = "quieto";
+                                jugador.ximagen = 0;
+                                jugador.animacion_continua = true;
+                                cambiar_estado();
+                            }
                     }
                 
                 }
@@ -2717,7 +2757,7 @@ if (isset($_SESSION["username"]))
             // console.log(personajes[0].vida);
         }
        
-        //musica.play();
+        musica.play();
 
 
         requestAnimationFrame(loop);

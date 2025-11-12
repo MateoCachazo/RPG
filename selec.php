@@ -313,6 +313,9 @@ voces.Ninja = voz_ninja;
 let voz_golem = new Audio();
 voz_golem.src = "sonidos/Golem Nombre.wav";
 voces.Golem = voz_golem;
+let voz_mago = new Audio();
+voz_mago.src = "sonidos/Mago Nombre.wav";
+voces.Mago = voz_mago;
 
 const carrusel = document.getElementById('carrusel');
 const clases = document.querySelectorAll('.clase');

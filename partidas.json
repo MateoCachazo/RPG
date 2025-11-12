@@ -1,15 +1,15 @@
 {
     "18": {
         "id": 1,
-        "nombre": "ww",
+        "nombre": "Mago",
         "usuario": "Eric",
-        "personaje": "Guerrero"
+        "personaje": "Mago"
     },
     "19": {
         "id": 2,
-        "nombre": "sdf",
+        "nombre": "Golem",
         "usuario": "Eric",
-        "personaje": "Guerrero"
+        "personaje": "Golem"
     },
     "20": {
         "id": 3,
