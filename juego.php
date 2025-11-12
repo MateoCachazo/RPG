@@ -2013,6 +2013,13 @@ if (isset($_SESSION["username"]))
                         {
                             console.log("puuuuuuum");
                             proyectiles.splice(proyectiles.indexOf(a), 1);
+                            if (jugador.estado == "especial")
+                            {
+                                jugador.estado = "quieto";
+                                jugador.ximagen = 0;
+                                jugador.animacion_continua = true;
+                                cambiar_estado();
+                            }
                         }
                     }
                 break;
@@ -2683,9 +2690,12 @@ if (isset($_SESSION["username"]))
                     {
                         proyectiles.splice(proyectiles.indexOf(proyectiles[i]), 1);
                         if (jugador.estado == "especial")
-                        {
-                            jugador.estado = "quieto";
-                        }
+                            {
+                                jugador.estado = "quieto";
+                                jugador.ximagen = 0;
+                                jugador.animacion_continua = true;
+                                cambiar_estado();
+                            }
                     }
                 
                 }
