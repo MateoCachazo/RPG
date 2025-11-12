@@ -8,7 +8,6 @@
 </head>
 
 <body>
-  <audio id="audioFondo" src="rpg-tranquilo.wav" autoplay loop></audio>
   <div id="ash-background"></div>
 
   <div id="intro-container">
