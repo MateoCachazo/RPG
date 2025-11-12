@@ -286,8 +286,6 @@ if (empty($email)) $email = "sin@correo.local";
 
             <div style="display:flex; align-items:center; gap:8px;">
               <div class="actions">
-                <a class="btn ghost" href="editar_perfil.php">Editar perfil</a>
-                <a class="btn ghost" href="cambiar_contrasena.php">Cambiar contraseña</a>
                 <a class="btn" href="logout.php">Cerrar sesión</a>
               </div>
             </div>

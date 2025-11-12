@@ -97,7 +97,7 @@
 
     .scene-body{ flex:1; display:flex; flex-direction:column; gap:12px; }
     .scene-title{ font-size:1.2rem; color:var(--accent); margin:0; font-weight:800; }
-    .scene-text{ color:#dfeef8; line-height:1.65; font-size:1rem; white-space:pre-wrap; }
+    .scene-text{ color:#dfeef8; line-height:1.65; font-size:1rem; }
 
     /* navigation UI */
     .nav{
@@ -134,6 +134,45 @@
       border:1px solid rgba(255,255,255,0.03);
     }
     .dot.active{ background:linear-gradient(90deg,var(--accent), #8ef0c6); box-shadow:0 6px 18px rgba(127,212,255,0.08); }
+    .scene-text br {
+  margin-bottom: 8px;
+  display: block;
+  content: "";
+}
+.navbar {
+  position: fixed;   
+  margin-top: 0px;
+  margin-bottom: 20px ;
+
+  width: 100%;
+  height: 70px;            
+  background: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;         
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+   margin-left: 60px;
+  margin-bottom: 60px;
+  margin-top: 60px;
+  height: 100px;         
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.20);
+}
+
 
     /* pequeños detalles responsive */
     @media (max-width:980px){
@@ -148,11 +187,16 @@
   </style>
 </head>
 <body>
+  <nav class="navbar">
+  <a href="index.php" class="logo-link">
+    <img src="imagenes/khaos.png" alt="Logo" class="logo">
+  </a>
+</nav>
   <div class="wrap">
     <section class="panel" aria-labelledby="hist-title">
       <header class="header">
         <h1 id="hist-title" class="title">Historia del proyecto</h1>
-        <div class="subtitle">Origen, objetivo y visión del RPG-1 — haz click o usa → ← para avanzar</div>
+        <div class="subtitle">Origen, objetivo y visión de KHAOS DOOM — haz click o usa → ← para avanzar</div>
       </header>
 
       <div class="stage" id="stage">
@@ -183,24 +227,53 @@
       // escenarios: cambialos o agrega imágenes en carpeta imagenes/
       const scenes = [
         {
-          title: "Ejemplo",
-          text: `.`,
-          img: "imagenes/escena1.png"
+          title: "El Origen de Khaos Dom",
+          text: `Khaos Doom se originó a finales de 2024 como un proyecto para la ExpoMEP de ese mismo año, titulado “Héroes del Abismo”.
+                Los encargados de llevarlo a cabo fueron Valentín Castro y Rocco Bruno. 
+                Ellos decidieron desarrollar un videojuego RPG lineal con sistema de combates por turnos, 
+                creado en C# y ambientado en un mundo de oscuridad, héroes y jefes imponentes.  
+                Fue nuestro primer paso dentro del desarrollo de videojuegos, y el proyecto que nos enseñó 
+                lo que realmente implica crear una experiencia completa desde cero.`,
+          img: "imagenes/heroes"
         },
         {
-          title: "Ejemplo",
-          text: `.`,
-          img: "imagenes/escena2.png"
+          title: "La Reinvención de Héroes del Abismo",
+          text: `Un año después llegó el desafío de presentar un nuevo proyecto para la ExpoMEP 2025.  
+                Esta vez, con un grupo diferente conformado por: Jazmín Sánchez, Nicolás Moreno, 
+                Eric Nachtygal, Mateo Cachazo y Rocco Bruno, decidimos retomar y reinventar aquella idea original.  
+                Así nació Khaos Doom: una versión completamente renovada, más ambiciosa y con una dirección mucho más visual y fluida.`,
+          img: "sprites/Nivel 1.png"
         },
         {
-          title: "Ejemplo",
-          text: `.`,
-          img: "imagenes/escena3.png"
+          title: "Créditos",
+          text: `De esta manera, nos distribuimos las tareas para llevar a cabo no solo un juego, 
+                ni un proyecto, sino algo más: una experiencia única para cada jugador.  
+                Cada uno de nosotros tuvo una contribución esencial en Khaos Doom:
+
+                🧩 Jazmín Sánchez: Programación del sistema de autenticación de usuarios, manejo de sesiones y 
+                conexión entre el front y el backend del juego.  
+                ⚙️ Nicolas Moreno y Eric Nachtygal: Implementación del sistema de combate, mecánicas principales, 
+                optimización del rendimiento y estructura del código base del juego.  
+                Encargados de transformar el concepto en una experiencia jugable sólida y fluida.  
+                🎨 Mateo Cachazo: Diseño y desarrollo de la interfaz del sitio web, organización visual, 
+                efectos de transición y estructura general de la presentación del proyecto.  
+                🔥 Rocco Bruno: Diseño gráfico del videojuego, desarrollo visual completo, animaciones, ambientación, 
+                efectos visuales, creación de personajes y enemigos, además de la escritura y adaptación de la historia principal.  
+                Responsable de la identidad estética y del tono narrativo del universo de Khaos Doom.
+              `,
+          img: "imagenes/foto2"
         },
         {
-          title: "Ejemplo",
-          text: `.`,
-          img: "imagenes/escena4.png"
+          title: "El Último Capítulo",
+          text: `Cuando el último enemigo cayó y la historia se completó, entendimos que Khaos Doom era más que un proyecto.  
+                Fue una batalla contra el tiempo, el cansancio y los límites de lo posible.
+
+                Pero lo logramos.
+
+                Porque mientras existan quienes se atrevan a crear mundos imposibles...  
+                el caos nunca morirá, solo cambiará de forma.
+                `,
+          img: "imagenes/logo khaos doom.png"
         }
       ];
 
@@ -237,7 +310,8 @@
         idx = i;
         const s = scenes[idx];
         sceneTitle.textContent = s.title;
-        sceneText.textContent = s.text;
+        sceneText.innerHTML = s.text.replace(/\n/g, '<br>');
+
         if(s.img){
           sceneImg.src = s.img;
           sceneImg.style.display = '';
