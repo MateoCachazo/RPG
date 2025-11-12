@@ -1,6 +1,6 @@
 <?php
 $json = json_decode(file_get_contents("partidas.json"), true);
-$partida = $_POST['partida'] ?? 0;
+$partida = $_SESSION['partida'] ?? $_POST['id'] ?? 0;
 
         $xinicio = 79;
         $yinicio = 555;
@@ -12,6 +12,9 @@ $partida = $_POST['partida'] ?? 0;
     $clase = ucfirst(strtolower($clase));
     //$jefe = $_POST['jefe'] ?? false;
 
+
+$json[$partida]['personaje'] = $clase;
+file_put_contents(json_encode($json, JSON_PRETTY_PRINT));
 ?>
 
 <!DOCTYPE html>
@@ -1028,14 +1031,14 @@ $partida = $_POST['partida'] ?? 0;
     function crear_ojo(spawn_x, spawn_y)
     {
         //altura_hitbox, vision, orientado, x, y, altura, ancho, imagen, id, velocidadx_max, velocidady_max, vida, ataque, defensa, xp, tipo
-        let william = new enemigo(25, 300, 1, spawn_x, spawn_y - 50, 78, 48, imagenes.Ojo_Flotante, global_id, 2, 0, 5, 4, 4, 1,2);
+        let william = new enemigo(25, 300, 1, spawn_x, spawn_y - 50, 78, 48, imagenes.Ojo_Flotante, global_id, 1, 0, 5, 4, 4, 1,2);
         william.ataque_2 = ataque_ojito;
         personajes.push(william);
     }
 
     function crear_sabueso(spawn_x, spawn_y)
     {
-        let scooby  = new enemigo(25, 350, 1, spawn_x, spawn_y, 78, 48, imagenes.Sabueso_Infernal, global_id, 5, 5, 10, 5, 5, 3,1);
+        let scooby  = new enemigo(25, 350, 1, spawn_x, spawn_y, 78, 48, imagenes.Sabueso_Infernal, global_id, 5, 7, 10, 5, 5, 3,1);
         scooby.ataque_2 = ataque_perro;
         personajes.push(scooby);
     }
