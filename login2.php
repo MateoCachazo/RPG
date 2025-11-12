@@ -36,9 +36,7 @@ foreach ($usuarios as $user) {
         }
     }
 }
-    echo "<script>
-localStorage.setItem('username', " . json_encode($user['username']) . ");
-</script>";
+
 if ($loginCorrecto) {
     $_SESSION['username'] = $user['username'];
      echo "<script>

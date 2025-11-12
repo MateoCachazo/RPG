@@ -1,6 +1,10 @@
 <?php
+session_start();
+
 $json = json_decode(file_get_contents("partidas.json"), true);
 $partida = $_SESSION['partida'] ?? $_POST['id'] ?? 0;
+
+echo '<script> console.log(' . $partida . ') </script>';
 
         $xinicio = 79;
         $yinicio = 555;
@@ -12,9 +16,21 @@ $partida = $_SESSION['partida'] ?? $_POST['id'] ?? 0;
     $clase = ucfirst(strtolower($clase));
     //$jefe = $_POST['jefe'] ?? false;
 
+if (isset($_SESSION["username"]))
+{
+    foreach ($json as &$i)
+    {
+        if ($i['usuario'] == trim($_SESSION['username']) && $i['id'] == $partida)
+        {
+            $i['personaje'] = $clase;
+            file_put_contents("partidas.json", json_encode($json, JSON_PRETTY_PRINT));
+            break;
+        }
+    }
+}
 
-$json[$partida]['personaje'] = $clase;
-file_put_contents(json_encode($json, JSON_PRETTY_PRINT));
+
+
 ?>
 
 <!DOCTYPE html>
