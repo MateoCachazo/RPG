@@ -1,14 +1,200 @@
 [
     {
         "id": 1,
-        "nombre": "a"
+        "nombre": null,
+        "usuario": "jaz",
+        "personaje": null
     },
     {
         "id": 2,
-        "nombre": "a"
+        "nombre": null,
+        "usuario": "jaz",
+        "personaje": null
     },
     {
         "id": 3,
-        "nombre": null
+        "nombre": null,
+        "usuario": "jaz",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "rodri",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "rodri",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "rodri",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "jazz43",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "jazz43",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "jazz43",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "sanchez17",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "sanchez17",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "sanchez17",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "min6601",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "min6601",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "min6601",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "mateo",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "mateo",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "mateo",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "Eric",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "Eric",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "Eric",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "Nacho",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "Nacho",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "Nacho",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "rocco.bruno.22",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "rocco.bruno.22",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "rocco.bruno.22",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "rocco",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "rocco",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "rocco",
+        "personaje": null
+    },
+    {
+        "id": 1,
+        "nombre": null,
+        "usuario": "roking",
+        "personaje": null
+    },
+    {
+        "id": 2,
+        "nombre": null,
+        "usuario": "roking",
+        "personaje": null
+    },
+    {
+        "id": 3,
+        "nombre": null,
+        "usuario": "roking",
+        "personaje": null
     }
 ]
