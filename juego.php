@@ -843,7 +843,7 @@ $partida = $_POST['partida'] ?? 0;
                 //console.log(enemigo.vida);
                 enemigo.daño_aux -= 1;
             }
-            if (revisar_porcion(enemigo).abajo == false && enemigo.estado != "daño" && enemigo.estado != "ataque")
+            if (enemigo.velocidadx != 0 && enemigo.estado != "daño" && enemigo.estado != "ataque" && enemigo.estado != "especial")
             {
                 enemigo.estado = "vuelo";
             }
