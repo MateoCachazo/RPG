@@ -8,6 +8,8 @@ if (!isset($_SESSION['username']))
 
 $archivo = 'partidas.json';
 
+$partidas = json_decode(file_get_contents($archivo), 1);
+
 $usuarios = json_decode(file_get_contents("USUARIOS.json"), 1);
 
 // Si no existe el archivo, lo creamos con 3 slots vacíos
