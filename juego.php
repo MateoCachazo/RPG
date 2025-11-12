@@ -9,7 +9,7 @@ $partida = $_SESSION['partida'] ?? $_POST['id'] ?? 0;
     //$xinicio = $j['x'] ?? 22;
     //$yinicio = $j['y'] ?? 400;
     $clase = $_POST['personaje'] ?? "Guerrero";
-    $clase = ucfirst(strtolower($clase));
+    $clase = "Guerrero";
     //$jefe = $_POST['jefe'] ?? false;
 
 
