@@ -227,7 +227,7 @@
       // escenarios: cambialos o agrega imágenes en carpeta imagenes/
       const scenes = [
         {
-          title: "El Origen de Khaos Dom",
+          title: "El Origen de Khaos Doom",
           text: `Khaos Doom se originó a finales de 2024 como un proyecto para la ExpoMEP de ese mismo año, titulado “Héroes del Abismo”.
                 Los encargados de llevarlo a cabo fueron Valentín Castro y Rocco Bruno. 
                 Ellos decidieron desarrollar un videojuego RPG lineal con sistema de combates por turnos, 
