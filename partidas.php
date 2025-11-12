@@ -19,7 +19,7 @@ if (!file_exists($archivo)) {
       $id_aux = 1;
       for ($j = 0; $j < 3; $j++)
       {
-        $partidas[] = ["id" => $id_aux, "nombre" => null, "usuario" => $usuarios[$i]['username'], "personaje" => null];
+        $partidas[] = [  "id" => $id_aux, "nombre" => null, "usuario" => $usuarios[$i]['username'], "personaje" => null];
         $id_aux++;
       }   
     }
@@ -38,33 +38,67 @@ if ($usuarioActual) {
 
 // Crear partida nueva
 if (isset($_POST['crear'])) {
-    $id = count($partidas);
+    $id = (int)$_POST['id'];
     $nombre = trim($_POST['nombre']) ?: 'Jugador';
-    $partidas[$id]['nombre'] = $nombre;
-    $partidas[$id]['usuario'] = $_SESSION['username'];
-    file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
-    $_SESSION['partida'] = $id;
-    header("Location: historia.html");
-    exit;
+    $usuarioActual = $_SESSION['username'];
+
+    // Leemos todas las partidas (sin filtrar)
+    $todas = json_decode(file_get_contents($archivo), true);
+
+   foreach ($todas as &$partida) {
+    if (
+        isset($partida['usuario']) &&
+        $partida['usuario'] === $usuarioActual &&
+        (empty($partida['nombre']) || is_null($partida['nombre']))
+    ) {
+        $partida['nombre'] = $nombre;
+        $partida['usuario'] = $usuarioActual;
+
+        file_put_contents($archivo, json_encode($todas, JSON_PRETTY_PRINT));
+
+        $_SESSION['partida'] = $partida['id'];
+        header("Location: historia.html");
+        exit;
+    }
 }
+unset($partida); 
+
+}
+
 
 // Cargar partida existente
 if (isset($_POST['cargar'])) {
     $id = (int)$_POST['id'];
-    $_SESSION['partida'] = $id;
+    foreach ($partidas as &$i)
+    {
+      if ($i['id'] == $id)
+      {
+        $_SESSION['partida'] = $id;
     
-    header("Location: juego.php");
-    exit;
+        header("Location: juego.php");
+        exit;
+      }
+    }
+
 }
 
 // Borrar partida
 if (isset($_POST['borrar'])) {
-    $id = (int)$_POST['id'];
-    $partidas[$id]['nombre'] = null;
-    $partidas[$id]['personaje'] = null;
-    file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
-    header("Location: partidas.php");
-    exit;
+  $id = (int)$_POST['id'];
+  foreach ($partidas as &$i)
+  {
+    if ($i['id'] == $id)
+    {
+      $i['nombre'] = null;
+      $i['personaje'] = null;
+      file_put_contents($archivo, json_encode($partidas, JSON_PRETTY_PRINT));
+      header("Location: partidas.php");
+      exit;
+    }
+    
+  }
+    
+    
 }
 
 // Contador de partidas guardadas (no nulas / no vacías)
