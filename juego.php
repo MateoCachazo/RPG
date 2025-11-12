@@ -968,7 +968,7 @@ $partida = $_POST['partida'] ?? 0;
 
     function spawnear()
     {
-        if(personajes.length <= 2)
+        if(personajes.length <= 4)
         {
             let spawnx = 0;
             let spawny = 555;
@@ -2574,7 +2574,10 @@ $partida = $_POST['partida'] ?? 0;
             ctx.clearRect (0,0,canvas.width, canvas.height);
             hud_ctx.clearRect(0,0,screen.width,screen.height);
 
-            spawnear();
+            if (jefe == false)
+            {
+                spawnear();
+            }           
             camara();
             //console.log(jugador.y);
             moverJugador();
