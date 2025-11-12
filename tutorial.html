@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorial - Controles y HUD</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(circle at center, #0b0b0b, #1a1a1a 90%);
+        color: #f4f4f4;
+        font-family: 'Press Start 2P', monospace;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        margin-top: 50px;
+        color: #ff4747;
+        text-shadow: 0 0 10px #ff4747, 0 0 20px #ff0000;
+        font-size: 28px;
+    }
+
+    .section {
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 20px;
+        background: rgba(20, 20, 20, 0.85);
+        border: 2px solid #ff4747;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    h2 {
+        color: #ffb347;
+        font-size: 16px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px #ffb347;
+    }
+
+    .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .key {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid #ffb347;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(255, 179, 71, 0.2);
+    }
+
+    .key span {
+        display: block;
+        font-size: 14px;
+        color: #fff;
+        margin-top: 5px;
+    }
+
+    .hud {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .hud img {
+        image-rendering: pixelated;
+        height: 40px;
+        filter: drop-shadow(0 0 10px #00ffcc);
+    }
+
+    .pocion {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+    }
+
+    .pocion img {
+        width: 80px;
+        height: auto;
+        margin-bottom: 5px;
+        image-rendering: pixelated;
+        filter: drop-shadow(0 0 10px #00ff88);
+    }
+
+    .volver {
+        display: inline-block;
+        margin-top: 40px;
+        color: #fff;
+        background: #ff4747;
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        text-shadow: 0 0 10px black;
+        box-shadow: 0 0 20px #ff4747;
+        transition: 0.2s;
+    }
+
+    .volver:hover {
+        background: #ff2e2e;
+        transform: scale(1.05);
+    }
+
+</style>
+</head>
+<body>
+
+    <h1>📜 Tutorial del Juego</h1>
+
+    <div class="section">
+        <h2>🎮 Controles Básicos</h2>
+        <div class="controls">
+            <div class="key">A / D <span>→ Mover Izquierda / Derecha</span></div>
+            <div class="key">W <span>→ Saltar</span></div>
+            <div class="key">P <span>→ Ataque</span></div>
+            <div class="key">Q <span>→ Ataque Especial</span></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>❤️ HUD (Interfaz de Juego)</h2>
+        <div class="hud">
+            <div>
+                <img style = "width: 100px; height: 100px;" src="sprites/Barra de Vida.png " alt="Barra de Vida">
+                <p>Indica tu salud actual (HP).</p>
+            </div>
+            <div>
+                <img style = "width: 100px; height: 100px;" src="sprites/Barra de Experiencia.png" alt="Barra de Experiencia">
+                <p>Muestra la experiencia acumulada (XP).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🧪 Pociones</h2>
+        <div class="pocion">
+            <img style = "width: 100px; height: auto; margin-bottom: 20px;" src="sprites/PócimaCuración (animación).png" alt="Poción de curación">
+            <span>Restaura parte de tu vida al usarla.</span>
+        </div>
+    </div>
+
+    <a href="menu.html" class="volver">⬅ Volver al Menú</a>
+
+</body>
+</html>
