@@ -282,7 +282,7 @@ $displayName = $userData['username'] ?? ($_SESSION['username'] ?? null);
 $displayEmail = $userData['email'] ?? ($_SESSION['email'] ?? null);
 $displayNivel = isset($userData['nivel']) ? intval($userData['nivel']) : (isset($_SESSION['nivel']) ? intval($_SESSION['nivel']) : null);
 $displayXP = isset($userData['xp']) ? intval($userData['xp']) : (isset($_SESSION['xp']) ? intval($_SESSION['xp']) : null);
-$avatarPath = $userData['avatar'] ?? 'imagenes/perfil2.png';
+$avatarPath = $userData['avatar'] ?? 'imagenes/Foto de Perfil.png';
 ?>
 
 <!-- Popup de perfil (siempre presente para que el JS lo encuentre) -->
