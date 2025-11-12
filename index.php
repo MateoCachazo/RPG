@@ -327,8 +327,9 @@ $avatarPath = $userData['avatar'] ?? 'imagenes/Foto de Perfil.png';
 
     <div class="menu">
         <button class="menu-btn" onclick="window.location.href='partidas.php'">Iniciar partida</button>   
-        <button class="menu-btn" onclick="window.location.href='his_proyecto.php'">Historia</button>
-        <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>     
+        <button class="menu-btn" onclick="window.location.href='Opciones.php'">Opciones</button>   
+        <button class="menu-btn" onclick="window.location.href='his_proyecto.php'">Historia</button>   
+        <button class="menu-btn" onclick="window.location.href='tutorial.php'">Tutorial</button>  
     </div>
 
     <script> 

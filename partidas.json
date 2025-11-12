@@ -16,5 +16,23 @@
         "nombre": "ewr",
         "usuario": "Eric",
         "personaje": "Ninja"
+    },
+    "21": {
+        "id": 1,
+        "nombre": null,
+        "usuario": null,
+        "personaje": null
+    },
+    "22": {
+        "id": 2,
+        "nombre": null,
+        "usuario": null,
+        "personaje": null
+    },
+    "23": {
+        "id": 3,
+        "nombre": null,
+        "usuario": null,
+        "personaje": null
     }
 }
