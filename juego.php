@@ -995,7 +995,7 @@ if (isset($_SESSION["username"]))
 
     function spawnear()
     {
-        if(personajes.length <= 4)
+        if(personajes.length <= 2)
         {
             let spawnx = 0;
             let spawny = 555;
@@ -2602,6 +2602,10 @@ if (isset($_SESSION["username"]))
 
     function loop()
     {
+        if (jefe == true)
+        {
+            window.location.href = "fin.php";
+        }
         if (pausa == true)
         {
             
